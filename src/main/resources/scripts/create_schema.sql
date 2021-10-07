@@ -1,12 +1,27 @@
+Drop database if exists library;
+
+create database if not exists library;
+use library;
+
 CREATE TABLE `users` (
                          `id` int(11) NOT NULL AUTO_INCREMENT,
                          `name` varchar(30) DEFAULT NULL,
                          `email` varchar(40) DEFAULT NULL,
                          `sex` enum ('man','woman') DEFAULT NULL,
-                         `telephone` int(15) DEFAULT NULL,
+                         `telephone` varchar (15) DEFAULT NULL,
                          `role` enum ('admin','user','librarian') default null,
-                         `bun_list` tinyint (1),
+                         `ban_list` tinyint (1),
                          PRIMARY KEY (`id`));
+
+
+
+CREATE TABLE `books`(
+                        `id` int (11) NOT NULL auto_increment,
+                        `author` varchar(30) DEFAULT NULL,
+                        `book_name` varchar(30) DEFAULT NULL,
+                        `book_edition` varchar (30) DEFAULT NULL,
+                        `reliase_date` date DEFAULT NULL,
+                        PRIMARY KEY (`id`));
 
 CREATE TABLE `orders`(
                          `id` int (11) NOT NULL auto_increment,
@@ -14,16 +29,10 @@ CREATE TABLE `orders`(
                          `id_user` int (11) DEFAULT NULL,
                          `book_spot` enum ('abonement', 'library hall') DEFAULT NULL,
                          `status` enum ('expected','checked out' ,'returned'),
-                         `date_of_service` int(11) DEFAULT NULL,
-                         PRIMARY KEY (`id`));
-
-CREATE TABLE `books`(
-                        `id` int (11) NOT NULL auto_increment,
-                        `author` varchar(30) DEFAULT NULL,
-                        `book_name` varchar(30) DEFAULT NULL,
-                        `book_edition` varchar (30) DEFAULT NULL,
-                        `realise_date` date DEFAULT NULL,
-                        PRIMARY KEY (`id`));
+                         `return_date` date DEFAULT NULL,
+                         PRIMARY KEY (`id`),
+                         FOREIGN KEY (id_book) REFERENCES books (id),
+                         FOREIGN KEY (id_user) REFERENCES users (id));
 
 CREATE TABLE `penalties`(
                             `id` int (11) NOT NULL auto_increment,
