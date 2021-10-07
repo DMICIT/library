@@ -14,7 +14,6 @@ CREATE TABLE `users` (
                          PRIMARY KEY (`id`));
 
 
-
 CREATE TABLE `books`(
                         `id` int (11) NOT NULL auto_increment,
                         `author` varchar(30) DEFAULT NULL,
