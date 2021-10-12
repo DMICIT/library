@@ -16,6 +16,8 @@ public class PenaltyDao implements EntityDao<Penalty> {
     private static final Logger LOG = Logger.getLogger(PenaltyDao.class);
     public static final String SELECT_ALL_PENALTIES_QUERY = "SELECT * FROM penalties";
     public static final String SELECT_PENALTIES_BY_ID_QUERY = "SELECT * FROM penalties WHERE id = ?";
+    public static final String INSERT_QUERY = "INSERT INTO penalties ( user_id, order_id, penalty_cost ) values(?,?,?)";
+    public static final String UPDATE_QUERY = "UPDATE penalties SET( user_id, order_id, penalty_cost ) values(?,?,?)";
     public static final String ID = "id";
     public static final String ORDER_ID = "order_id";
     public static final String USER_ID = "user_id";
@@ -60,6 +62,34 @@ public class PenaltyDao implements EntityDao<Penalty> {
                 result = new Penalty(id, orderId, userId, penaltyCost);
             }
 
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    @Override
+    public int create(Penalty entity) {
+        int result = 0;
+        try (Connection connection = DataSourceFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY)) {
+            preparedStatement.setInt(1, entity.getUserId());
+            preparedStatement.setInt(2, entity.getOrderId());
+            preparedStatement.setInt(3, entity.getPenaltyCost());
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    @Override
+    public int update(Penalty entity) {
+        int result = 0;
+        try (Connection connection = DataSourceFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
+            preparedStatement.setInt(1, entity.getUserId());
+            preparedStatement.setInt(2, entity.getOrderId());
+            preparedStatement.setInt(3, entity.getPenaltyCost());
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }

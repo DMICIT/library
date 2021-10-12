@@ -18,6 +18,8 @@ public class UserDao implements EntityDao<User> {
     private static final Logger LOG = Logger.getLogger(PenaltyDao.class);
     public static final String SELECT_ALL_QUERY = "SELECT * FROM users";
     public static final String SELECT_BY_ID_QUERY = "SELECT * FROM users WHERE id = ?";
+    public static final String UPDATE_USERS_QUERY = "UPDATE  users SET ( name , email, sex, telephone, role, ban_list) values(?,?,?,?,?,?)";
+    public static final String INSERT_INTO_USERS_QUERY = "INSERT INTO users ( name , email, sex, telephone, role, ban_list) values(?,?,?,?,?,?)";
     public static final String ID = "id";
     public static final String NAME = "name";
     public static final String EMAIL = "email";
@@ -74,6 +76,40 @@ public class UserDao implements EntityDao<User> {
 
                 result = new User(id, name, email, sex, phone, role, banList);
             }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    @Override
+    public int create(User entity) {
+        int result = 0;
+        try (Connection connection = DataSourceFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_INTO_USERS_QUERY)) {
+            preparedStatement.setString(1, entity.getName());
+            preparedStatement.setString(2, entity.getEmail());
+            preparedStatement.setString(3, entity.getSex());
+            preparedStatement.setString(4, entity.getPhone());
+            preparedStatement.setString(5, entity.getRole());
+            preparedStatement.setInt(6, entity.getBanList());
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    @Override
+    public int update(User entity) {
+        int result = 0;
+        try (Connection connection = DataSourceFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USERS_QUERY)) {
+            preparedStatement.setString(1, entity.getName());
+            preparedStatement.setString(2, entity.getEmail());
+            preparedStatement.setString(3, entity.getSex());
+            preparedStatement.setString(4, entity.getPhone());
+            preparedStatement.setString(5, entity.getRole());
+            preparedStatement.setInt(6, entity.getBanList());
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }

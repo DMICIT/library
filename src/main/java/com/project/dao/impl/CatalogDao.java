@@ -2,7 +2,6 @@ package com.project.dao.impl;
 
 import com.project.dao.EntityDao;
 import com.project.entities.Catalog;
-import com.project.entities.Penalty;
 import com.project.persistance.DataSourceFactory;
 import org.apache.log4j.Logger;
 
@@ -18,6 +17,8 @@ public class CatalogDao implements EntityDao<Catalog> {
     private static final Logger LOG = Logger.getLogger(CatalogDao.class);
     public static final String SELECT_ALL_CATALOG_QUERY = "SELECT * FROM catalog";
     public static final String SELECT_CATALOG_BY_ID_QUERY = "SELECT * FROM catalog WHERE id = ?";
+    public static final String INSERT_QUERY = "INSERT INTO catalog (book_id, status ) VALUES (?,?)";
+    public static final String UPDATE_CATALOG_QUERY = "UPDATE catalog SET (book_id, status ) VALUES (?,?)";
     public static final String ID = "id";
     public static final String BOOK_ID = "book_id";
     public static final String STATUS = "status";
@@ -39,7 +40,8 @@ public class CatalogDao implements EntityDao<Catalog> {
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
-        } return result;
+        }
+        return result;
     }
 
     @Override
@@ -58,6 +60,38 @@ public class CatalogDao implements EntityDao<Catalog> {
 
                 result = new Catalog(id, bookId, status);
             }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    @Override
+    public int create(Catalog entity) {
+        int result = 0;
+        try (Connection connection = DataSourceFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY);
+        ) { preparedStatement.setInt(1,entity.getBookId());
+            preparedStatement.setString(2,entity.getStatus());
+
+            result = preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    @Override
+    public int update(Catalog entity) {
+        int result = 0;
+        try (Connection connection = DataSourceFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CATALOG_QUERY );
+        ) { preparedStatement.setInt(1,entity.getBookId());
+            preparedStatement.setString(2,entity.getStatus());
+
+            result = preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }

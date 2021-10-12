@@ -19,6 +19,8 @@ public class BookDao implements EntityDao<Book> {
     public static final String BOOK_NAME = "book_name";
     public static final String BOOK_EDITION = "book_edition";
     public static final String RELIASE_DATE = "reliase_date";
+    public static final String INSERT_NEW_BOOK_QUERY = "INSERT into books(author, book_name, book_edition, reliase_date) VALUES (?,?,?,?)";
+    public static final String UPDATE_BOOKS_QUERY = "UPDATE books SET (author, book_name, book_edition, reliase_date) VALUES (?,?,?,?)";
 
     @Override
     public List<Book> getAll() {
@@ -62,6 +64,44 @@ public class BookDao implements EntityDao<Book> {
                 result = new Book(id, author, bookName, bookEdition, reliaseDate);
 
             }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    @Override
+    public int create(Book entity) {
+        int result = 0;
+        try (Connection connection = DataSourceFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NEW_BOOK_QUERY);
+
+        ) {
+            preparedStatement.setString(1, entity.getAuthor());
+            preparedStatement.setString(2, entity.getBookName());
+            preparedStatement.setString(3, entity.getBookEdition());
+            preparedStatement.setDate(4, entity.getReliaseDate());
+
+            result = preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    @Override
+    public int update(Book entity) {
+        int result = 0;
+        try (Connection connection = DataSourceFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_BOOKS_QUERY);) {
+            preparedStatement.setString(1, entity.getAuthor());
+            preparedStatement.setString(2, entity.getBookName());
+            preparedStatement.setString(3, entity.getBookEdition());
+            preparedStatement.setDate(4, entity.getReliaseDate());
+
+            result = preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }

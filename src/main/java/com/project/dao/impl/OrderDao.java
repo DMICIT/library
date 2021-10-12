@@ -14,6 +14,8 @@ public class OrderDao implements EntityDao<Order> {
     private static final Logger LOG = Logger.getLogger(PenaltyDao.class);
     public static final String SELECT_ALL_ORDERS_QUERY = "SELECT * FROM orders";
     public static final String SELECT_ORDERS_BY_ID_QUERY = "SELECT * FROM orders WHERE id = ?";
+    public static final String INSERT_INTO_ORDERS_QUERY = "INSERT INTO orders ( id_book, id_user, book_spot, status, return_date ) values(?,?,?,?,?)";
+    public static final String UPDATE_ORDERS_QUERY = "UPDATE orders SET ( id_book, id_user, book_spot, status, return_date ) values(?,?,?,?,?)";
     public static final String ID = "id";
     public static final String ID_USER = "id_user";
     public static final String ID_BOOK = "id_book";
@@ -50,9 +52,9 @@ public class OrderDao implements EntityDao<Order> {
 
         Order result = null;
         try (Connection connection = DataSourceFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ORDERS_BY_ID_QUERY);){
-             preparedStatement.setInt(1, inputId);
-             ResultSet resultSet = preparedStatement.executeQuery();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ORDERS_BY_ID_QUERY);) {
+            preparedStatement.setInt(1, inputId);
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt(ID);
                 int userId = resultSet.getInt(ID_USER);
@@ -68,4 +70,43 @@ public class OrderDao implements EntityDao<Order> {
         }
         return result;
     }
+
+    @Override
+    public int create(Order entity) {
+        int result = 0;
+        try (Connection connection = DataSourceFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_INTO_ORDERS_QUERY)) {
+            preparedStatement.setInt(1, entity.getBookId());
+            preparedStatement.setInt(2, entity.getUserId());
+            preparedStatement.setString(3, entity.getBookSpot());
+            preparedStatement.setString(4, entity.getStatus());
+            preparedStatement.setDate(5, entity.getReturnDate());
+
+            result = preparedStatement.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public int update(Order entity) {
+        int result = 0;
+        try (Connection connection = DataSourceFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ORDERS_QUERY)) {
+            preparedStatement.setInt(1, entity.getBookId());
+            preparedStatement.setInt(2, entity.getUserId());
+            preparedStatement.setString(3, entity.getBookSpot());
+            preparedStatement.setString(4, entity.getStatus());
+            preparedStatement.setDate(5, entity.getReturnDate());
+
+            result = preparedStatement.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return result;
+    }
 }
+
