@@ -11,6 +11,15 @@ public class User {
     private String role;
     private int banList;
 
+    public User(String name, String email, String sex, String phone, String role, int banList) {
+        this.name = name;
+        this.email = email;
+        this.sex = sex;
+        this.phone = phone;
+        this.role = role;
+        this.banList = banList;
+    }
+
     public User(int id, String name, String email, String sex, String phone, String role, int banList) {
         this.id = id;
         this.name = name;
