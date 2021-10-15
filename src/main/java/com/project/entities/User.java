@@ -10,17 +10,10 @@ public class User {
     private String phone;
     private String role;
     private int banList;
+    private String password;
 
-    public User(String name, String email, String sex, String phone, String role, int banList) {
-        this.name = name;
-        this.email = email;
-        this.sex = sex;
-        this.phone = phone;
-        this.role = role;
-        this.banList = banList;
-    }
 
-    public User(int id, String name, String email, String sex, String phone, String role, int banList) {
+    public User(int id, String name, String email, String sex, String phone, String role, int banList, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -28,6 +21,17 @@ public class User {
         this.phone = phone;
         this.role = role;
         this.banList = banList;
+        this.password = password;
+    }
+
+    public User(String name, String email, String sex, String phone, String role, int banList, String password) {
+        this.name = name;
+        this.email = email;
+        this.sex = sex;
+        this.phone = phone;
+        this.role = role;
+        this.banList = banList;
+        this.password = password;
     }
 
     public int getId() {
@@ -84,6 +88,14 @@ public class User {
 
     public void setBanList(int banList) {
         this.banList = banList;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
