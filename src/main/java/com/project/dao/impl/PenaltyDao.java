@@ -17,7 +17,7 @@ public class PenaltyDao implements EntityDao<Penalty> {
     public static final String SELECT_ALL_PENALTIES_QUERY = "SELECT * FROM penalties";
     public static final String SELECT_PENALTIES_BY_ID_QUERY = "SELECT * FROM penalties WHERE id = ?";
     public static final String INSERT_QUERY = "INSERT INTO penalties ( user_id, order_id, penalty_cost ) values(?,?,?)";
-    public static final String UPDATE_QUERY = "UPDATE penalties SET( user_id, order_id, penalty_cost ) values(?,?,?)";
+    public static final String UPDATE_QUERY = "UPDATE penalties SET user_id = ?, order_id = ?, penalty_cost = ? WHERE id = ?";
     public static final String ID = "id";
     public static final String ORDER_ID = "order_id";
     public static final String USER_ID = "user_id";
@@ -90,6 +90,7 @@ public class PenaltyDao implements EntityDao<Penalty> {
             preparedStatement.setInt(1, entity.getUserId());
             preparedStatement.setInt(2, entity.getOrderId());
             preparedStatement.setInt(3, entity.getPenaltyCost());
+            preparedStatement.setInt(4,entity.getId());
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }

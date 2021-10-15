@@ -15,7 +15,7 @@ public class OrderDao implements EntityDao<Order> {
     public static final String SELECT_ALL_ORDERS_QUERY = "SELECT * FROM orders";
     public static final String SELECT_ORDERS_BY_ID_QUERY = "SELECT * FROM orders WHERE id = ?";
     public static final String INSERT_INTO_ORDERS_QUERY = "INSERT INTO orders ( id_book, id_user, book_spot, status, return_date ) values(?,?,?,?,?)";
-    public static final String UPDATE_ORDERS_QUERY = "UPDATE orders SET ( id_book, id_user, book_spot, status, return_date ) values(?,?,?,?,?)";
+    public static final String UPDATE_ORDERS_QUERY = "UPDATE orders SET id_book = ?, id_user = ?, book_spot = ?, status= ?, return_date = ? WHERE id =?";
     public static final String ID = "id";
     public static final String ID_USER = "id_user";
     public static final String ID_BOOK = "id_book";
@@ -100,6 +100,7 @@ public class OrderDao implements EntityDao<Order> {
             preparedStatement.setString(3, entity.getBookSpot());
             preparedStatement.setString(4, entity.getStatus());
             preparedStatement.setDate(5, entity.getReturnDate());
+            preparedStatement.setInt(6,entity.getId());
 
             result = preparedStatement.executeUpdate();
 

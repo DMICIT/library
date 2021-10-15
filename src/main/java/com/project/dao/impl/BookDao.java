@@ -20,7 +20,7 @@ public class BookDao implements EntityDao<Book> {
     public static final String BOOK_EDITION = "book_edition";
     public static final String RELIASE_DATE = "reliase_date";
     public static final String INSERT_NEW_BOOK_QUERY = "INSERT into books(author, book_name, book_edition, reliase_date) VALUES (?,?,?,?)";
-    public static final String UPDATE_BOOKS_QUERY = "UPDATE books SET (author, book_name, book_edition, reliase_date) VALUES (?,?,?,?)";
+    public static final String UPDATE_BOOKS_QUERY = "UPDATE books SET author = ?, book_name = ?, book_edition = ?, reliase_date = ? WHERE id = ?";
 
     @Override
     public List<Book> getAll() {
@@ -99,6 +99,7 @@ public class BookDao implements EntityDao<Book> {
             preparedStatement.setString(2, entity.getBookName());
             preparedStatement.setString(3, entity.getBookEdition());
             preparedStatement.setDate(4, entity.getReliaseDate());
+            preparedStatement.setInt(5,entity.getId());
 
             result = preparedStatement.executeUpdate();
 
