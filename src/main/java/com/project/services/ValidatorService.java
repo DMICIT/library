@@ -1,24 +1,18 @@
 package com.project.services;
 
 
-import javax.servlet.http.HttpServletRequest;
+import com.project.forms.RegistrationForm;
+
 
 public class ValidatorService {
-    public static boolean validate (HttpServletRequest request){
+    public static boolean validate (RegistrationForm form){
         boolean result = true;
 
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String confirmPass = request.getParameter("confirm_password");
-
-        if (email.length() < 7) {
+        if (form.getEmail().length() < 7) {
             result = false;
-            request.setAttribute("error message", "False email address");
         }
-        if (!password.equals(confirmPass)){
+        if (!form.getPassword().equals(form.getConfirmPassword())){
             result = false;
-            request.setAttribute("error message", "Wrong password");
         }
         return result;
     }
