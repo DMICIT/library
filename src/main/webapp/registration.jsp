@@ -24,6 +24,10 @@
     Password:
     <input type = "text" name="password" required >
     </br>
+    </br>
+    Confirm Password:
+    <input type = "text" name="confirm_password" required >
+    </br>
     Phone:
     <input type = "text" name="phone" required >
     </br>

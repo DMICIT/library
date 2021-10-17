@@ -1,10 +1,9 @@
 package com.project.web;
 
-import com.project.dao.impl.UserDao;
+import com.project.dao.impl.UserDaoImpl;
 import com.project.entities.User;
 import org.apache.log4j.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,9 +29,10 @@ public class DispatcherServlet extends HttpServlet {
         String phone = req.getParameter("phone");
         String sex = req.getParameter("sex");
 
-        User user = new User(name,email,sex,phone,"user",0);
-        UserDao userDao = new UserDao();
-        userDao.create(user);
+
+        User user = new User(name,email,sex,phone,"user",0,password);
+        UserDaoImpl userDaoImpl = UserDaoImpl.getInstance();
+        userDaoImpl.create(user);
 
         req.getRequestDispatcher("registration.jsp").forward(req,resp);
 
