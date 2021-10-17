@@ -2,8 +2,10 @@ package com.project.web;
 
 import com.project.dao.impl.UserDaoImpl;
 import com.project.entities.User;
+import com.project.factory.CommandFactory;
 import com.project.services.UserService;
 import com.project.services.ValidatorService;
+import com.project.web.commands.Command;
 import com.project.web.commands.LoginCommand;
 import com.project.web.commands.RegistrationCommand;
 import org.apache.log4j.Logger;
@@ -31,16 +33,19 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String path = getPath(request);
+        Command command = CommandFactory.getCommand(path);
+        String page = command.execute(request, response);
+
+        request.getRequestDispatcher("/WEB-INF/pages/" + page).forward(request, response);
+    }
+
+    private String getPath(HttpServletRequest request) {
         String requestUri = request.getRequestURI();
         int lastSymbol = requestUri.lastIndexOf('/');
-        String path = requestUri.substring(lastSymbol + 1);
-        if (path.equals("registration")) {
-            String registrationPage = new RegistrationCommand().execute(request, response);
-            request.getRequestDispatcher("/WEB-INF/pages/" + registrationPage).forward(request, response);
-        } else if (path.equals("login")) {
-            String loginPage = new LoginCommand().execute(request, response);
-            request.getRequestDispatcher("/WEB-INF/pages/" + loginPage).forward(request, response);
+        return requestUri.substring(lastSymbol + 1);
 
-        }
     }
 }
+
