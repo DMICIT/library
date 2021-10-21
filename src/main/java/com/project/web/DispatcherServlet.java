@@ -1,13 +1,7 @@
 package com.project.web;
 
-import com.project.dao.impl.UserDaoImpl;
-import com.project.entities.User;
 import com.project.factory.CommandFactory;
-import com.project.services.UserService;
-import com.project.services.ValidatorService;
 import com.project.web.commands.Command;
-import com.project.web.commands.LoginCommand;
-import com.project.web.commands.RegistrationCommand;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -33,7 +27,6 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String path = getPath(request);
         Command command = CommandFactory.getCommand(path);
         String page = command.execute(request, response);
