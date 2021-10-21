@@ -7,10 +7,11 @@ public abstract class AbstractCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String method = request.getMethod();
-        if (method.equals("GET")) {
-            executeGet(request, response);
-        } else if (method.equals("POST")) {
-            executePost(request, response);
+        if (method.equals("GET")){
+            return executeGet(request,response);
+
+        }else if (method.equals("POST")){
+            return executePost(request,response);
         }
         return "error.jsp";
     }

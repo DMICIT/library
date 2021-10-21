@@ -1,9 +1,6 @@
 package com.project.factory;
 
-import com.project.web.commands.Command;
-import com.project.web.commands.HomeCommand;
-import com.project.web.commands.LoginCommand;
-import com.project.web.commands.RegistrationCommand;
+import com.project.web.commands.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +13,7 @@ public class CommandFactory {
         commandMap.put("login", new LoginCommand());
         commandMap.put("registration", new RegistrationCommand());
         commandMap.put("", new HomeCommand());
+        commandMap.put("books", new BookCommand());
     }
 
     private CommandFactory() {

@@ -22,6 +22,16 @@ public class BookDao implements EntityDao<Book> {
     public static final String INSERT_NEW_BOOK_QUERY = "INSERT into books(author, book_name, book_edition, reliase_date) VALUES (?,?,?,?)";
     public static final String UPDATE_BOOKS_QUERY = "UPDATE books SET author = ?, book_name = ?, book_edition = ?, reliase_date = ? WHERE id = ?";
 
+    private static BookDao instance;
+    private BookDao(){};
+
+    public static synchronized BookDao getInstance(){
+        if (instance == null){
+            instance = new BookDao();
+        }
+        return instance;
+    }
+
     @Override
     public List<Book> getAll() {
         List<Book> result = new ArrayList<>();
