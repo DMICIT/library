@@ -11,6 +11,14 @@ public class Order {
     private String status;
     private Date returnDate;
 
+    public Order(int userId, int bookId, String bookSpot, String status, Date returnDate) {
+        this.userId = userId;
+        this.bookId = bookId;
+        this.bookSpot = bookSpot;
+        this.status = status;
+        this.returnDate = returnDate;
+    }
+
     public Order(int id, int userId, int bookId, String bookSpot, String status, Date returnDate) {
         this.id = id;
         this.userId = userId;
