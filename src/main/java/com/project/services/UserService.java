@@ -4,17 +4,15 @@ import com.project.dao.impl.UserDaoImpl;
 import com.project.entities.User;
 import com.project.forms.RegistrationForm;
 
-import javax.servlet.http.HttpServletRequest;
-
 public class UserService {
-    public static boolean isUserExist(String email) {
-
+    public static User getUserByEmail (String inputEmail){
         UserDaoImpl instance = UserDaoImpl.getInstance();
-        User userByEmail = instance.getByEmail(email);
-        if (userByEmail != null) {
-            return true;
-        }
-        return false;
+        return instance.getByEmail(inputEmail);
+
+    }
+    public static boolean isUserExist(String incomeEmail) {
+        User userByEmail = getUserByEmail(incomeEmail);
+        return userByEmail != null;
     }
 
     public static void createUser(RegistrationForm form) {
@@ -28,4 +26,5 @@ public class UserService {
         instance.create(user);
 
     }
+
 }
