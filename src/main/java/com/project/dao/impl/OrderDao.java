@@ -3,6 +3,7 @@ package com.project.dao.impl;
 import com.project.dao.EntityDao;
 import com.project.entities.Order;
 import com.project.persistance.DataSourceFactory;
+import com.sun.tools.corba.se.idl.constExpr.Or;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -22,6 +23,15 @@ public class OrderDao implements EntityDao<Order> {
     public static final String BOOK_SPOT = "book_spot";
     public static final String STATUS = "status";
     public static final String RETURN_DATE = "return_date";
+
+    private static OrderDao instance;
+    private OrderDao (){}
+    public static synchronized OrderDao getOrderDao(){
+        if (instance == null) {
+            instance = new OrderDao();
+        }
+        return instance;
+    }
 
     @Override
     public List<Order> getAll() {
