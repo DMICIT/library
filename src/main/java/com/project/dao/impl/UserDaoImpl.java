@@ -156,7 +156,6 @@ public class UserDaoImpl implements UserDao {
                 int banList = resultSet.getInt(BAN_LIST);
                 String password = resultSet.getString(PASSWORD);
 
-
                 result = new User(id, name, email, sex, phone, role, banList, password);
             }
         } catch (SQLException e) {
