@@ -9,10 +9,10 @@ public class LogoutCommand implements Command{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        String usersEmail =(String) session.getAttribute("usersEmail");
+        String usersEmail =(String) session.getAttribute("user");
         if (usersEmail != null){
             session.invalidate();
         }
-        return "index.jsp";
+        return "redirect:";
     }
 }

@@ -31,7 +31,7 @@ public class LoginCommand extends AbstractCommand {
         }
         if (user == null) {
             request.setAttribute("errorMessage", "User not found, please register");
-            return "registration.jsp";
+            return "redirect:registration";
         }
         if (!user.getPassword().equals(form.getPassword())) {
             request.setAttribute("errorMessage", "Wrong password!");
@@ -40,7 +40,7 @@ public class LoginCommand extends AbstractCommand {
         HttpSession session = request.getSession();
         session.setAttribute("user", form.getEmail());
 
-        return "index.jsp";
+        return "redirect:";
     }
 
     private LoginForm getLoginForm(HttpServletRequest request) {
