@@ -25,7 +25,7 @@ public class RegistrationCommand extends AbstractCommand {
             if (!UserService.isUserExist(form.getEmail())){
                 UserService.createUser(form);
                 LOG.info("User created");
-                return "index.jsp";
+                return "redirect:login";
             }else {
                 LOG.info("Already exist user with this email: " + form.getEmail());
                 request.setAttribute("errorMessage", "User already exist");
