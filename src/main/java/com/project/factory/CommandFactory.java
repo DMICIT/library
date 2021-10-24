@@ -17,6 +17,7 @@ public class CommandFactory {
         commandMap.put("books", new BookCommand());
         commandMap.put("orders", new OrderCommand());
         commandMap.put("logout", new LogoutCommand());
+        commandMap.put("language",new LanguageCommand());
     }
 
     private CommandFactory() {

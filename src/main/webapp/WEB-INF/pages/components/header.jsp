@@ -7,6 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${locale}"></fmt:setLocale>
+<fmt:setBundle basename="${bundle}"></fmt:setBundle>
 <c:set var="contextPath" value = "${pageContext.request.contextPath}"/><html>
 <head>
     <title>Title</title>
@@ -18,8 +21,8 @@
         <a href="${contextPath}" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"> Library </a>
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="${contextPath}/" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="${contextPath}/books" class="nav-link px-2 link-dark">Books</a></li>
+            <li><a href="${contextPath}/" class="nav-link px-2 link-secondary"><fmt:message key="header.home"/></a></li>
+            <li><a href="${contextPath}/books" class="nav-link px-2 link-dark"><fmt:message key="header.books"/></a></li>
             <li><a href="${contextPath}/orders" class="nav-link px-2 link-dark">Orders</a></li>
         </ul>
 
@@ -33,6 +36,16 @@
                     <a href="logout" class="btn btn-primary">logout</a>
                 </c:otherwise>
             </c:choose>
+        </div>
+
+        <div class="dropdown">
+            <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                ${locale}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li><a class="dropdown-item" href="language?locale=en">EN</a></li>
+                <li><a class="dropdown-item" href="language?locale=ru">RU</a></li>
+            </ul>
         </div>
     </header>
 </div>
