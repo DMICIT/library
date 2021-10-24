@@ -24,8 +24,15 @@
         </ul>
 
         <div class="col-md-3 text-end">
-            <a href="login" class="btn btn-outline-primary me-2">Login</a>
-            <a href="registration" class="btn btn-primary">Registration</a>
+            <c:choose>
+                <c:when test = "${empty user}">
+                    <a href="login" class="btn btn-outline-primary me-2">login</a>
+                    <a href="registration" class="btn btn-primary">registration</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="logout" class="btn btn-primary">logout</a>
+                </c:otherwise>
+            </c:choose>
         </div>
     </header>
 </div>
