@@ -14,6 +14,7 @@ public class CommandFactory {
         commandMap.put("registration", new RegistrationCommand());
         commandMap.put("", new HomeCommand());
         commandMap.put("books", new BookCommand());
+        commandMap.put("orders", new OrderCommand());
     }
 
     private CommandFactory() {
