@@ -16,12 +16,13 @@ public class StaticResourceFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         String requestUrl = httpServletRequest.getRequestURI();
         if (requestUrl.endsWith(".jsp")) {
-            filterChain.doFilter(servletRequest,servletResponse);
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
         }
-            String contextPath = httpServletRequest.getContextPath();
-            String path = requestUrl.substring(contextPath.length());
-            String pathToForward = "/app" + path;
-            httpServletRequest.getRequestDispatcher(pathToForward).forward(servletRequest,servletResponse);
+        String contextPath = httpServletRequest.getContextPath();
+        String path = requestUrl.substring(contextPath.length());
+        String pathToForward = "/app" + path;
+        httpServletRequest.getRequestDispatcher(pathToForward).forward(servletRequest, servletResponse);
 
     }
 

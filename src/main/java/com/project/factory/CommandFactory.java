@@ -7,7 +7,8 @@ import java.util.Map;
 
 public class CommandFactory {
     private static Map<String, Command> commandMap = new HashMap<>();
-    private static Command defaultCommand = new HomeCommand();
+    private static Command defaultCommand = new PageNotFoundCommand();
+
 
     static {
         commandMap.put("login", new LoginCommand());
