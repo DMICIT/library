@@ -24,11 +24,13 @@ public class RegistrationCommand extends AbstractCommand {
         if (ValidatorService.validate(form)){
             if (!UserService.isUserExist(form.getEmail())){
                 UserService.createUser(form);
+                LOG.info("User created");
+                return "index.jsp";
             }else {
                 LOG.info("Already exist user with this email: " + form.getEmail());
                 request.setAttribute("errorMessage", "User already exist");
             }
-        }
+        } LOG.info("Invalid Data");
         request.setAttribute("errorMessage", "Invalid Data");
         return "registration.jsp";
 
