@@ -15,6 +15,15 @@
   </servlet-mapping>
 
   <filter>
+    <filter-name>LocalizationFilter</filter-name>
+    <filter-class>com.project.filter.LocalizationFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LocalizationFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
     <filter-name>StaticResourceFilter</filter-name>
     <filter-class>com.project.filter.StaticResourceFilter</filter-class>
   </filter>
@@ -22,6 +31,9 @@
     <filter-name>StaticResourceFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
+
+
 
   <error-page>
     <error-code>404</error-code>
