@@ -23,28 +23,34 @@
 </br>
 </br>
 <form action="registration" method="post" >
-    Name:
-    <input type = "text" name="name" required >
-    </br>
-    Email:
-    <input type = "text" name="email" required >
-    </br>
-    Password:
-    <input type = "text" name="password" required >
-    </br>
-    </br>
-    Confirm Password:
-    <input type = "text" name="confirm_password" required >
-    </br>
-    Phone:
-    <input type = "text" name="phone" required >
-    </br>
-    Sex:
-    <input type = "text" name="sex" required >
-    </br>
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" >
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="text" class="form-control" id="email" name="email">
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password">
+    </div>
+    <div class="mb-3">
+        <label for="confirm_password" class="form-label">Confirm password</label>
+        <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+    </div>
+    <div class="mb-3">
+        <label for="phone" class="form-label">Phone</label>
+        <input type="text" class="form-control" id ="phone" name ="phone">
+    </div>
+  <div class="mb-3">
+      <label for="sex" class="form-label">Sex</label>
+      <input type="text" class="form-control" id ="sex" name ="sex">
+  </div>
 
-    <button type = "submit">Register</button>
+    <button class= "btn btn-primary" type="submit">Register</button>
 </form>
+    Message: ${errorMessage}
 </div>
 <c:import url="components/footer.jsp"/>
 </body>

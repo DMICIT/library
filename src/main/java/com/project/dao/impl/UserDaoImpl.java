@@ -111,6 +111,8 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setInt(6, entity.getBanList());
             preparedStatement.setString(7, entity.getPassword());
 
+           result = preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -130,6 +132,9 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setInt(6, entity.getBanList());
             preparedStatement.setString(7, entity.getPassword());
             preparedStatement.setInt(8, entity.getId());
+
+            result = preparedStatement.executeUpdate();
+
 
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);

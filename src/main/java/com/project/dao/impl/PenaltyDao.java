@@ -76,6 +76,9 @@ public class PenaltyDao implements EntityDao<Penalty> {
             preparedStatement.setInt(1, entity.getUserId());
             preparedStatement.setInt(2, entity.getOrderId());
             preparedStatement.setInt(3, entity.getPenaltyCost());
+
+            result = preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -91,6 +94,8 @@ public class PenaltyDao implements EntityDao<Penalty> {
             preparedStatement.setInt(2, entity.getOrderId());
             preparedStatement.setInt(3, entity.getPenaltyCost());
             preparedStatement.setInt(4,entity.getId());
+            result = preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }

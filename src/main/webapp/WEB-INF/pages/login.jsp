@@ -24,15 +24,17 @@
 </br>
 <form action="login" method="post" >
 
-  Email:
-  <input type = "text" name="email" required >
-  </br>
-  Password:
-  <input type = "text" name="password" required >
-  </br>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="text" class="form-control" id="email" name="email">
+  </div>
 
-  <button type = "submit">Enter</button>
-</form>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" name="password">
+  </div>
+
+  <button class= "btn btn-primary" type = "submit">Login</button></form>
 
 Message: ${errorMessage}
 </div>
