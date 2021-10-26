@@ -35,7 +35,7 @@
             <a class="btn btn-primary btn-lg" href="books">Books</a>
         </div>
     </div>
-    Hello user : ${user}
+    <fmt:message key="index.hello.user"/> : ${user}
 </div>
 
 <c:import url="components/footer.jsp"/>
