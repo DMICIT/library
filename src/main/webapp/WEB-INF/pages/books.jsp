@@ -27,16 +27,16 @@
 <c:import url="components/header.jsp"/>
 <div class="container">
 
-    <h2>Books</h2>
+    <h2><fmt:message key="books.header"/></h2>
 
     <table class="table">
         <thead>
         <tr>
-            <td>#</td>
-            <td>Author</td>
-            <td>Book name</td>
-            <td>Edition</td>
-            <td>Date of reliase</td>
+            <td><fmt:message key="books.#"/></td>
+            <td><fmt:message key="books.author"/></td>
+            <td><fmt:message key="books.book.name"/></td>
+            <td><fmt:message key="books.edition"/></td>
+            <td><fmt:message key="books.date.of.reliase"/></td>
         </tr>
         </thead>
 

@@ -23,17 +23,17 @@
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="${contextPath}/" class="nav-link px-2 link-secondary"><fmt:message key="header.home"/></a></li>
             <li><a href="${contextPath}/books" class="nav-link px-2 link-dark"><fmt:message key="header.books"/></a></li>
-            <li><a href="${contextPath}/orders" class="nav-link px-2 link-dark">Orders</a></li>
+            <li><a href="${contextPath}/orders" class="nav-link px-2 link-dark"><fmt:message key="header.orders"/></a></li>
         </ul>
 
         <div class="col-md-3 text-end">
             <c:choose>
                 <c:when test = "${empty user}">
-                    <a href="login" class="btn btn-outline-primary me-2">login</a>
-                    <a href="registration" class="btn btn-primary">registration</a>
+                    <a href="login" class="btn btn-outline-primary me-2"><fmt:message key="header.login"/></a>
+                    <a href="registration" class="btn btn-primary"><fmt:message key="header.registration"/></a>
                 </c:when>
                 <c:otherwise>
-                    <a href="logout" class="btn btn-primary">logout</a>
+                    <a href="logout" class="btn btn-primary"><fmt:message key="header.logout"/></a>
                 </c:otherwise>
             </c:choose>
         </div>
