@@ -10,6 +10,13 @@ public class Book {
     private String bookEdition;
     private Date reliaseDate;
 
+    public Book(String author, String bookName, String bookEdition, Date reliaseDate) {
+        this.author = author;
+        this.bookName = bookName;
+        this.bookEdition = bookEdition;
+        this.reliaseDate = reliaseDate;
+    }
+
     public Book(int id, String author, String bookName, String bookEdition, Date reliaseDate) {
         this.id = id;
         this.author = author;

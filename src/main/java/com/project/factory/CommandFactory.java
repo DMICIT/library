@@ -19,6 +19,7 @@ public class CommandFactory {
         commandMap.put("logout", new LogoutCommand());
         commandMap.put("language",new LanguageCommand());
         commandMap.put("admin-books",new AdminBooksCommand());
+        commandMap.put("admin-edit-book", new AdminEditBookCommand());
     }
 
     private CommandFactory() {

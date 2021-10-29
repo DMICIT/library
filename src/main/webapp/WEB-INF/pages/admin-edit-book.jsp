@@ -28,41 +28,29 @@
 <div class="container">
 
     <h2><fmt:message key="books.header"/></h2>
-<form action="admin-books" method="post" id="bookForm" role ="form">
-    <input type="hidden" id ="bookId" name ="bookId">
-    <input type="hidden" id ="action" name ="action">
+    <form action="admin-edit-book" method="post" id="bookForm" role ="form">
+        <c:if test ="${empty action}">
+            <c:set var="action" value="add"/>
+        </c:if>
+        <input type="hidden" id ="bookId" name ="bookId" value="${book.id}">
+        <input type="hidden" id ="action" name ="action" value="${action}">
 
-    <table class="table">
-        <thead>
-        <tr>
-            <td><fmt:message key="books.#"/></td>
-            <td><fmt:message key="books.author"/></td>
-            <td><fmt:message key="books.book.name"/></td>
-            <td><fmt:message key="books.edition"/></td>
-            <td><fmt:message key="books.date.of.reliase"/></td>
-            <td></td>
-        </tr>
-        </thead>
+        <div class ="form-group col-xs-4">
+            <label for="author" class="control-label col-xs-4">author</label>
+            <input type = "text" name="author" id = "author" class="form-control" value ="${book.author}" required>
 
-        <c:forEach items="${books}" var="book">
-            <tr>
-                <td><a href="admin-edit-book?id=${book.id}">${book.id}</a></td>
-                <td>${book.author}</td>
-                <td>${book.bookName}</td>
-                <td>${book.bookEdition}</td>
-                <td>${book.reliaseDate}</td>
-                <td><a href="#" id="remove"
-                onclick="document.getElementById('action').value = 'delete';
-                document.getElementById('bookId').value = '${book.id}';
-                document.getElementById('bookForm').submit();">
-                    delete
-                </a>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
-</form>
-<a href="admin-edit-book" class="btn btn-primary btn-md">new book</a>
+            <label for="bookName" class="control-label col-xs-4">bookName</label>
+            <input type = "text" name="bookName" id = "bookName" class="form-control" value ="${book.bookName}" required>
+
+            <label for="bookEdition" class="control-label col-xs-4">bookEdition</label>
+            <input type = "text" name="bookEdition" id = "bookEdition" class="form-control" value ="${book.bookEdition}" required>
+
+            <label for="reliaseDate" class="control-label col-xs-4">reliaseDate</label>
+            <input type = "text" name="reliaseDate" id = "reliaseDate" class="form-control" value ="${book.reliaseDate}" required>
+            </br>
+            <button type="submit" class="btn btn-primary btn-md">Accept</button>
+        </div>
+    </form>
 </div>
 <c:import url="components/footer.jsp"/>
 </body>
