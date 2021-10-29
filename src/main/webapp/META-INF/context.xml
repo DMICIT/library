@@ -10,7 +10,7 @@
             maxIdle="30"
             maxWait="10000"
             driverClassName="com.mysql.cj.jdbc.Driver"
-            url="jdbc:mysql://localhost:3306/library?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=UTF-8"
+            url="jdbc:mysql://localhost:3306/library?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false"
             username="root"
             password="rootroot"
     />
