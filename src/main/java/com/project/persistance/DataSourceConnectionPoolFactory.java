@@ -4,28 +4,26 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import com.project.entities.Book;
 import org.apache.log4j.Logger;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
 
-public class DataSourceFactory {
-    private static final Logger LOG = Logger.getLogger(DataSourceFactory.class);
-    private static final DataSourceFactory INSTANCE = new DataSourceFactory();
+public class DataSourceConnectionPoolFactory {
+    private static final Logger LOG = Logger.getLogger(DataSourceConnectionPoolFactory.class);
+    private static final DataSourceConnectionPoolFactory INSTANCE = new DataSourceConnectionPoolFactory();
 
     private static DataSource dataSource;
 
-    public DataSourceFactory() {
+    public DataSourceConnectionPoolFactory() {
     }
     static {
         try {
-            MysqlDataSource mysqlDataSource = new MysqlDataSource();
-            mysqlDataSource.setUrl("jdbc:mysql://localhost:3306/library?useUnicode=true&serverTimezone=UTC&useSSL=false");
-            mysqlDataSource.setDatabaseName("library");
-            mysqlDataSource.setCharacterEncoding("UTF-8");
-            mysqlDataSource.setUser("root");
-            mysqlDataSource.setPassword("rootroot");
+            Context initContext = new InitialContext();
+            dataSource = (DataSource) initContext.lookup("java:comp/env/jdbc/library");
 
-            dataSource = mysqlDataSource;
-        } catch (SQLException e) {
+        } catch ( NamingException e) {
             LOG.error(e.getMessage(), e);
         }
     }
@@ -40,7 +38,7 @@ public class DataSourceFactory {
 }
 
     public static void main(String[] args) throws SQLException {
-        Connection connection = DataSourceFactory.getConnection();
+        Connection connection = DataSourceConnectionPoolFactory.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM library.books WHERE id = ?");
         preparedStatement.setInt (1 ,2);
         ResultSet resultSet = preparedStatement.executeQuery();

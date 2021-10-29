@@ -2,7 +2,7 @@ package com.project.dao.impl;
 
 import com.project.dao.OrderDao;
 import com.project.entities.Order;
-import com.project.persistance.DataSourceFactory;
+import com.project.persistance.DataSourceConnectionPoolFactory;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -39,7 +39,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getAll() {
         List<Order> result = new ArrayList<>();
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ORDERS_QUERY);
              ResultSet resultSet = preparedStatement.executeQuery();) {
             while (resultSet.next()) {
@@ -64,7 +64,7 @@ public class OrderDaoImpl implements OrderDao {
     public Order getById(int inputId) {
 
         Order result = null;
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ORDERS_BY_ID_QUERY);) {
             preparedStatement.setInt(1, inputId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -87,7 +87,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public int create(Order entity) {
         int result = 0;
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_INTO_ORDERS_QUERY)) {
             preparedStatement.setInt(1, entity.getBookId());
             preparedStatement.setInt(2, entity.getUserId());
@@ -106,7 +106,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public int update(Order entity) {
         int result = 0;
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ORDERS_QUERY)) {
             preparedStatement.setInt(1, entity.getBookId());
             preparedStatement.setInt(2, entity.getUserId());
@@ -126,7 +126,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getAllTicketsByUser(int usersId) {
         List<Order> result = new ArrayList<>();
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_ORDERS_BY_USER_ID_QUERY)) {
             preparedStatement.setInt(1, usersId);
             ResultSet resultSet = preparedStatement.executeQuery();

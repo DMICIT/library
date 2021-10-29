@@ -2,7 +2,7 @@ package com.project.dao.impl;
 
 import com.project.dao.EntityDao;
 import com.project.entities.Penalty;
-import com.project.persistance.DataSourceFactory;
+import com.project.persistance.DataSourceConnectionPoolFactory;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -27,7 +27,7 @@ public class PenaltyDao implements EntityDao<Penalty> {
     public List<Penalty> getAll() {
 
         List<Penalty> result = new ArrayList<>();
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_PENALTIES_QUERY);
              ResultSet resultSet = preparedStatement.executeQuery();) {
             while (resultSet.next()) {
@@ -49,7 +49,7 @@ public class PenaltyDao implements EntityDao<Penalty> {
     public Penalty getById(int inputId) {
 
         Penalty result = null;
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PENALTIES_BY_ID_QUERY);) {
             preparedStatement.setInt(1, inputId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -71,7 +71,7 @@ public class PenaltyDao implements EntityDao<Penalty> {
     @Override
     public int create(Penalty entity) {
         int result = 0;
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY)) {
             preparedStatement.setInt(1, entity.getUserId());
             preparedStatement.setInt(2, entity.getOrderId());
@@ -88,7 +88,7 @@ public class PenaltyDao implements EntityDao<Penalty> {
     @Override
     public int update(Penalty entity) {
         int result = 0;
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
             preparedStatement.setInt(1, entity.getUserId());
             preparedStatement.setInt(2, entity.getOrderId());
