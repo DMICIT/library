@@ -2,7 +2,7 @@ package com.project.dao.impl;
 
 import com.project.dao.EntityDao;
 import com.project.entities.Book;
-import com.project.persistance.DataSourceFactory;
+import com.project.persistance.DataSourceConnectionPoolFactory;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -35,7 +35,7 @@ public class BookDao implements EntityDao<Book> {
     @Override
     public List<Book> getAll() {
         List<Book> result = new ArrayList<>();
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_QUERY);
              ResultSet resultSet = preparedStatement.executeQuery();) {
 
@@ -59,7 +59,7 @@ public class BookDao implements EntityDao<Book> {
     @Override
     public Book getById(int inputId) {
         Book result = null;
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID_QUERY);) {
             preparedStatement.setInt(1, inputId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -83,7 +83,7 @@ public class BookDao implements EntityDao<Book> {
     @Override
     public int create(Book entity) {
         int result = 0;
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NEW_BOOK_QUERY);
 
         ) {
@@ -103,7 +103,7 @@ public class BookDao implements EntityDao<Book> {
     @Override
     public int update(Book entity) {
         int result = 0;
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_BOOKS_QUERY);) {
             preparedStatement.setString(1, entity.getAuthor());
             preparedStatement.setString(2, entity.getBookName());

@@ -2,7 +2,7 @@ package com.project.dao.impl;
 
 import com.project.dao.UserDao;
 import com.project.entities.User;
-import com.project.persistance.DataSourceFactory;
+import com.project.persistance.DataSourceConnectionPoolFactory;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -46,7 +46,7 @@ public class UserDaoImpl implements UserDao {
 
         List<User> result = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_QUERY);
              ResultSet resultSet = preparedStatement.executeQuery();) {
 
@@ -74,7 +74,7 @@ public class UserDaoImpl implements UserDao {
     public User getById(int inputId) {
 
         User result = null;
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID_QUERY);) {
             preparedStatement.setInt(1, inputId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -101,7 +101,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public int create(User entity) {
         int result = 0;
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(CREATE_USERS_QUERY)) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getEmail());
@@ -122,7 +122,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public int update(User entity) {
         int result = 0;
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USERS_QUERY)) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getEmail());
@@ -146,7 +146,7 @@ public class UserDaoImpl implements UserDao {
     public User getByEmail(String inputEmail) {
 
         User result = null;
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_EMAIL_QUERY);) {
             preparedStatement.setString(1, inputEmail);
             ResultSet resultSet = preparedStatement.executeQuery();

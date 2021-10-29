@@ -2,7 +2,7 @@ package com.project.dao.impl;
 
 import com.project.dao.EntityDao;
 import com.project.entities.Catalog;
-import com.project.persistance.DataSourceFactory;
+import com.project.persistance.DataSourceConnectionPoolFactory;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -26,7 +26,7 @@ public class CatalogDao implements EntityDao<Catalog> {
     @Override
     public List<Catalog> getAll() {
         List<Catalog> result = new ArrayList<>();
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_CATALOG_QUERY);
              ResultSet resultSet = preparedStatement.executeQuery();) {
             while (resultSet.next()) {
@@ -49,7 +49,7 @@ public class CatalogDao implements EntityDao<Catalog> {
 
         Catalog result = null;
 
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CATALOG_BY_ID_QUERY);) {
             preparedStatement.setInt(1, inputId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -69,7 +69,7 @@ public class CatalogDao implements EntityDao<Catalog> {
     @Override
     public int create(Catalog entity) {
         int result = 0;
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY);
         ) { preparedStatement.setInt(1,entity.getBookId());
             preparedStatement.setString(2,entity.getStatus());
@@ -85,7 +85,7 @@ public class CatalogDao implements EntityDao<Catalog> {
     @Override
     public int update(Catalog entity) {
         int result = 0;
-        try (Connection connection = DataSourceFactory.getConnection();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CATALOG_QUERY );
         ) { preparedStatement.setInt(1,entity.getBookId());
             preparedStatement.setString(2,entity.getStatus());
