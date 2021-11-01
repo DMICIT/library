@@ -40,4 +40,11 @@ public class UserService {
         UserDaoImpl userDao = UserDaoImpl.getInstance();
         return userDao.getUsersByRole("user");
     }
+    public static void banUser(int userId){
+
+        UserDaoImpl userDao = UserDaoImpl.getInstance();
+        User user = userDao.getById(userId);
+        user.setBanList(1);
+        userDao.update(user);
+    }
 }
