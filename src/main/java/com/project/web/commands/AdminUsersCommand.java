@@ -42,9 +42,13 @@ public class AdminUsersCommand extends AbstractCommand {
 
         } else if (action.equals("ban")) {
 
-            UserService.banUser(Integer.parseInt(request.getParameter("userId")));
+            UserService.banUser(Integer.parseInt(request.getParameter("userId")),true);
 
             return "redirect:admin-users?type=users";
+        }else if (action.equals("unban")){
+            UserService.banUser(Integer.parseInt(request.getParameter("userId")),false);
+            return "redirect:admin-users?type=users";
+
         }
         return "error.jsp";
     }

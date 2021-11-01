@@ -10,11 +10,12 @@ import java.util.List;
 public class UserService {
     private static final Logger LOG = Logger.getLogger(UserService.class);
 
-    public static User getUserByEmail (String inputEmail){
+    public static User getUserByEmail(String inputEmail) {
         UserDaoImpl instance = UserDaoImpl.getInstance();
         return instance.getByEmail(inputEmail);
 
     }
+
     public static boolean isUserExist(String incomeEmail) {
         User userByEmail = getUserByEmail(incomeEmail);
         return userByEmail != null;
@@ -26,25 +27,31 @@ public class UserService {
         int banList = 0;
 
         UserDaoImpl instance = UserDaoImpl.getInstance();
-        User user = new User(form.getName(), form.getEmail(),form.getSex(),form.getPhone(), registredUser, banList, form.getPassword());
-       LOG.info("User : "+ user);
+        User user = new User(form.getName(), form.getEmail(), form.getSex(), form.getPhone(), registredUser, banList, form.getPassword());
+        LOG.info("User : " + user);
         int result = instance.create(user);
         LOG.info("result is :" + result);
     }
 
-    public static List<User> getAllLibrarians(){
+    public static List<User> getAllLibrarians() {
         UserDaoImpl userDao = UserDaoImpl.getInstance();
         return userDao.getUsersByRole("librarian");
     }
-    public static List<User> getAllUsers(){
+
+    public static List<User> getAllUsers() {
         UserDaoImpl userDao = UserDaoImpl.getInstance();
         return userDao.getUsersByRole("user");
     }
-    public static void banUser(int userId){
+
+    public static void banUser(int userId, boolean value) {
 
         UserDaoImpl userDao = UserDaoImpl.getInstance();
         User user = userDao.getById(userId);
-        user.setBanList(1);
+        if (value) {
+            user.setBanList(1);
+        } else {
+            user.setBanList(0);
+        }
         userDao.update(user);
     }
 }
