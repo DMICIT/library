@@ -20,6 +20,8 @@ public class CommandFactory {
         commandMap.put("language",new LanguageCommand());
         commandMap.put("admin-books",new AdminBooksCommand());
         commandMap.put("admin-edit-book", new AdminEditBookCommand());
+        commandMap.put ("admin-users", new AdminUsersCommand());
+        commandMap.put( "admin-add-user", new AdminAddUserCommand());
     }
 
     private CommandFactory() {
