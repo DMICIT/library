@@ -55,24 +55,32 @@
                     <td>${user.banList}</td>
                     <td>${user.password}</td>
                     <td>
-                        <c:choose>
-                            <c:when test="${param.type eq 'librarians'}">
-                                <a href="#" id="delete"
-                                   onclick="document.getElementById('action').value = 'delete';
-                                           document.getElementById('userId').value = '${user.id}';
-                                           document.getElementById('userForm').submit();">
-                                    delete
-                                </a>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="#" id="ban"
-                                   onclick="document.getElementById('action').value = 'ban';
-                                           document.getElementById('userId').value = '${user.id}';
-                                           document.getElementById('userForm').submit();">
-                                    ban
-                                </a>
-                            </c:otherwise>
-                        </c:choose>
+
+                        <c:if test="${param.type eq 'librarians'}">
+                            <a href="#" id="delete"
+                               onclick="document.getElementById('action').value = 'delete';
+                                       document.getElementById('userId').value = '${user.id}';
+                                       document.getElementById('userForm').submit();">
+                                delete
+                            </a>
+                        </c:if>
+                        <c:if test="${param.type eq 'users' && user.banList eq 0}">
+                            <a href="#" id="ban"
+                               onclick="document.getElementById('action').value = 'ban';
+                                       document.getElementById('userId').value = '${user.id}';
+                                       document.getElementById('userForm').submit();">
+                                ban
+                            </a>
+                        </c:if>
+                        <c:if test="${param.type eq 'users' && user.banList eq 1}">
+                            <a href="#" id="unban"
+                               onclick="document.getElementById('action').value = 'unban';
+                                       document.getElementById('userId').value = '${user.id}';
+                                       document.getElementById('userForm').submit();">
+                                unban
+                            </a>
+                        </c:if>
+
 
                     </td>
                 </tr>
