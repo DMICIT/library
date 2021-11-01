@@ -16,6 +16,7 @@ public class UserDaoImpl implements UserDao {
 
     private static final Logger LOG = Logger.getLogger(PenaltyDao.class);
     public static final String SELECT_ALL_QUERY = "SELECT * FROM users";
+    public static final String SELECT_ALL_BY_ROLE_QUERY = "SELECT * FROM users Where role = ?";
     public static final String SELECT_BY_ID_QUERY = "SELECT * FROM users WHERE id = ?";
     public static final String SELECT_BY_EMAIL_QUERY = "SELECT * FROM users WHERE email = ?";
     public static final String UPDATE_USERS_QUERY = "UPDATE  users SET name = ? , email = ?, sex = ?, telephone = ?, role = ?, ban_list = ?, password = ? WHERE id = ?";
@@ -111,7 +112,7 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setInt(6, entity.getBanList());
             preparedStatement.setString(7, entity.getPassword());
 
-           result = preparedStatement.executeUpdate();
+            result = preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -163,6 +164,36 @@ public class UserDaoImpl implements UserDao {
 
                 result = new User(id, name, email, sex, phone, role, banList, password);
             }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<User> getUsersByRole(String inputRole) {
+        List<User> result = new ArrayList<>();
+
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_BY_ROLE_QUERY);
+        ) {
+            preparedStatement.setString(1, inputRole);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt(ID);
+                String name = resultSet.getString(NAME);
+                String email = resultSet.getString(EMAIL);
+                String sex = resultSet.getString(SEX);
+                String phone = resultSet.getString(TELEPHONE);
+                String role = resultSet.getString(ROLE);
+                int banList = resultSet.getInt(BAN_LIST);
+                String password = resultSet.getString(PASSWORD);
+
+                User user = new User(id, name, email, sex, phone, role, banList, password);
+                result.add(user);
+            }
+
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }

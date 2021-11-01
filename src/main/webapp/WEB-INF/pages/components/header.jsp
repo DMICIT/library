@@ -24,6 +24,10 @@
             <li><a href="${contextPath}/" class="nav-link px-2 link-secondary"><fmt:message key="header.home"/></a></li>
             <li><a href="${contextPath}/books" class="nav-link px-2 link-dark"><fmt:message key="header.books"/></a></li>
             <li><a href="${contextPath}/orders" class="nav-link px-2 link-dark"><fmt:message key="header.orders"/></a></li>
+            <c:if test = "${user eq 'admin@gmail.com'}">
+            <li><a href="${contextPath}/admin-users?type=users" class="nav-link px-2 link-dark"><fmt:message key="header.users"/></a></li>
+            <li><a href="${contextPath}/admin-users?type=librarians" class="nav-link px-2 link-dark"><fmt:message key="header.librarians"/></a></li>
+            </c:if>
         </ul>
 
         <div class="col-md-3 text-end">

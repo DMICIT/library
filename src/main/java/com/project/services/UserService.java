@@ -5,6 +5,8 @@ import com.project.entities.User;
 import com.project.forms.RegistrationForm;
 import org.apache.log4j.Logger;
 
+import java.util.List;
+
 public class UserService {
     private static final Logger LOG = Logger.getLogger(UserService.class);
 
@@ -28,7 +30,14 @@ public class UserService {
        LOG.info("User : "+ user);
         int result = instance.create(user);
         LOG.info("result is :" + result);
-
     }
 
+    public static List<User> getAllLibrarians(){
+        UserDaoImpl userDao = UserDaoImpl.getInstance();
+        return userDao.getUsersByRole("librarian");
+    }
+    public static List<User> getAllUsers(){
+        UserDaoImpl userDao = UserDaoImpl.getInstance();
+        return userDao.getUsersByRole("user");
+    }
 }
