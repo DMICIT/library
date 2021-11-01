@@ -8,5 +8,5 @@ public interface UserDao extends EntityDao<User>{
     User getByEmail (String email);
 
     List<User> getUsersByRole (String role);
-
+    int deleteUser(int userId);
 }

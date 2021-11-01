@@ -34,11 +34,16 @@ public class AdminUsersCommand extends AbstractCommand {
     protected String executePost(HttpServletRequest request, HttpServletResponse response) {
         String action = request.getParameter("action");
         if (action.equals("delete")) {
-            LOG.info("Delete: " + request.getParameter("userId"));
+
+            UserDaoImpl userDao = UserDaoImpl.getInstance();
+            userDao.deleteUser(Integer.parseInt(request.getParameter("userId")));
+
             return "redirect:admin-users?type=librarians";
 
-        }else if (action.equals("ban")){
-            LOG.info("Banned: " + request.getParameter("userId"));
+        } else if (action.equals("ban")) {
+
+            UserService.banUser(Integer.parseInt(request.getParameter("userId")));
+
             return "redirect:admin-users?type=users";
         }
         return "error.jsp";

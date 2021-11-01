@@ -200,4 +200,18 @@ public class UserDaoImpl implements UserDao {
         return result;
     }
 
+    @Override
+    public int deleteUser(int userId) {
+        int result = 0;
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
+            preparedStatement.setInt(1, userId);
+            result = preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
 }
