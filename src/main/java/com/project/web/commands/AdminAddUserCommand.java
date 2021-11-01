@@ -23,21 +23,21 @@ public class AdminAddUserCommand extends AbstractCommand{
     @Override
     protected String executePost(HttpServletRequest request, HttpServletResponse response) {
 
+
         String action = request.getParameter("action");
-        int userId = Integer.parseInt(request.getParameter("userId"));
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String sex = request.getParameter("sex");
         String phone = request.getParameter("phone");
-        String role = request.getParameter("role");
-        int banList = Integer.parseInt(request.getParameter("banList"));
+        String role = "librarian";
+        int banList = 0;
         String password = request.getParameter("password");
 
         if (action.equals("add")){
-            User user = new User(userId,name,email,sex,phone,role,banList,password);
+            User user = new User(name,email,sex,phone,role,banList,password);
             UserDaoImpl userDao = UserDaoImpl.getInstance();
             userDao.create(user);
         }
-        return "redirect: admin-users";
+        return "redirect:admin-users?type=librarians";
     }
 }

@@ -22,11 +22,10 @@
 <div class="container">
 
     <h2><fmt:message key="users.header"/></h2>
-    <form action="admin-edit-user" method="post" id="userForm" role ="form">
+    <form action="admin-add-user" method="post" id="userForm" role ="form">
         <c:if test ="${empty action}">
             <c:set var="action" value="add"/>
         </c:if>
-        <input type="hidden" id ="userId" name ="userId" value="${user.id}">
         <input type="hidden" id ="action" name ="action" value="${action}">
 
         <div class ="form-group col-xs-4">
@@ -41,9 +40,6 @@
 
             <label for="phone" class="control-label col-xs-4">phone</label>
             <input type = "text" name="phone" id = "phone" class="form-control" value ="${user.phone}" required>
-
-            <label for="role" class="control-label col-xs-4">role</label>
-            <input type = "text" name="role" id = "role" class="form-control" value ="${user.role}" required>
 
             <label for="password" class="control-label col-xs-4">password</label>
             <input type = "text" name="password" id = "password" class="form-control" value ="${user.password}" required>
