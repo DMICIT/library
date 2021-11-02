@@ -26,18 +26,33 @@
 <c:import url="components/header.jsp"/>
 <div class="container">
 
-<h2>Login form</h2>
+<h2>Orders</h2>
 </br>
 </br>
-<form action="orders" method="post" >
 
-    Book:
-    <input type = "text" name="bookId" required >
-    </br>
+    <table class="table">
+        <thead>
+        <tr>
+            <td><fmt:message key="orders.#"/></td>
+            <td><fmt:message key="orders.bookId"/></td>
+            <td><fmt:message key="orders.book.spot"/></td>
+            <td><fmt:message key="orders.status"/></td>
+            <td><fmt:message key="orders.return.date"/></td>
+        </tr>
+        </thead>
+
+    <c:forEach items="${allOrders}" var="order">
+        <tr>
+        <td>${order.id}</td>
+        <td>${order.bookId}</td>
+        <td>${order.bookSpot}</td>
+        <td>${order.status}</td>
+        <td>${order.returnDate}</td>
+        </tr>
+        </c:forEach>
+    </table>
 
 
-    <button type = "submit">Enter</button>
-</form>
 </div>
 <c:import url="components/footer.jsp"/>
 </body>
