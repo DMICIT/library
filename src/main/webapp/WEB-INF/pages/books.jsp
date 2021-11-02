@@ -16,7 +16,6 @@
             crossorigin="anonymous"></script>
 </head>
 
-
 <title>Books</title>
 </head>
 <body>
@@ -26,7 +25,7 @@
     <h2><fmt:message key="books.header"/></h2>
     <form action="books" method="get">
         <div class="form-group col-xs-5">
-            <input type="text" name="search" id="search" class="form-control" required
+            <input type="text" name="search" id="search" class="form-control" required value="${not empty param.search ? param.search: ''}"
                    placeholder="Type the Author or Book Name">
         </div>
         <button type="submit" class="btn btn-info">Search</button>
@@ -40,10 +39,19 @@
                 <thead>
                 <tr>
                     <td><fmt:message key="books.#"/></td>
-                    <td><fmt:message key="books.author"/></td>
-                    <td><fmt:message key="books.book.name"/></td>
-                    <td><fmt:message key="books.edition"/></td>
-                    <td><fmt:message key="books.date.of.reliase"/></td>
+                    <td><fmt:message key="books.author"/>
+                        <a style="text-decoration: none;" href="books?sort=author${not empty param.search ? '&search=' += param.search  : ''}">&#9650;</a>
+                        <a style="text-decoration: none;" href="books?sort=author&order=desc${not empty param.search ? '$search' += param.search : ''}">&#9660;</a></td>
+                    <td><fmt:message key="books.book.name"/>
+                        <a style="text-decoration: none;" href="books?sort=bookName${not empty param.search ? '&search=' += param.search : ''}">&#9650;</a>
+                        <a style="text-decoration: none;" href="books?sort=bookName&order=desc${not empty param.search ? '&search=' += param.search : ''}">&#9660;</a></td>
+                    </td>
+                    <td><fmt:message key="books.edition"/>
+                        <a style="text-decoration: none;" href="books?sort=bookEdition${not empty param.search ? '&search=' += param.search : ''}">&#9650;</a>
+                        <a style="text-decoration: none;" href="books?sort=bookEdition&order=desc${not empty param.search ? '&search=' += param.search : ''}">&#9660;</a></td>
+                    <td><fmt:message key="books.date.of.reliase"/>
+                        <a style="text-decoration: none;" href="books?sort=reliaseDate${not empty param.search ? '&search=' += param.search : ''}">&#9650;</a>
+                        <a style="text-decoration: none;" href="books?sort=reliaseDate&order=desc${not empty param.search ? '&search=' += param.search : ''}">&#9660;</a></td>
                 </tr>
                 </thead>
 
@@ -62,7 +70,6 @@
         <c:otherwise>
             <h2>Sorry but nothing found =_( </h2>
         </c:otherwise>
-
 
     </c:choose>
 
