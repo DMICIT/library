@@ -35,7 +35,12 @@
 
     <c:choose>
         <c:when test="${not empty books}">
-            <table class="table">
+
+    <form action="orders" method="post" id="bookForm" role ="form">
+        <input type="hidden" id ="bookId" name ="bookId">
+        <input type="hidden" id ="action" name ="action">
+
+        <table class="table">
                 <thead>
                 <tr>
                     <td><fmt:message key="books.#"/></td>
@@ -52,6 +57,8 @@
                     <td><fmt:message key="books.date.of.reliase"/>
                         <a style="text-decoration: none;" href="books?sort=reliaseDate${not empty param.search ? '&search=' += param.search : ''}">&#9650;</a>
                         <a style="text-decoration: none;" href="books?sort=reliaseDate&order=desc${not empty param.search ? '&search=' += param.search : ''}">&#9660;</a></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 </thead>
 
@@ -62,13 +69,25 @@
                         <td>${book.bookName}</td>
                         <td>${book.bookEdition}</td>
                         <td>${book.reliaseDate}</td>
+                      <td><a href="#" id="abonement"
+                           onclick="document.getElementById('action').value = 'abonement';
+                                   document.getElementById('bookId').value = '${book.id}';
+                                   document.getElementById('bookForm').submit();">
+                          abonement
+                        </a> </td>
+                        <td><a href="#" id="library hall"
+                               onclick="document.getElementById('action').value = 'library hall';
+                                       document.getElementById('bookId').value = '${book.id}';
+                                       document.getElementById('bookForm').submit();">
+                            library hall
+                        </a> </td>
                     </tr>
                 </c:forEach>
             </table>
 
         </c:when>
         <c:otherwise>
-            <h2>Sorry but nothing found =_( </h2>
+            <h2>Sorry but nothing found &#9785;</h2>
         </c:otherwise>
 
     </c:choose>
