@@ -8,19 +8,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class BookCommand extends AbstractCommand{
+public class BookCommand extends AbstractCommand {
 
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
         String searchParameter = request.getParameter("search");
+        String sortParameter = request.getParameter("sort");
+        List<Book> books;
         if (searchParameter != null) {
-            List<Book> searchedBook = BookService.searchBook(searchParameter);
-            request.setAttribute("books", searchedBook);
-        }else {
-        BookDao bookDao = BookDao.getInstance();
-        List<Book> books = bookDao.getAll();
-        request.setAttribute("books",books);
+            books = BookService.searchBook(searchParameter);
+        } else {
+            BookDao bookDao = BookDao.getInstance();
+            books = bookDao.getAll();
         }
+        if (sortParameter != null) {
+            // ascending asc
+            // descending desc
+            String orderParam = request.getParameter("order");
+            boolean order = true;
+            if (orderParam != null && orderParam.equals("desc")){
+                order = false;
+            }
+            books = BookService.sortBooks(books,sortParameter, order);
+        }
+        request.setAttribute("books", books);
         return "books.jsp";
     }
 
