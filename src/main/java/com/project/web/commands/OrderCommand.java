@@ -21,7 +21,7 @@ public class OrderCommand extends AbstractCommand{
             User userByEmail = UserService.getUserByEmail(user);
             int usersIdByEmail = userByEmail.getId();
 
-            OrderDaoImpl orderDao = OrderDaoImpl.getOrderDao();
+            OrderDaoImpl orderDao = OrderDaoImpl.getInstance();
             List<Order> allOrdersByUser = orderDao.getAllTicketsByUser(usersIdByEmail);
             request.setAttribute("allOrders",allOrdersByUser);
         }
@@ -41,7 +41,7 @@ public class OrderCommand extends AbstractCommand{
         String bookSpot = request.getParameter("action");
         User userByEmail = UserService.getUserByEmail(userEmail);
 
-        OrderDaoImpl instance = OrderDaoImpl.getOrderDao();
+        OrderDaoImpl instance = OrderDaoImpl.getInstance();
         Date returnDate = null;
 
         if(bookSpot.equals("abonement")){
