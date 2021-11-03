@@ -125,7 +125,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getAllTicketsByUser(int usersId) {
+    public List<Order> getAllOrdersByUser(int usersId) {
         List<Order> result = new ArrayList<>();
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_ORDERS_BY_USER_ID_QUERY)) {

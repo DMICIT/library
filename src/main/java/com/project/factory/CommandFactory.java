@@ -23,6 +23,7 @@ public class CommandFactory {
         commandMap.put ("admin-users", new AdminUsersCommand());
         commandMap.put( "admin-add-user", new AdminAddUserCommand());
         commandMap.put("librarian-orders", new LibrarianBookOrdersCommand());
+        commandMap.put("personal-account", new PersonalAccountCommand());
     }
 
     private CommandFactory() {
