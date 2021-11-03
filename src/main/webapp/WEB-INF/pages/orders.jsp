@@ -26,7 +26,7 @@
 <c:import url="components/header.jsp"/>
 <div class="container">
 
-<h2>Orders</h2>
+<h2><fmt:message key="orders.orders"/></h2>
 </br>
 </br>
 

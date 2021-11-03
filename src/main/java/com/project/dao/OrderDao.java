@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface OrderDao extends EntityDao<Order>{
 
-    List<Order> getAllTicketsByUser(int usersId);
+    List<Order> getAllOrdersByUser(int usersId);
     List<Order> getOrdersByStatus(String status);
 
 }
