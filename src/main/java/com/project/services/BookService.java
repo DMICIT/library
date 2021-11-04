@@ -46,5 +46,10 @@ public class BookService {
         }
         return Comparator.comparing(Book::getId);
     }
+
+    public static List<Book> getAllBooks() {
+        BookDao bookDao = BookDao.getInstance();
+        return bookDao.getAll();
+    }
 }
 

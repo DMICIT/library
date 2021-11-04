@@ -26,13 +26,20 @@
             <li><a href="${contextPath}/" class="nav-link px-2 link-secondary"><fmt:message key="header.home"/></a></li>
             <li><a href="${contextPath}/books" class="nav-link px-2 link-dark"><fmt:message key="header.books"/></a>
             </li>
-            <c:if test="${not empty user}">
+            <c:if test="${user.role eq 'user'}">
                 <li><a href="${contextPath}/orders" class="nav-link px-2 link-dark"><fmt:message
                         key="header.orders"/></a></li>
                 <li><a href="${contextPath}/personal-account" class="nav-link px-2 link-dark"><fmt:message
                         key="header.account"/></a></li>
             </c:if>
-            <c:if test="${user eq 'admin@gmail.com'}">
+            <c:if test="${user.role eq 'librarian'}">
+                <li><a href="${contextPath}/librarian-orders" class="nav-link px-2 link-dark"><fmt:message
+                        key="orders.orders"/></a></li>
+                <li><a href="${contextPath}/user-list" class="nav-link px-2 link-dark"><fmt:message
+                        key="users.header"/></a></li>
+
+            </c:if>
+            <c:if test="${user.role eq 'admin'}">
                 <li><a href="${contextPath}/admin-users?type=users" class="nav-link px-2 link-dark"><fmt:message
                         key="header.users"/></a></li>
                 <li><a href="${contextPath}/admin-users?type=librarians" class="nav-link px-2 link-dark"><fmt:message

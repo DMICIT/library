@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="${locale}"></fmt:setLocale>
+<fmt:setBundle basename="${bundle}"></fmt:setBundle>
 <html>
 <head>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -12,23 +13,43 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
-</head>
 
-<title>Personal information</title>
+    <title>User abonement</title>
 </head>
-
 <body>
 
 <c:import url="components/header.jsp"/>
+<div class="container">
+
+<h2>User abonement</h2>
 
 
-    Name : ${user.name} <br>
+<table class="table">
+<thead>
+<tr>
 
-    Email : ${user.email}<br>
-    Password : ${user.password}<br>
-    Gender : ${user.sex}<br>
-    Phone number: ${user.phone}<br>
-    Role : ${user.role}<br>
+    <td><fmt:message key="orders.#"/></td>
+    <td><fmt:message key="books.book.name"/></td>
+    <td><fmt:message key="books.author"/></td>
+    <td><fmt:message key="orders.return.date"/></td>
 
-</body>
-</html>
+
+</tr>
+</thead>
+
+<c:forEach items="${allOrders}" var="order">
+    <tr>
+
+        <td>${order.id}</td>
+        <td>${order.bookId}<td>
+        <td>${order.returnDate}<td>
+        <td></td>
+
+    </tr>
+
+    </c:forEach>
+    </table>
+    </div>
+    <c:import url="components/footer.jsp"/>
+    </body>
+    </html>

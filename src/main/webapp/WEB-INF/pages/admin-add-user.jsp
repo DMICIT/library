@@ -30,19 +30,19 @@
 
         <div class ="form-group col-xs-4">
             <label for="name" class="control-label col-xs-4">name</label>
-            <input type = "text" name="name" id = "name" class="form-control" value ="${user.name}" required>
+            <input type = "text" name="name" id = "name" class="form-control"  required>
 
             <label for="email" class="control-label col-xs-4">email</label>
-            <input type = "text" name="email" id = "email" class="form-control" value ="${user.email}" required>
+            <input type = "text" name="email" id = "email" class="form-control" required>
 
             <label for="sex" class="control-label col-xs-4">sex</label>
-            <input type = "text" name="sex" id = "sex" class="form-control" value ="${user.sex}" required>
+            <input type = "text" name="sex" id = "sex" class="form-control"  required>
 
             <label for="phone" class="control-label col-xs-4">phone</label>
-            <input type = "text" name="phone" id = "phone" class="form-control" value ="${user.phone}" required>
+            <input type = "text" name="phone" id = "phone" class="form-control" required>
 
             <label for="password" class="control-label col-xs-4">password</label>
-            <input type = "text" name="password" id = "password" class="form-control" value ="${user.password}" required>
+            <input type = "text" name="password" id = "password" class="form-control"  required>
             </br>
             <button type="submit" class="btn btn-primary btn-md">Accept</button>
         </div>

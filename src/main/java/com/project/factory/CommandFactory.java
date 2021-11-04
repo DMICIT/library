@@ -24,6 +24,8 @@ public class CommandFactory {
         commandMap.put( "admin-add-user", new AdminAddUserCommand());
         commandMap.put("librarian-orders", new LibrarianBookOrdersCommand());
         commandMap.put("personal-account", new PersonalAccountCommand());
+        commandMap.put("user-list", new UserListCommand());
+        commandMap.put("user-abonement",new UserAbonementCommand());
     }
 
     private CommandFactory() {

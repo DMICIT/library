@@ -4,6 +4,7 @@ import com.project.dao.impl.OrderDaoImpl;
 import com.project.entities.Order;
 import com.project.entities.User;
 import com.project.services.UserService;
+import com.project.web.data.UserPrincipal;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,9 +18,9 @@ public class OrderCommand extends AbstractCommand {
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        String user = (String) session.getAttribute("user");
+        UserPrincipal user = (UserPrincipal) session.getAttribute("user");
         if (user != null) {
-            User userByEmail = UserService.getUserByEmail(user);
+            User userByEmail = UserService.getUserByEmail(user.getEmail());
             int usersIdByEmail = userByEmail.getId();
 
             OrderDaoImpl orderDao = OrderDaoImpl.getInstance();
@@ -39,14 +40,14 @@ public class OrderCommand extends AbstractCommand {
     @Override
     protected String executePost(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        String userEmail = (String) session.getAttribute("user");
+        UserPrincipal userEmail = (UserPrincipal) session.getAttribute("user");
         if (userEmail == null) {
             return "redirect:login";
         }
 
         int bookId = Integer.parseInt(request.getParameter("bookId"));
         String bookSpot = request.getParameter("action");
-        User userByEmail = UserService.getUserByEmail(userEmail);
+        User userByEmail = UserService.getUserByEmail(userEmail.getEmail());
 
         OrderDaoImpl instance = OrderDaoImpl.getInstance();
         Date returnDate = null;

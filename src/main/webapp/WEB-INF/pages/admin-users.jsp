@@ -23,7 +23,11 @@
 <c:import url="components/header.jsp"/>
 <div class="container">
 
-    <h2><fmt:message key="users.header"/></h2>
+    <h2><c:if test="${param.type eq 'librarians'}">
+        <fmt:message key="users.librarian"/></c:if>
+        <c:if test="${param.type eq 'users'}">
+            <fmt:message key="users.header"/></c:if>
+    </h2>
     <form action="admin-users" method="post" id="userForm" role="form">
         <input type="hidden" id="userId" name="userId">
         <input type="hidden" id="action" name="action">

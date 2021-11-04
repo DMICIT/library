@@ -5,6 +5,7 @@ import com.project.entities.User;
 import com.project.forms.LoginForm;
 import com.project.services.UserService;
 import com.project.services.ValidatorService;
+import com.project.web.data.UserPrincipal;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +39,8 @@ public class LoginCommand extends AbstractCommand {
             return "login.jsp";
         }
         HttpSession session = request.getSession();
-        session.setAttribute("user", form.getEmail());
+        UserPrincipal userPrincipal = new UserPrincipal(user.getEmail() ,user.getRole());
+        session.setAttribute("user", userPrincipal);
 
         return "redirect:";
     }
