@@ -8,6 +8,12 @@ public class Penalty {
     private int userId;
     private int penaltyCost;
 
+    public Penalty(int orderId, int userId, int penaltyCost) {
+        this.orderId = orderId;
+        this.userId = userId;
+        this.penaltyCost = penaltyCost;
+    }
+
     public Penalty(int id, int orderId, int userId, int penaltyCost) {
         this.id = id;
         this.orderId = orderId;
