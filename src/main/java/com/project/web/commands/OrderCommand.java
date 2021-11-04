@@ -1,13 +1,17 @@
 package com.project.web.commands;
 
+import com.project.dao.PenaltyDao;
 import com.project.dao.impl.BookDao;
 import com.project.dao.impl.OrderDaoImpl;
+import com.project.dao.impl.PenaltyDaoImpl;
 import com.project.entities.Book;
 import com.project.entities.Order;
+import com.project.entities.Penalty;
 import com.project.entities.User;
 import com.project.services.UserService;
 import com.project.web.data.BookData;
 import com.project.web.data.OrderData;
+import com.project.web.data.PenaltyData;
 import com.project.web.data.UserPrincipal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,10 +48,14 @@ public class OrderCommand extends AbstractCommand {
                 Book book = bookDao.getById(bookId);
                 BookData bookData = new BookData(book.getId(),book.getAuthor(),book.getBookName(),book.getBookEdition(),book.getReliaseDate());
                 OrderData orderData = new OrderData(order.getId(), order.getUserId(),bookData,order.getBookSpot(),order.getStatus(),order.getReturnDate());
+                PenaltyDao penaltyDao = PenaltyDaoImpl.getInstance();
+                Penalty penaltyByOrder = penaltyDao.getPenaltyByOrder(order.getId());
+                if(penaltyByOrder != null){
+                    PenaltyData penaltyData = new PenaltyData(penaltyByOrder.getPenaltyCost());
+                    orderData.setPenaltyData(penaltyData);
+                }
                 orderDataList.add(orderData);
             }
-
-
             request.setAttribute("allOrders", orderDataList);
         }
         return "orders.jsp";

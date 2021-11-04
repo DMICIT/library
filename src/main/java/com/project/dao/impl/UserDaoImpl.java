@@ -14,7 +14,7 @@ import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
-    private static final Logger LOG = Logger.getLogger(PenaltyDao.class);
+    private static final Logger LOG = Logger.getLogger(PenaltyDaoImpl.class);
     public static final String SELECT_ALL_QUERY = "SELECT * FROM users";
     public static final String SELECT_ALL_BY_ROLE_QUERY = "SELECT * FROM users Where role = ?";
     public static final String SELECT_BY_ID_QUERY = "SELECT * FROM users WHERE id = ?";

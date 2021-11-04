@@ -38,6 +38,7 @@
             <td><fmt:message key="orders.book.spot"/></td>
             <td><fmt:message key="orders.status"/></td>
             <td><fmt:message key="orders.return.date"/></td>
+            <td><fmt:message key="orders.penalty"/></td>
         </tr>
         </thead>
 
@@ -48,6 +49,10 @@
         <td>${order.bookSpot}</td>
         <td>${order.status}</td>
         <td>${order.returnDate}</td>
+           <c:if test="${not empty order.penaltyData}">
+               <td>${order.penaltyData.penaltyCost}</td>
+           </c:if>
+
         </tr>
         </c:forEach>
     </table>

@@ -19,6 +19,7 @@ public class CatalogDaoImpl implements CatalogDao {
     private static final Logger LOG = Logger.getLogger(CatalogDaoImpl.class);
     public static final String SELECT_ALL_CATALOG_QUERY = "SELECT * FROM catalog";
     public static final String SELECT_CATALOG_BY_ID_QUERY = "SELECT * FROM catalog WHERE id = ?";
+    public static final String SELECT_CATALOG_BY_BOOK_ID_QUERY = "SELECT * FROM catalog WHERE book_id = ?";
     public static final String INSERT_QUERY = "INSERT INTO catalog (book_id, status ) VALUES (?,?)";
     public static final String UPDATE_CATALOG_QUERY = "UPDATE catalog SET book_id = ?, status = ? WHERE id = ?";
     public static final String ID = "id";
@@ -27,7 +28,10 @@ public class CatalogDaoImpl implements CatalogDao {
 
     private static CatalogDaoImpl instance;
 
-    private CatalogDaoImpl() {};
+    private CatalogDaoImpl() {
+    }
+
+    ;
 
     public static synchronized CatalogDaoImpl getInstance() {
         if (instance == null) {
@@ -48,7 +52,7 @@ public class CatalogDaoImpl implements CatalogDao {
                 int bookId = resultSet.getInt(BOOK_ID);
                 int count = resultSet.getInt(COUNT);
 
-                Catalog catalog = new Catalog(id, bookId,count);
+                Catalog catalog = new Catalog(id, bookId, count);
                 result.add(catalog);
 
             }
@@ -85,8 +89,9 @@ public class CatalogDaoImpl implements CatalogDao {
         int result = 0;
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY);
-        ) { preparedStatement.setInt(1,entity.getBookId());
-            preparedStatement.setInt(2,entity.getCount());
+        ) {
+            preparedStatement.setInt(1, entity.getBookId());
+            preparedStatement.setInt(2, entity.getCount());
 
             result = preparedStatement.executeUpdate();
 
@@ -100,10 +105,11 @@ public class CatalogDaoImpl implements CatalogDao {
     public int update(Catalog entity) {
         int result = 0;
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CATALOG_QUERY );
-        ) { preparedStatement.setInt(1,entity.getBookId());
-            preparedStatement.setInt(2,entity.getCount());
-            preparedStatement.setInt(3,entity.getId());
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CATALOG_QUERY);
+        ) {
+            preparedStatement.setInt(1, entity.getBookId());
+            preparedStatement.setInt(2, entity.getCount());
+            preparedStatement.setInt(3, entity.getId());
 
             result = preparedStatement.executeUpdate();
 
@@ -114,8 +120,25 @@ public class CatalogDaoImpl implements CatalogDao {
     }
 
     @Override
-    public Catalog getCatalogByBookId(int bookId) {
-        return null;
+    public Catalog getCatalogByBookId(int inputBookId) {
+
+        Catalog result = null;
+
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CATALOG_BY_BOOK_ID_QUERY);) {
+            preparedStatement.setInt(1, inputBookId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt(ID);
+                int bookId = resultSet.getInt(BOOK_ID);
+                int count = resultSet.getInt(COUNT);
+
+                result = new Catalog(id, bookId, count);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
     }
 }
 
