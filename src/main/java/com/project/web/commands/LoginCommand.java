@@ -3,6 +3,7 @@ package com.project.web.commands;
 import com.project.dao.impl.UserDaoImpl;
 import com.project.entities.User;
 import com.project.forms.LoginForm;
+import com.project.services.PenaltyService;
 import com.project.services.UserService;
 import com.project.services.ValidatorService;
 import com.project.web.data.UserPrincipal;
@@ -41,6 +42,8 @@ public class LoginCommand extends AbstractCommand {
         HttpSession session = request.getSession();
         UserPrincipal userPrincipal = new UserPrincipal(user.getEmail() ,user.getRole());
         session.setAttribute("user", userPrincipal);
+
+        PenaltyService.checkUserPenalty(user.getId());
 
         return "redirect:";
     }
