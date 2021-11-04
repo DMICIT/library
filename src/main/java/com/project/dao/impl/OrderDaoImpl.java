@@ -11,7 +11,7 @@ import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
 
-    private static final Logger LOG = Logger.getLogger(PenaltyDao.class);
+    private static final Logger LOG = Logger.getLogger(PenaltyDaoImpl.class);
     public static final String SELECT_ALL_ORDERS_QUERY = "SELECT * FROM orders";
     public static final String SELECT_ORDERS_BY_ID_QUERY = "SELECT * FROM orders WHERE id = ?";
     public static final String SELECT_ORDERS_BY_STATUS_QUERY = "SELECT * FROM orders WHERE status = ?";

@@ -9,6 +9,7 @@ public class OrderData {
     private String bookSpot;
     private String status;
     private Date returnDate;
+    private PenaltyData penaltyData;
 
     public OrderData(int id, int userId, BookData bookData, String bookSpot, String status, Date returnDate) {
         this.id = id;
@@ -65,5 +66,13 @@ public class OrderData {
 
     public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
+    }
+
+    public PenaltyData getPenaltyData() {
+        return penaltyData;
+    }
+
+    public void setPenaltyData(PenaltyData penaltyData) {
+        this.penaltyData = penaltyData;
     }
 }
