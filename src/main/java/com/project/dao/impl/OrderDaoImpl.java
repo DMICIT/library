@@ -15,6 +15,7 @@ public class OrderDaoImpl implements OrderDao {
     public static final String SELECT_ALL_ORDERS_QUERY = "SELECT * FROM orders";
     public static final String SELECT_ORDERS_BY_ID_QUERY = "SELECT * FROM orders WHERE id = ?";
     public static final String SELECT_ORDERS_BY_STATUS_QUERY = "SELECT * FROM orders WHERE status = ?";
+    public static final String SELECT_ORDERS_BY_BOOK_ID_QUERY = "SELECT * FROM orders WHERE id_book = ?";
     public static final String INSERT_INTO_ORDERS_QUERY = "INSERT INTO orders ( id_book, id_user, book_spot, status, return_date ) values(?,?,?,?,?)";
     public static final String UPDATE_ORDERS_QUERY = "UPDATE orders SET id_book = ?, id_user = ?, book_spot = ?, status= ?, return_date = ? WHERE id =?";
     public static final String SELECT_FROM_ORDERS_BY_USER_ID_QUERY = "SELECT * FROM orders WHERE ID_USER = ?";
@@ -150,14 +151,41 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public List<Order> getAllOrdersByBook(int incomeBookId) {
+
+        List<Order> result = new ArrayList<>();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ORDERS_BY_BOOK_ID_QUERY)) {
+            preparedStatement.setInt(1, incomeBookId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt(ID);
+                int userId = resultSet.getInt(ID_USER);
+                int bookId = resultSet.getInt(ID_BOOK);
+                String bookSpot = resultSet.getString(BOOK_SPOT);
+                String status = resultSet.getString(STATUS);
+                Date returnDate = resultSet.getDate(RETURN_DATE);
+
+                Order order = new Order(id, userId, bookId, bookSpot, status, returnDate);
+                result.add(order);
+
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    @Override
     public List<Order> getOrdersByStatus(String incomeStatus) {
         List<Order> result = new ArrayList<>();
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ORDERS_BY_STATUS_QUERY)){
-            preparedStatement.setString(1,incomeStatus);
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ORDERS_BY_STATUS_QUERY)) {
+            preparedStatement.setString(1, incomeStatus);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 int id = resultSet.getInt(ID);
                 int userId = resultSet.getInt(ID_USER);
                 int bookId = resultSet.getInt(ID_BOOK);
@@ -168,7 +196,7 @@ public class OrderDaoImpl implements OrderDao {
                 Order order = new Order(id, userId, bookId, bookSpot, status, returnDate);
                 result.add(order);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
         return result;

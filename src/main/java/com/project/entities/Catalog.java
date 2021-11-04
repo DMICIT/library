@@ -5,12 +5,12 @@ import java.util.Objects;
 public class Catalog {
     private int id;
     private int bookId;
-    private String status;
+    private int count;
 
-    public Catalog(int id, int bookId, String status) {
+    public Catalog(int id, int bookId, int count) {
         this.id = id;
         this.bookId = bookId;
-        this.status = status;
+        this.count = count;
     }
 
     public int getId() {
@@ -29,12 +29,12 @@ public class Catalog {
         this.bookId = bookId;
     }
 
-    public String getStatus() {
-        return status;
+    public int getCount() {
+        return count;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCount(int count) {
+        this.count = count;
     }
 
     @Override
@@ -42,12 +42,12 @@ public class Catalog {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Catalog catalog = (Catalog) o;
-        return id == catalog.id && bookId == catalog.bookId && Objects.equals(status, catalog.status);
+        return id == catalog.id && bookId == catalog.bookId && Objects.equals(count, catalog.count);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, bookId, status);
+        return Objects.hash(id, bookId, count);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Catalog {
         return "Catalog{" +
                 "id=" + id +
                 ", bookId=" + bookId +
-                ", status='" + status + '\'' +
+                ", status='" + count + '\'' +
                 '}';
     }
 }

@@ -18,8 +18,7 @@ public class BookCommand extends AbstractCommand {
         if (searchParameter != null) {
             books = BookService.searchBook(searchParameter);
         } else {
-            BookDao bookDao = BookDao.getInstance();
-            books = bookDao.getAll();
+            books = BookService.getAllAvailableBooks();
         }
         if (sortParameter != null) {
             // ascending asc

@@ -9,12 +9,24 @@ import java.util.Comparator;
 import java.util.List;
 
 public class BookService {
+
+    public static List<Book> getAllAvailableBooks() {
+        BookDao bookDao = BookDao.getInstance();
+        List<Book> allbooks = bookDao.getAll();
+        List<Book> allAvailableBooks = new ArrayList<>();
+        for (Book book : allbooks) {
+            if (CatalogService.isBookAvailable(book.getId())) {
+                allAvailableBooks.add(book);
+            }
+
+        } return allAvailableBooks;
+    }
+
+
     public static List<Book> searchBook(String searchParameter) {
 
         List<Book> result = new ArrayList<>();
-
-        BookDao bookDao = BookDao.getInstance();
-        List<Book> allBooks = bookDao.getAll();
+        List<Book> allBooks = getAllAvailableBooks();
         for (Book book : allBooks) {
             if (book.getAuthor().toLowerCase().contains(searchParameter.toLowerCase())
                     || book.getBookName().toLowerCase().contains(searchParameter.toLowerCase())) {

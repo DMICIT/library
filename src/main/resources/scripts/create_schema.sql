@@ -46,7 +46,7 @@ CREATE TABLE `penalties`(
 CREATE TABLE `catalog`(
                           `id` int (11) NOT NULL auto_increment,
                           `book_id` int (11) DEFAULT NULL,
-                          `status` enum ('checked out', 'available'),
+                          `count` int (11) DEFAULT NULL,
                           PRIMARY KEY (id),
                           FOREIGN KEY (book_id) REFERENCES books (id));
 
