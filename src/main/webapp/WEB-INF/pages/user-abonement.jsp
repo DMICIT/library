@@ -41,9 +41,9 @@
     <tr>
 
         <td>${order.id}</td>
-        <td>${order.bookId}<td>
-        <td>${order.returnDate}<td>
-        <td></td>
+        <td>${order.bookData.bookName}</td>
+        <td>${order.bookData.author}</td>
+        <td>${order.returnDate}</td>
 
     </tr>
 

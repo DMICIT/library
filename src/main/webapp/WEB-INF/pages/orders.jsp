@@ -34,7 +34,7 @@
         <thead>
         <tr>
             <td><fmt:message key="orders.#"/></td>
-            <td><fmt:message key="orders.bookId"/></td>
+            <td><fmt:message key="books.book.name"/></td>
             <td><fmt:message key="orders.book.spot"/></td>
             <td><fmt:message key="orders.status"/></td>
             <td><fmt:message key="orders.return.date"/></td>
@@ -44,7 +44,7 @@
     <c:forEach items="${allOrders}" var="order">
         <tr>
         <td>${order.id}</td>
-        <td>${order.bookId}</td>
+        <td>${order.bookData.bookName}</td>
         <td>${order.bookSpot}</td>
         <td>${order.status}</td>
         <td>${order.returnDate}</td>
