@@ -2,6 +2,7 @@ package com.project.services;
 
 import com.project.dao.impl.BookDao;
 import com.project.entities.Book;
+import com.project.web.data.BookData;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +20,8 @@ public class BookService {
                 allAvailableBooks.add(book);
             }
 
-        } return allAvailableBooks;
+        }
+        return allAvailableBooks;
     }
 
 
@@ -62,6 +64,38 @@ public class BookService {
     public static List<Book> getAllBooks() {
         BookDao bookDao = BookDao.getInstance();
         return bookDao.getAll();
+    }
+
+    public static List<BookData> getAllBooks2() {
+        BookDao bookDao = BookDao.getInstance();
+        List<Book> bookList = bookDao.getAll();
+        List<BookData> bookDataList = new ArrayList<>();
+        for (Book book : bookList) {
+            BookData bookData = new BookData(book.getId(), book.getAuthor(), book.getBookName(), book.getBookEdition(), book.getReliaseDate());
+            bookDataList.add(bookData);
+        }
+        return bookDataList;
+    }
+
+    public static Book getById(int id) {
+        BookDao bookDao = BookDao.getInstance();
+        Book book = bookDao.getById(id);
+        return book;
+    }
+    public static BookData getById2(int id){
+        BookDao bookDao = BookDao.getInstance();
+        Book book = bookDao.getById(id);
+        return new BookData(book.getId(),book.getAuthor(),book.getBookName(), book.getBookEdition(), book.getReliaseDate());
+
+    }
+    public static void create(Book book) {
+        BookDao bookDao = BookDao.getInstance();
+        bookDao.create(book);
+    }
+
+    public static void uodate(Book book) {
+        BookDao bookDao = BookDao.getInstance();
+        bookDao.update(book);
     }
 }
 

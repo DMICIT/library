@@ -35,18 +35,16 @@ public class AdminUsersCommand extends AbstractCommand {
         String action = request.getParameter("action");
         if (action.equals("delete")) {
 
-            UserDaoImpl userDao = UserDaoImpl.getInstance();
-            userDao.deleteUser(Integer.parseInt(request.getParameter("userId")));
-
+            UserService.deleteUser(Integer.parseInt(request.getParameter("userId")));
             return "redirect:admin-users?type=librarians";
 
         } else if (action.equals("ban")) {
 
-            UserService.banUser(Integer.parseInt(request.getParameter("userId")),true);
-
+            UserService.banUser(Integer.parseInt(request.getParameter("userId")), true);
             return "redirect:admin-users?type=users";
-        }else if (action.equals("unban")){
-            UserService.banUser(Integer.parseInt(request.getParameter("userId")),false);
+        } else if (action.equals("unban")) {
+
+            UserService.banUser(Integer.parseInt(request.getParameter("userId")), false);
             return "redirect:admin-users?type=users";
 
         }
