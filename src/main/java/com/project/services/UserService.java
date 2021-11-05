@@ -20,6 +20,11 @@ public class UserService {
         User userByEmail = getUserByEmail(incomeEmail);
         return userByEmail != null;
     }
+    public static void createUser(User user) {
+        UserDaoImpl instance = UserDaoImpl.getInstance();
+        instance.create(user);
+
+    }
 
     public static void createUser(RegistrationForm form) {
 
@@ -54,4 +59,11 @@ public class UserService {
         }
         userDao.update(user);
     }
+
+    public static void deleteUser(int userId){
+
+        UserDaoImpl userDao = UserDaoImpl.getInstance();
+        userDao.deleteUser(userId);
+    }
+
 }

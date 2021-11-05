@@ -2,6 +2,7 @@ package com.project.web.commands;
 
 import com.project.dao.impl.BookDao;
 import com.project.entities.Book;
+import com.project.services.BookService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,8 +14,7 @@ public class AdminEditBookCommand extends AbstractCommand {
         String id = request.getParameter("id");
         if (id != null) {
             int bookId = Integer.parseInt(id);
-            BookDao bookDao = BookDao.getInstance();
-            Book book = bookDao.getById(bookId);
+            Book book = BookService.getById(bookId);
             request.setAttribute("book", book);
             request.setAttribute("action", "edit");
         }
@@ -32,12 +32,10 @@ public class AdminEditBookCommand extends AbstractCommand {
         Date reliaseDate = Date.valueOf(request.getParameter("reliaseDate"));
         if (action.equals("add")) {
             Book book = new Book(author, bookName, bookEdition, reliaseDate);
-            BookDao bookDao = BookDao.getInstance();
-            bookDao.create(book);
+            BookService.create(book);
         } else if (action.equals("edit")) {
             Book book = new Book(Integer.parseInt(bookId), author, bookName, bookEdition, reliaseDate);
-            BookDao bookDao = BookDao.getInstance();
-            bookDao.update(book);
+            BookService.uodate(book);
         }
         return "redirect:admin-books";
     }

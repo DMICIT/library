@@ -16,9 +16,9 @@ public class LibrarianBookOrdersCommand extends AbstractCommand {
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
 
         PenaltyService.checkPenaltyByLibrarian();
-        OrderDao orderDao = OrderDaoImpl.getInstance();
-        List<Order> orders = orderDao.getOrdersByStatus("expected");
-        orders.addAll(orderDao.getOrdersByStatus("checked out"));
+
+        List<Order> orders = OrderService.getOrdersByStatus("expected");
+        orders.addAll(OrderService.getOrdersByStatus("checked out"));
         request.setAttribute("orders", orders);
         return "librarian-orders.jsp";
     }
@@ -29,10 +29,10 @@ public class LibrarianBookOrdersCommand extends AbstractCommand {
         String action = request.getParameter("action");
         int orderId = Integer.parseInt(request.getParameter("orderId"));
 
-        if (action.equals("checked out")){
-            OrderService.changeStatus(orderId,"checked out");
-        }else if (action.equals("returned")){
-            OrderService.changeStatus(orderId,"returned");
+        if (action.equals("checked out")) {
+            OrderService.changeStatus(orderId, "checked out");
+        } else if (action.equals("returned")) {
+            OrderService.changeStatus(orderId, "returned");
         }
         return "redirect:librarian-orders";
     }
