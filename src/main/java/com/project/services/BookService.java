@@ -1,8 +1,12 @@
 package com.project.services;
 
+import com.project.dao.CatalogDao;
 import com.project.dao.impl.BookDao;
+import com.project.dao.impl.CatalogDaoImpl;
 import com.project.entities.Book;
+import com.project.entities.Catalog;
 import com.project.web.data.BookData;
+import com.project.web.data.CatalogData;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,7 +15,7 @@ import java.util.List;
 
 public class BookService {
 
-    public static List<Book> getAllAvailableBooks() {
+    public static List<BookData> getAllAvailableBooks() {
         BookDao bookDao = BookDao.getInstance();
         List<Book> allbooks = bookDao.getAll();
         List<Book> allAvailableBooks = new ArrayList<>();
@@ -19,17 +23,37 @@ public class BookService {
             if (CatalogService.isBookAvailable(book.getId())) {
                 allAvailableBooks.add(book);
             }
-
         }
-        return allAvailableBooks;
+
+        return getBookDataList(allAvailableBooks);
+    }
+
+    private static List<BookData> getBookDataList(List<Book>  books){
+        List<BookData> result = new ArrayList<>();
+        for(Book book: books){
+            BookData bookData = new BookData(book.getId(), book.getAuthor(), book.getBookName(), book.getBookEdition(), book.getReliaseDate());
+
+            CatalogDao catalogDao = CatalogDaoImpl.getInstance();
+            Catalog catalogByBookId = catalogDao.getCatalogByBookId(book.getId());
+            if (catalogByBookId !=null){
+                CatalogData catalogData = new CatalogData();
+                catalogData.setTotalQuantity(catalogByBookId.getCount());
+                long checkedOutBooks = CatalogService.quantityCheckedOutBooks(book.getId());
+                catalogData.setCheckedOutQuantity((int)checkedOutBooks);
+                catalogData.setAvailableQuantity(catalogByBookId.getCount()-(int)checkedOutBooks);
+            }
+
+            result.add(bookData);
+        }
+        return result;
     }
 
 
-    public static List<Book> searchBook(String searchParameter) {
+    public static List<BookData> searchBook(String searchParameter) {
 
-        List<Book> result = new ArrayList<>();
-        List<Book> allBooks = getAllAvailableBooks();
-        for (Book book : allBooks) {
+        List<BookData> result = new ArrayList<>();
+        List<BookData> allBooks = getAllAvailableBooks();
+        for (BookData book : allBooks) {
             if (book.getAuthor().toLowerCase().contains(searchParameter.toLowerCase())
                     || book.getBookName().toLowerCase().contains(searchParameter.toLowerCase())) {
                 result.add(book);
@@ -38,27 +62,26 @@ public class BookService {
         return result;
     }
 
-    public static List<Book> sortBooks(List<Book> books, String sortParameter, boolean order) {
-        Comparator<Book> bookComparator = getComparator(sortParameter);
+    public static void sortBooks(List<BookData> books, String sortParameter, boolean order) {
+        Comparator<BookData> bookComparator = getComparator(sortParameter);
         if (order) {
             books.sort(bookComparator);
         } else {
             books.sort(Collections.reverseOrder(bookComparator));
         }
-        return books;
     }
 
-    private static Comparator<Book> getComparator(String sortParameter) {
+    private static Comparator<BookData> getComparator(String sortParameter) {
         if (sortParameter.equals("author")) {
-            return Comparator.comparing(Book::getAuthor);
+            return Comparator.comparing(BookData::getAuthor);
         } else if (sortParameter.equals("bookName")) {
-            return Comparator.comparing(Book::getBookName);
+            return Comparator.comparing(BookData::getBookName);
         } else if (sortParameter.equals("bookEdition")) {
-            return Comparator.comparing(Book::getBookEdition);
+            return Comparator.comparing(BookData::getBookEdition);
         } else if (sortParameter.equals("reliaseDate")) {
-            return Comparator.comparing(Book::getReliaseDate);
+            return Comparator.comparing(BookData::getReliaseDate);
         }
-        return Comparator.comparing(Book::getId);
+        return Comparator.comparing(BookData::getId);
     }
 
     public static List<Book> getAllBooks() {
@@ -74,7 +97,7 @@ public class BookService {
             BookData bookData = new BookData(book.getId(), book.getAuthor(), book.getBookName(), book.getBookEdition(), book.getReliaseDate());
             bookDataList.add(bookData);
         }
-        return bookDataList;
+        return getBookDataList(bookList);
     }
 
     public static Book getById(int id) {

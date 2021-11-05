@@ -8,6 +8,7 @@ public class BookData {
     private String bookName;
     private String bookEdition;
     private Date reliaseDate;
+    private CatalogData catalogData;
 
     public BookData(int id, String author, String bookName, String bookEdition, Date reliaseDate) {
         this.id = id;
@@ -55,5 +56,13 @@ public class BookData {
 
     public void setReliaseDate(Date reliaseDate) {
         this.reliaseDate = reliaseDate;
+    }
+
+    public CatalogData getCatalogData() {
+        return catalogData;
+    }
+
+    public void setCatalogData(CatalogData catalogData) {
+        this.catalogData = catalogData;
     }
 }
