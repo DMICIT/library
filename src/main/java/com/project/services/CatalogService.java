@@ -15,12 +15,17 @@ public class CatalogService {
         CatalogDao catalogDao = CatalogDaoImpl.getInstance();
         Catalog catalog = catalogDao.getCatalogByBookId(bookId);
 
+        long checkedOutBooks = quantityCheckedOutBooks(bookId);
+        return catalog != null && catalog.getCount() > checkedOutBooks;
+    }
+
+    public static long quantityCheckedOutBooks(int bookId){
+
         OrderDao orderDao = OrderDaoImpl.getInstance();
         List<Order> allOrdersByBook = orderDao.getAllOrdersByBook(bookId);
 
-        long checkedOutBooks = allOrdersByBook.stream()
+       return  allOrdersByBook.stream()
                 .filter(order -> order.getStatus().equals("checked out"))
                 .count();
-        return catalog != null && catalog.getCount() > checkedOutBooks;
     }
 }
