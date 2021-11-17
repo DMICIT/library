@@ -1,5 +1,12 @@
 package com.project.factory;
 
+import com.project.dao.impl.BookDao;
+import com.project.dao.impl.OrderDaoImpl;
+import com.project.dao.impl.UserDaoImpl;
+import com.project.services.BookService;
+import com.project.services.OrderService;
+import com.project.services.UserService;
+import com.project.services.ValidatorService;
 import com.project.web.commands.*;
 
 import java.util.HashMap;
@@ -11,11 +18,11 @@ public class CommandFactory {
 
 
     static {
-        commandMap.put("login", new LoginCommand());
-        commandMap.put("registration", new RegistrationCommand());
+        commandMap.put("login", new LoginCommand(new UserService(UserDaoImpl.getInstance())));
+        commandMap.put("registration", new RegistrationCommand(new UserService(UserDaoImpl.getInstance()), new ValidatorService()));
         commandMap.put("", new HomeCommand());
-        commandMap.put("books", new BookCommand());
-        commandMap.put("orders", new OrderCommand());
+        commandMap.put("books", new BookCommand(new BookService(BookDao.getInstance())));
+        commandMap.put("orders", new OrderCommand(new UserService(UserDaoImpl.getInstance()),new OrderService(OrderDaoImpl.getInstance())));
         commandMap.put("logout", new LogoutCommand());
         commandMap.put("language",new LanguageCommand());
         commandMap.put("admin-books",new AdminBooksCommand());
@@ -23,7 +30,7 @@ public class CommandFactory {
         commandMap.put ("admin-users", new AdminUsersCommand());
         commandMap.put( "admin-add-user", new AdminAddUserCommand());
         commandMap.put("librarian-orders", new LibrarianBookOrdersCommand());
-        commandMap.put("personal-account", new PersonalAccountCommand());
+        commandMap.put("personal-account", new PersonalAccountCommand(new UserService(UserDaoImpl.getInstance())));
         commandMap.put("user-list", new UserListCommand());
         commandMap.put("user-abonement",new UserAbonementCommand());
     }

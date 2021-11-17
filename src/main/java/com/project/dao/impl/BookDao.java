@@ -84,8 +84,7 @@ public class BookDao implements EntityDao<Book> {
     public int create(Book entity) {
         int result = 0;
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NEW_BOOK_QUERY);
-
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NEW_BOOK_QUERY, Statement.RETURN_GENERATED_KEYS);
         ) {
             preparedStatement.setString(1, entity.getAuthor());
             preparedStatement.setString(2, entity.getBookName());
@@ -93,6 +92,13 @@ public class BookDao implements EntityDao<Book> {
             preparedStatement.setDate(4, entity.getReliaseDate());
 
             result = preparedStatement.executeUpdate();
+            if (result != 0){
+                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()){
+                    if (generatedKeys.next()){
+                        entity.setId(generatedKeys.getInt(1));
+                    }
+                }
+            }
 
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);

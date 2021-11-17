@@ -1,21 +1,10 @@
 package com.project.web.commands;
-
-import com.project.dao.PenaltyDao;
-import com.project.dao.impl.BookDao;
-import com.project.dao.impl.OrderDaoImpl;
-import com.project.dao.impl.PenaltyDaoImpl;
-import com.project.entities.Book;
 import com.project.entities.Order;
-import com.project.entities.Penalty;
 import com.project.entities.User;
-import com.project.services.BookService;
 import com.project.services.OrderService;
 import com.project.services.UserService;
-import com.project.web.data.BookData;
 import com.project.web.data.OrderData;
-import com.project.web.data.PenaltyData;
 import com.project.web.data.UserPrincipal;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -25,12 +14,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderCommand extends AbstractCommand {
+
+    private UserService userService;
+    private OrderService orderService;
+
+    public OrderCommand(UserService userService, OrderService orderService) {
+        this.userService = userService;
+        this.orderService = orderService;
+    }
+
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         UserPrincipal user = (UserPrincipal) session.getAttribute("user");
         if (user != null) {
-            User userByEmail = UserService.getUserByEmail(user.getEmail());
+            User userByEmail = userService.getUserByEmail(user.getEmail());
             int usersIdByEmail = userByEmail.getId();
 
             List<Order> allOrdersByUser = OrderService.getAllOrdersByUser(usersIdByEmail);
@@ -58,7 +56,7 @@ public class OrderCommand extends AbstractCommand {
 
         int bookId = Integer.parseInt(request.getParameter("bookId"));
         String bookSpot = request.getParameter("action");
-        User userByEmail = UserService.getUserByEmail(userEmail.getEmail());
+        User userByEmail = userService.getUserByEmail(userEmail.getEmail());
 
         Date returnDate = null;
         if (bookSpot.equals("abonement")) {
@@ -68,7 +66,7 @@ public class OrderCommand extends AbstractCommand {
         }
 
         Order order = new Order(userByEmail.getId(), bookId, bookSpot, "expected", returnDate);
-        OrderService.create(order);
+        orderService.create(order);
         return "redirect:orders";
     }
 }

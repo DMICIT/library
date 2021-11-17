@@ -24,8 +24,15 @@
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="${contextPath}/" class="nav-link px-2 link-secondary"><fmt:message key="header.home"/></a></li>
-            <li><a href="${contextPath}/books" class="nav-link px-2 link-dark"><fmt:message key="header.books"/></a>
-            </li>
+            <c:choose>
+                <c:when test="${user.role eq 'admin'}">
+                    <li><a href="${contextPath}/admin-books" class="nav-link px-2 link-dark"><fmt:message key="header.books"/></a></li>
+                </c:when>
+                <c:otherwise>
+                    <li><a href="${contextPath}/books" class="nav-link px-2 link-dark"><fmt:message key="header.books"/></a></li>
+                </c:otherwise>
+            </c:choose>
+
             <c:if test="${user.role eq 'user'}">
                 <li><a href="${contextPath}/orders" class="nav-link px-2 link-dark"><fmt:message
                         key="header.orders"/></a></li>

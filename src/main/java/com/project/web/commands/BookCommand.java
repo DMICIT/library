@@ -1,7 +1,5 @@
 package com.project.web.commands;
 
-import com.project.dao.impl.BookDao;
-import com.project.entities.Book;
 import com.project.services.BookService;
 import com.project.web.data.BookData;
 
@@ -10,6 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class BookCommand extends AbstractCommand {
+    private BookService bookService;
+
+    public BookCommand(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
@@ -19,7 +22,7 @@ public class BookCommand extends AbstractCommand {
         if (searchParameter != null) {
             books = BookService.searchBook(searchParameter);
         } else {
-            books = BookService.getAllAvailableBooks();
+            books = bookService.getAllAvailableBooks2();
         }
         if (sortParameter != null) {
             // ascending asc
@@ -39,4 +42,9 @@ public class BookCommand extends AbstractCommand {
     protected String executePost(HttpServletRequest request, HttpServletResponse response) {
         return null;
     }
+
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
+    }
+
 }

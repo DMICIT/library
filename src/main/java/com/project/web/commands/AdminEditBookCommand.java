@@ -1,14 +1,18 @@
 package com.project.web.commands;
 
+import com.project.dao.CatalogDao;
 import com.project.dao.impl.BookDao;
 import com.project.entities.Book;
 import com.project.services.BookService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 
 public class AdminEditBookCommand extends AbstractCommand {
+    private static final Logger LOG = Logger.getLogger(AdminBooksCommand.class);
+
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
         String id = request.getParameter("id");
@@ -30,9 +34,13 @@ public class AdminEditBookCommand extends AbstractCommand {
         String bookName = request.getParameter("bookName");
         String bookEdition = request.getParameter("bookEdition");
         Date reliaseDate = Date.valueOf(request.getParameter("reliaseDate"));
+        int count = Integer.parseInt(request.getParameter("count"));
+
         if (action.equals("add")) {
             Book book = new Book(author, bookName, bookEdition, reliaseDate);
-            BookService.create(book);
+            BookService.create(book, count);
+
+
         } else if (action.equals("edit")) {
             Book book = new Book(Integer.parseInt(bookId), author, bookName, bookEdition, reliaseDate);
             BookService.uodate(book);

@@ -8,15 +8,21 @@ import org.apache.log4j.Logger;
 import java.util.List;
 
 public class UserService {
+
     private static final Logger LOG = Logger.getLogger(UserService.class);
 
-    public static User getUserByEmail(String inputEmail) {
-        UserDaoImpl instance = UserDaoImpl.getInstance();
-        return instance.getByEmail(inputEmail);
+    private UserDaoImpl userDao;
+
+    public UserService(UserDaoImpl userDao) {
+        this.userDao = userDao;
+    }
+
+    public User getUserByEmail(String inputEmail) {
+        return userDao.getByEmail(inputEmail);
 
     }
 
-    public static boolean isUserExist(String incomeEmail) {
+    public boolean isUserExist(String incomeEmail) {
         User userByEmail = getUserByEmail(incomeEmail);
         return userByEmail != null;
     }

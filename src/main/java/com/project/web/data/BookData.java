@@ -18,6 +18,15 @@ public class BookData {
         this.reliaseDate = reliaseDate;
     }
 
+    public BookData(int id, String author, String bookName, String bookEdition, Date reliaseDate, CatalogData catalogData) {
+        this.id = id;
+        this.author = author;
+        this.bookName = bookName;
+        this.bookEdition = bookEdition;
+        this.reliaseDate = reliaseDate;
+        this.catalogData = catalogData;
+    }
+
     public int getId() {
         return id;
     }

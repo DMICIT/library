@@ -1,6 +1,5 @@
 package com.project.web.commands;
 
-import com.project.dao.impl.UserDaoImpl;
 import com.project.entities.User;
 import com.project.forms.LoginForm;
 import com.project.services.PenaltyService;
@@ -15,6 +14,11 @@ import javax.servlet.http.HttpSession;
 
 public class LoginCommand extends AbstractCommand {
     private static final Logger LOG = Logger.getLogger(LoginCommand.class);
+    private UserService userService;
+
+    public LoginCommand(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
@@ -25,7 +29,7 @@ public class LoginCommand extends AbstractCommand {
     protected String executePost(HttpServletRequest request, HttpServletResponse response) {
 
         LoginForm form = getLoginForm(request);
-        User user = UserService.getUserByEmail(form.getEmail());
+        User user = userService.getUserByEmail(form.getEmail());
 
         if (!ValidatorService.validate(form)) {
             request.setAttribute("errorMessage", "Not valid Data");
@@ -40,7 +44,7 @@ public class LoginCommand extends AbstractCommand {
             return "login.jsp";
         }
         HttpSession session = request.getSession();
-        UserPrincipal userPrincipal = new UserPrincipal(user.getEmail() ,user.getRole());
+        UserPrincipal userPrincipal = new UserPrincipal(user.getEmail(), user.getRole());
         session.setAttribute("user", userPrincipal);
 
         PenaltyService.checkUserPenalty(user.getId());
