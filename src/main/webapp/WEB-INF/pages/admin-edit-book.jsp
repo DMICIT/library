@@ -28,6 +28,7 @@
 <div class="container">
 
     <h2><fmt:message key="books.header"/></h2>
+
     <form action="admin-edit-book" method="post" id="bookForm" role ="form">
         <c:if test ="${empty action}">
             <c:set var="action" value="add"/>
@@ -47,6 +48,9 @@
 
             <label for="reliaseDate" class="control-label col-xs-4">reliaseDate</label>
             <input type = "text" name="reliaseDate" id = "reliaseDate" class="form-control" value ="${book.reliaseDate}" required>
+
+            <label for="count" class="control-label col-xs-4">count</label>
+            <input type = "text" name="count" id = "count" class="form-control" value ="${book.count}" required>
             </br>
             <button type="submit" class="btn btn-primary btn-md">Accept</button>
         </div>

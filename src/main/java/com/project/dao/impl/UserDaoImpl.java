@@ -31,7 +31,6 @@ public class UserDaoImpl implements UserDao {
     public static final String PASSWORD = "password";
 
     private static UserDaoImpl instance;
-
     private UserDaoImpl() {
     }
 

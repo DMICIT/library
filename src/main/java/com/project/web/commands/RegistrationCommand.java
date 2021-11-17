@@ -10,7 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 
 public class RegistrationCommand extends AbstractCommand {
     private static final Logger LOG = Logger.getLogger(RegistrationCommand.class);
+    private UserService userServiceNotStatic;
+    private ValidatorService validatorServiceNotStatic;
 
+    public RegistrationCommand(UserService userServiceNotStatic, ValidatorService validatorServiceNotStatic) {
+        this.userServiceNotStatic = userServiceNotStatic;
+        this.validatorServiceNotStatic = validatorServiceNotStatic;
+    }
 
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
@@ -21,9 +27,9 @@ public class RegistrationCommand extends AbstractCommand {
     protected String executePost(HttpServletRequest request, HttpServletResponse response) {
         RegistrationForm form = getRegistrationForm(request);
 
-        if (ValidatorService.validate(form)){
-            if (!UserService.isUserExist(form.getEmail())){
-                UserService.createUser(form);
+        if (validatorServiceNotStatic.validate(form)){
+            if (!userServiceNotStatic.isUserExist(form.getEmail())){
+                userServiceNotStatic.createUser(form);
                 LOG.info("User created");
                 return "redirect:login";
             }else {

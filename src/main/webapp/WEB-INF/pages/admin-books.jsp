@@ -40,6 +40,7 @@
             <td><fmt:message key="books.book.name"/></td>
             <td><fmt:message key="books.edition"/></td>
             <td><fmt:message key="books.date.of.reliase"/></td>
+            <td><fmt:message key="books.quantity"/></td>
             <td></td>
         </tr>
         </thead>
@@ -51,6 +52,7 @@
                 <td>${book.bookName}</td>
                 <td>${book.bookEdition}</td>
                 <td>${book.reliaseDate}</td>
+                <td>${book.catalogData.totalQuantity}</td>
                 <td><a href="#" id="remove"
                 onclick="document.getElementById('action').value = 'delete';
                 document.getElementById('bookId').value = '${book.id}';

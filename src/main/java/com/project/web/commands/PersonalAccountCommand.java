@@ -11,11 +11,17 @@ import javax.servlet.http.HttpSession;
 
 public class PersonalAccountCommand implements Command {
 
+    private UserService userService;
+
+    public PersonalAccountCommand(UserService userService) {
+        this.userService = userService;
+    }
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         UserPrincipal userEmail = (UserPrincipal) session.getAttribute("user");
-        User user = UserService.getUserByEmail(userEmail.getEmail());
+        User user = userService.getUserByEmail(userEmail.getEmail());
         request.setAttribute("user", user);
 
         return "personal-account.jsp";

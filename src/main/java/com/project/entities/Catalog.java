@@ -7,6 +7,11 @@ public class Catalog {
     private int bookId;
     private int count;
 
+    public Catalog(int bookId, int count) {
+        this.bookId = bookId;
+        this.count = count;
+    }
+
     public Catalog(int id, int bookId, int count) {
         this.id = id;
         this.bookId = bookId;

@@ -19,11 +19,16 @@ import java.util.List;
 
 
 public class OrderService {
+    private OrderDao orderDao;
+
+    public OrderService(OrderDao orderDao) {
+        this.orderDao = orderDao;
+    }
+
     public static void changeStatus(int orderId, String status) {
 
         OrderDaoImpl orderDao = OrderDaoImpl.getInstance();
         Order order = orderDao.getById(orderId);
-
         order.setStatus(status);
         orderDao.update(order);
     }
@@ -33,9 +38,9 @@ public class OrderService {
         return orderDao.getAllOrdersByUser(userId);
     }
 
-    public static void create(Order order) {
-        OrderDaoImpl instance = OrderDaoImpl.getInstance();
-        instance.create(order);
+    public void create(Order order) {
+        orderDao = OrderDaoImpl.getInstance();
+        orderDao.create(order);
     }
 
     public static List<Order> getOrdersByStatus(String status) {
