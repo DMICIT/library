@@ -13,11 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class LoginCommand extends AbstractCommand {
+
     private static final Logger LOG = Logger.getLogger(LoginCommand.class);
     private UserService userService;
+    private PenaltyService penaltyService;
 
-    public LoginCommand(UserService userService) {
+    public LoginCommand(){
+        this(new UserService(), new PenaltyService());
+    }
+
+    public LoginCommand(UserService userService, PenaltyService penaltyService) {
         this.userService = userService;
+        this.penaltyService = penaltyService;
     }
 
     @Override
@@ -47,7 +54,7 @@ public class LoginCommand extends AbstractCommand {
         UserPrincipal userPrincipal = new UserPrincipal(user.getEmail(), user.getRole());
         session.setAttribute("user", userPrincipal);
 
-        PenaltyService.checkUserPenalty(user.getId());
+        penaltyService.checkUserPenalty(user.getId());
 
         return "redirect:";
     }

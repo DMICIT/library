@@ -18,6 +18,10 @@ public class OrderCommand extends AbstractCommand {
     private UserService userService;
     private OrderService orderService;
 
+    public OrderCommand(){
+        this(new UserService(), new OrderService());
+    }
+
     public OrderCommand(UserService userService, OrderService orderService) {
         this.userService = userService;
         this.orderService = orderService;
@@ -40,7 +44,7 @@ public class OrderCommand extends AbstractCommand {
                 }
             }
 
-            List<OrderData> orderDataList = OrderService.getOrderDataList(ordersByStatus);
+            List<OrderData> orderDataList = orderService.getOrderDataList(ordersByStatus);
             request.setAttribute("allOrders", orderDataList);
         }
         return "orders.jsp";

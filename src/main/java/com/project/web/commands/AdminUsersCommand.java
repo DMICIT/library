@@ -12,6 +12,16 @@ import java.util.List;
 
 public class AdminUsersCommand extends AbstractCommand {
 
+    private UserService userService;
+
+    public AdminUsersCommand(){
+        this(new UserService());
+    }
+
+    public AdminUsersCommand(UserService userService) {
+        this.userService = userService;
+    }
+
     private static final Logger LOG = Logger.getLogger(AdminUsersCommand.class);
 
     @Override
@@ -19,11 +29,11 @@ public class AdminUsersCommand extends AbstractCommand {
 
         String type = request.getParameter("type");
         if (type.equals("users")) {
-            List<User> users = UserService.getAllUsers();
+            List<User> users = userService.getAllUsers();
             request.setAttribute("users", users);
             return "admin-users.jsp";
         } else if (type.equals("librarians")) {
-            List<User> librarians = UserService.getAllLibrarians();
+            List<User> librarians = userService.getAllLibrarians();
             request.setAttribute("users", librarians);
             return "admin-users.jsp";
         }
@@ -35,16 +45,16 @@ public class AdminUsersCommand extends AbstractCommand {
         String action = request.getParameter("action");
         if (action.equals("delete")) {
 
-            UserService.deleteUser(Integer.parseInt(request.getParameter("userId")));
+            userService.deleteUser(Integer.parseInt(request.getParameter("userId")));
             return "redirect:admin-users?type=librarians";
 
         } else if (action.equals("ban")) {
 
-            UserService.banUser(Integer.parseInt(request.getParameter("userId")), true);
+            userService.banUser(Integer.parseInt(request.getParameter("userId")), true);
             return "redirect:admin-users?type=users";
         } else if (action.equals("unban")) {
 
-            UserService.banUser(Integer.parseInt(request.getParameter("userId")), false);
+            userService.banUser(Integer.parseInt(request.getParameter("userId")), false);
             return "redirect:admin-users?type=users";
 
         }

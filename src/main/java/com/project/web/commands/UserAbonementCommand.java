@@ -16,6 +16,16 @@ import java.util.List;
 
 
 public class UserAbonementCommand implements Command{
+   private BookService bookService;
+
+   public UserAbonementCommand(){
+       this(new BookService());
+   }
+
+    public UserAbonementCommand(BookService bookService) {
+        this.bookService = bookService;
+    }
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
@@ -25,7 +35,7 @@ public class UserAbonementCommand implements Command{
         for (Order order :
                 allOrders) {
             int bookId = order.getBookId();
-            Book book = BookService.getById(bookId);
+            BookData book = bookService.getById(bookId);
             BookData bookData = new BookData(book.getId(),book.getAuthor(),book.getBookName(), book.getBookEdition(),book.getReliaseDate());
             OrderData orderData = new OrderData(order.getId(),order.getUserId(),bookData,order.getBookSpot(), order.getStatus(),order.getReturnDate());
             orders.add(orderData);
