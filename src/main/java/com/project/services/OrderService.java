@@ -12,6 +12,7 @@ import com.project.web.data.BookData;
 import com.project.web.data.OrderData;
 import com.project.web.data.PenaltyData;
 import com.project.web.data.UserPrincipal;
+import com.sun.tools.corba.se.idl.constExpr.Or;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -20,10 +21,17 @@ import java.util.List;
 
 public class OrderService {
     private OrderDao orderDao;
+    private BookService bookService;
 
-    public OrderService(OrderDao orderDao) {
-        this.orderDao = orderDao;
+    public OrderService(){
+        this(OrderDaoImpl.getInstance(),new BookService());
     }
+
+    public OrderService(OrderDao orderDao, BookService bookService) {
+        this.orderDao = orderDao;
+        this.bookService = bookService;
+    }
+
 
     public static void changeStatus(int orderId, String status) {
 
@@ -49,12 +57,12 @@ public class OrderService {
 
     }
 
-    public static List<OrderData> getOrderDataList(List<Order> orders) {
+    public  List<OrderData> getOrderDataList(List<Order> orders) {
 
         List<OrderData> orderDataList = new ArrayList<>();
         for (Order order : orders) {
             int bookId = order.getBookId();
-            Book book = BookService.getById(bookId);
+            BookData book = bookService.getById(bookId);
             BookData bookData = new BookData(book.getId(), book.getAuthor(), book.getBookName(), book.getBookEdition(), book.getReliaseDate());
             OrderData orderData = new OrderData(order.getId(), order.getUserId(), bookData, order.getBookSpot(), order.getStatus(), order.getReturnDate());
             PenaltyDao penaltyDao = PenaltyDaoImpl.getInstance();

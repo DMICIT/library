@@ -13,6 +13,10 @@ public class RegistrationCommand extends AbstractCommand {
     private UserService userServiceNotStatic;
     private ValidatorService validatorServiceNotStatic;
 
+    public RegistrationCommand(){
+        this(new UserService(),new ValidatorService());
+    }
+
     public RegistrationCommand(UserService userServiceNotStatic, ValidatorService validatorServiceNotStatic) {
         this.userServiceNotStatic = userServiceNotStatic;
         this.validatorServiceNotStatic = validatorServiceNotStatic;

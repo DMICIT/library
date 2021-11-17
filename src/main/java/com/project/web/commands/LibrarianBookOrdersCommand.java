@@ -11,11 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class LibrarianBookOrdersCommand extends AbstractCommand {
+    private PenaltyService penaltyService;
+
+    public LibrarianBookOrdersCommand(){
+        this(new PenaltyService());
+    }
+
+    public LibrarianBookOrdersCommand(PenaltyService penaltyService) {
+        this.penaltyService = penaltyService;
+    }
 
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
 
-        PenaltyService.checkPenaltyByLibrarian();
+        penaltyService.checkPenaltyByLibrarian();
 
         List<Order> orders = OrderService.getOrdersByStatus("expected");
         orders.addAll(OrderService.getOrdersByStatus("checked out"));

@@ -12,21 +12,30 @@ import java.util.List;
 
 public class PenaltyService {
 
-    public static void checkUserPenalty(int userId) {
+    private PenaltyDao penaltyDao;
+    public PenaltyService(){
+        this(PenaltyDaoImpl.getInstance());
+    }
+
+    public PenaltyService(PenaltyDao penaltyDao) {
+        this.penaltyDao = penaltyDao;
+    }
+
+    public void checkUserPenalty(int userId) {
         OrderDao orderDao = OrderDaoImpl.getInstance();
         List<Order> allOrdersByUser = orderDao.getAllOrdersByUser(userId);
 
         checkPenalty(allOrdersByUser);
     }
 
-    public static void checkPenaltyByLibrarian() {
+    public void checkPenaltyByLibrarian() {
         OrderDao orderDao = OrderDaoImpl.getInstance();
         List<Order> allOrdersByUser = orderDao.getOrdersByStatus("checked out");
 
         checkPenalty(allOrdersByUser);
     }
 
-    private static void checkPenalty(List<Order> allOrdersByUser) {
+    private void checkPenalty(List<Order> allOrdersByUser) {
         PenaltyDao penaltyDao = PenaltyDaoImpl.getInstance();
         LocalDate now = LocalDate.now();
         for (Order order : allOrdersByUser) {

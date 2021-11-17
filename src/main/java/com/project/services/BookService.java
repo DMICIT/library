@@ -15,16 +15,23 @@ import java.util.List;
 
 public class BookService {
     private BookDao bookDao;
+    private CatalogService catalogService;
 
-    public BookService(BookDao bookDao) {
+    public BookService(){
+        this(BookDao.getInstance(),new CatalogService());
+    }
+
+    public BookService(BookDao bookDao, CatalogService catalogService) {
         this.bookDao = bookDao;
+        this.catalogService = catalogService;
     }
 
-    public List<BookData> getAllAvailableBooks2() {
+
+    public List<BookData> getAllAvailableBooks() {
         List<Book> allbooks = bookDao.getAll();
         List<Book> allAvailableBooks = new ArrayList<>();
         for (Book book : allbooks) {
-            if (CatalogService.isBookAvailable(book.getId())) {
+            if (catalogService.isBookAvailable(book.getId())) {
                 allAvailableBooks.add(book);
             }
         }
@@ -33,20 +40,7 @@ public class BookService {
     }
 
 
-    public static List<BookData> getAllAvailableBooks() {
-        BookDao bookDao = BookDao.getInstance();
-        List<Book> allbooks = bookDao.getAll();
-        List<Book> allAvailableBooks = new ArrayList<>();
-        for (Book book : allbooks) {
-            if (CatalogService.isBookAvailable(book.getId())) {
-                allAvailableBooks.add(book);
-            }
-        }
-
-        return getBookDataList(allAvailableBooks);
-    }
-
-    private static List<BookData> getBookDataList(List<Book> books) {
+    private List<BookData> getBookDataList(List<Book> books) {
         List<BookData> result = new ArrayList<>();
         for (Book book : books) {
             BookData bookData = new BookData(book.getId(), book.getAuthor(), book.getBookName(), book.getBookEdition(), book.getReliaseDate());
@@ -56,9 +50,10 @@ public class BookService {
             if (catalogByBookId != null) {
                 CatalogData catalogData = new CatalogData();
                 catalogData.setTotalQuantity(catalogByBookId.getCount());
-                long checkedOutBooks = CatalogService.quantityCheckedOutBooks(book.getId());
+                long checkedOutBooks = catalogService.quantityCheckedOutBooks(book.getId());
                 catalogData.setCheckedOutQuantity((int) checkedOutBooks);
                 catalogData.setAvailableQuantity(catalogByBookId.getCount() - (int) checkedOutBooks);
+                bookData.setCatalogData(catalogData);
             }
 
             result.add(bookData);
@@ -67,7 +62,7 @@ public class BookService {
     }
 
 
-    public static List<BookData> searchBook(String searchParameter) {
+    public List<BookData> searchBook(String searchParameter) {
 
         List<BookData> result = new ArrayList<>();
         List<BookData> allBooks = getAllAvailableBooks();
@@ -80,7 +75,7 @@ public class BookService {
         return result;
     }
 
-    public static void sortBooks(List<BookData> books, String sortParameter, boolean order) {
+    public void sortBooks(List<BookData> books, String sortParameter, boolean order) {
         Comparator<BookData> bookComparator = getComparator(sortParameter);
         if (order) {
             books.sort(bookComparator);
@@ -89,7 +84,7 @@ public class BookService {
         }
     }
 
-    private static Comparator<BookData> getComparator(String sortParameter) {
+    private Comparator<BookData> getComparator(String sortParameter) {
         if (sortParameter.equals("author")) {
             return Comparator.comparing(BookData::getAuthor);
         } else if (sortParameter.equals("bookName")) {
@@ -103,31 +98,20 @@ public class BookService {
     }
 
 
-    public static List<BookData> getAllBooks() {
+    public List<BookData> getAllBooks() {
         BookDao bookDao = BookDao.getInstance();
         List<Book> bookList = bookDao.getAll();
-        List<BookData> bookDataList = new ArrayList<>();
-        for (Book book : bookList) {
-            BookData bookData = new BookData(book.getId(), book.getAuthor(), book.getBookName(), book.getBookEdition(), book.getReliaseDate());
-            bookDataList.add(bookData);
-        }
         return getBookDataList(bookList);
     }
 
-    public static Book getById(int id) {
-        BookDao bookDao = BookDao.getInstance();
-        Book book = bookDao.getById(id);
-        return book;
-    }
-
-    public static BookData getById2(int id) {
+    public BookData getById(int id) {
         BookDao bookDao = BookDao.getInstance();
         Book book = bookDao.getById(id);
         return new BookData(book.getId(), book.getAuthor(), book.getBookName(), book.getBookEdition(), book.getReliaseDate());
 
     }
 
-    public static void create(Book book, int count) {
+    public void create(Book book, int count) {
         BookDao bookDao = BookDao.getInstance();
         bookDao.create(book);
         CatalogDao catalogDao = CatalogDaoImpl.getInstance();
@@ -135,7 +119,7 @@ public class BookService {
         catalogDao.create(catalog);
     }
 
-    public static void uodate(Book book) {
+    public void uodate(Book book) {
         BookDao bookDao = BookDao.getInstance();
         bookDao.update(book);
     }

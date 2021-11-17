@@ -13,6 +13,9 @@ public class UserService {
 
     private UserDaoImpl userDao;
 
+    public UserService(){
+        this(UserDaoImpl.getInstance());
+    }
     public UserService(UserDaoImpl userDao) {
         this.userDao = userDao;
     }
@@ -26,13 +29,13 @@ public class UserService {
         User userByEmail = getUserByEmail(incomeEmail);
         return userByEmail != null;
     }
-    public static void createUser(User user) {
+    public void createUser(User user) {
         UserDaoImpl instance = UserDaoImpl.getInstance();
         instance.create(user);
 
     }
 
-    public static void createUser(RegistrationForm form) {
+    public void createUser(RegistrationForm form) {
 
         String registredUser = "user";
         int banList = 0;
@@ -44,17 +47,17 @@ public class UserService {
         LOG.info("result is :" + result);
     }
 
-    public static List<User> getAllLibrarians() {
+    public List<User> getAllLibrarians() {
         UserDaoImpl userDao = UserDaoImpl.getInstance();
         return userDao.getUsersByRole("librarian");
     }
 
-    public static List<User> getAllUsers() {
+    public List<User> getAllUsers() {
         UserDaoImpl userDao = UserDaoImpl.getInstance();
         return userDao.getUsersByRole("user");
     }
 
-    public static void banUser(int userId, boolean value) {
+    public void banUser(int userId, boolean value) {
 
         UserDaoImpl userDao = UserDaoImpl.getInstance();
         User user = userDao.getById(userId);
@@ -66,7 +69,7 @@ public class UserService {
         userDao.update(user);
     }
 
-    public static void deleteUser(int userId){
+    public void deleteUser(int userId){
 
         UserDaoImpl userDao = UserDaoImpl.getInstance();
         userDao.deleteUser(userId);

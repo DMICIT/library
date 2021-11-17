@@ -11,15 +11,23 @@ import java.util.List;
 
 public class CatalogService {
 
-    public static boolean isBookAvailable(int bookId) {
-        CatalogDao catalogDao = CatalogDaoImpl.getInstance();
+    private CatalogDao catalogDao;
+    public CatalogService(){
+        this(CatalogDaoImpl.getInstance());
+    }
+    public CatalogService(CatalogDao catalogDao) {
+        this.catalogDao = catalogDao;
+    }
+
+    public boolean isBookAvailable(int bookId) {
+
         Catalog catalog = catalogDao.getCatalogByBookId(bookId);
 
         long checkedOutBooks = quantityCheckedOutBooks(bookId);
         return catalog != null && catalog.getCount() > checkedOutBooks;
     }
 
-    public static long quantityCheckedOutBooks(int bookId){
+    public long quantityCheckedOutBooks(int bookId){
 
         OrderDao orderDao = OrderDaoImpl.getInstance();
         List<Order> allOrdersByBook = orderDao.getAllOrdersByBook(bookId);

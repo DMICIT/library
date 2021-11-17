@@ -13,6 +13,10 @@ public class PersonalAccountCommand implements Command {
 
     private UserService userService;
 
+    public PersonalAccountCommand() {
+        this(new UserService());
+
+    }
     public PersonalAccountCommand(UserService userService) {
         this.userService = userService;
     }
