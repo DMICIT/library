@@ -24,6 +24,15 @@
   </filter-mapping>
 
   <filter>
+    <filter-name>BannedUserFilter</filter-name>
+    <filter-class>com.project.filter.BannedUserFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>BannedUserFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
     <filter-name>StaticResourceFilter</filter-name>
     <filter-class>com.project.filter.StaticResourceFilter</filter-class>
   </filter>
@@ -31,6 +40,7 @@
     <filter-name>StaticResourceFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
 
 
   <resource-ref>

@@ -28,6 +28,7 @@ public class CommandFactory {
         commandMap.put("personal-account", new PersonalAccountCommand());
         commandMap.put("user-list", new UserListCommand());
         commandMap.put("user-abonement",new UserAbonementCommand());
+        commandMap.put("ban-page",new BanCommand());
     }
 
     private CommandFactory() {
