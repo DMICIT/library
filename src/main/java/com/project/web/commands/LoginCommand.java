@@ -50,6 +50,10 @@ public class LoginCommand extends AbstractCommand {
             request.setAttribute("errorMessage", "Wrong password!");
             return "login.jsp";
         }
+        if (user.getBanList() == 1){
+            return "ban-page.jsp";
+        }
+
         HttpSession session = request.getSession();
         UserPrincipal userPrincipal = new UserPrincipal(user.getEmail(), user.getRole());
         session.setAttribute("user", userPrincipal);

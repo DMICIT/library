@@ -15,7 +15,7 @@ public class StaticResourceFilter implements Filter {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         String requestUrl = httpServletRequest.getRequestURI();
-        if (requestUrl.endsWith(".jsp")) {
+        if (requestUrl.endsWith(".jsp")||requestUrl.endsWith(".jpeg")) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
