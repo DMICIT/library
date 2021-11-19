@@ -57,8 +57,13 @@
 
     <button class= "btn btn-primary" type="submit"><fmt:message key="registration.register"/></button>
 </form>
-    <fmt:message key="registration.message"/>: ${errorMessage}
-</div>
+    <c:if test="${not empty errorMessages}">
+        <c:forEach items="${errorMessages}" var="message">
+            <fmt:message key="${message}"/>
+            </br>
+
+        </c:forEach>
+    </c:if></div>
 <c:import url="components/footer.jsp"/>
 </body>
 </html>

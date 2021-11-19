@@ -3,8 +3,11 @@ package com.project.web.commands;
 import com.project.dao.CatalogDao;
 import com.project.dao.impl.BookDao;
 import com.project.entities.Book;
+import com.project.forms.AdminEditBookForm;
 import com.project.services.BookService;
+import com.project.services.ValidatorService;
 import com.project.web.data.BookData;
+import com.project.web.data.ValidationData;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,13 +18,15 @@ public class AdminEditBookCommand extends AbstractCommand {
 
     private static final Logger LOG = Logger.getLogger(AdminBooksCommand.class);
     private BookService bookService;
+    private ValidatorService validatorService;
 
     public AdminEditBookCommand(){
-        this(new BookService());
+        this(new BookService(), new ValidatorService());
     }
 
-    public AdminEditBookCommand(BookService bookService) {
+    public AdminEditBookCommand(BookService bookService, ValidatorService validatorService) {
         this.bookService = bookService;
+        this.validatorService = validatorService;
     }
 
     @Override
@@ -39,23 +44,32 @@ public class AdminEditBookCommand extends AbstractCommand {
     @Override
     protected String executePost(HttpServletRequest request, HttpServletResponse response) {
 
-        String action = request.getParameter("action");
-        String bookId = request.getParameter("bookId");
-        String author = request.getParameter("author");
-        String bookName = request.getParameter("bookName");
-        String bookEdition = request.getParameter("bookEdition");
-        Date reliaseDate = Date.valueOf(request.getParameter("reliaseDate"));
-        int count = Integer.parseInt(request.getParameter("count"));
-
+        AdminEditBookForm form = getAdminEditBookForm(request);
+         ValidationData validationData = validatorService.validate(form);
+         String action = request.getParameter("action");
+//        String bookId = request.getParameter("bookId");
+//        String author = request.getParameter("author");
+//        String bookName = request.getParameter("bookName");
+//        String bookEdition = request.getParameter("bookEdition");
+//        Date reliaseDate = Date.valueOf(request.getParameter("reliaseDate"));
+//        int count = Integer.parseInt(request.getParameter("count"));
+        if (!validationData.isValidationResult()){
+            request.setAttribute("errorMessages", validationData.getErrorCodes());
+            return "admin-edit-book.jsp";
+        }
         if (action.equals("add")) {
-            Book book = new Book(author, bookName, bookEdition, reliaseDate);
-            bookService.create(book, count);
-
+            Book book = new Book(form.getAuthor(), form.getBookName(), form.getBookEdition(),Date.valueOf(form.getReliaseDate()));
+            bookService.create(book, form.getCount());
 
         } else if (action.equals("edit")) {
-            Book book = new Book(Integer.parseInt(bookId), author, bookName, bookEdition, reliaseDate);
+            Book book = new Book(Integer.parseInt(form.getBookId()), form.getAuthor(), form.getBookName(), form.getBookEdition(),Date.valueOf(form.getReliaseDate()));
             bookService.uodate(book);
         }
         return "redirect:admin-books";
+    }
+    private AdminEditBookForm getAdminEditBookForm(HttpServletRequest request){
+        return new AdminEditBookForm(request.getParameter("bookId"),request.getParameter("author"),
+                request.getParameter("bookName"),request.getParameter("bookEdition"),
+                request.getParameter("reliaseDate"),Integer.parseInt(request.getParameter("count")));
     }
 }

@@ -2,16 +2,19 @@ package com.project.web.commands;
 
 import com.project.dao.impl.UserDaoImpl;
 import com.project.entities.User;
+import com.project.forms.AdminAddUserForm;
 import com.project.services.UserService;
+import com.project.services.ValidatorService;
+import com.project.web.data.ValidationData;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AdminAddUserCommand extends AbstractCommand{
+public class AdminAddUserCommand extends AbstractCommand {
 
     private UserService userService;
 
-    public AdminAddUserCommand(){
+    public AdminAddUserCommand() {
         this(new UserService());
     }
 
@@ -28,20 +31,28 @@ public class AdminAddUserCommand extends AbstractCommand{
     @Override
     protected String executePost(HttpServletRequest request, HttpServletResponse response) {
 
-
-        String action = request.getParameter("action");
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String sex = request.getParameter("sex");
-        String phone = request.getParameter("phone");
+        AdminAddUserForm form = getAdminAddUserForm(request);
+        ValidatorService validatorService = new ValidatorService();
         String role = "librarian";
         int banList = 0;
-        String password = request.getParameter("password");
+        ValidationData validationData = validatorService.validate(form);
 
-        if (action.equals("add")){
-            User user = new User(name,email,sex,phone,role,banList,password);
+        if (validationData.isValidationResult()) {
+            User user = new User(form.getName(), form.getEmail(), form.getSex(), form.getPhone(), role, banList, form.getPassword());
             userService.createUser(user);
+        }else {
+            request.setAttribute("errorMessages", validationData.getErrorCodes());
+            return "admin-add-user.jsp";
         }
+
         return "redirect:admin-users?type=librarians";
+    }
+
+    private AdminAddUserForm getAdminAddUserForm(HttpServletRequest request) {
+        return new AdminAddUserForm(request.getParameter("name"),
+                request.getParameter("email"),
+                request.getParameter("sex"),
+                request.getParameter("phone"),
+                request.getParameter("password"));
     }
 }

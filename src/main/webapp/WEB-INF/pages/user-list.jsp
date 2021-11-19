@@ -26,7 +26,7 @@
         <input type="hidden" id ="bookId" name ="bookId">
 
 
-        <h2>User list</h2>
+        <h2><fmt:message key="header.users"/></h2>
 
     <table class="table">
         <thead>

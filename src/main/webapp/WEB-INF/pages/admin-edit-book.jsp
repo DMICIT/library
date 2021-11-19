@@ -55,6 +55,13 @@
             <button type="submit" class="btn btn-primary btn-md">Accept</button>
         </div>
     </form>
+    <c:if test="${not empty errorMessages}">
+        <c:forEach items="${errorMessages}" var="message">
+            <fmt:message key="${message}"/>
+            </br>
+
+        </c:forEach>
+    </c:if>
 </div>
 <c:import url="components/footer.jsp"/>
 </body>

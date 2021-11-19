@@ -28,7 +28,7 @@
 
     <div class="p-5 mb-4 bg-light rounded-3">
         <div class="container-fluid">
-            <h1 class="display-5 fw-bold" style="text-align: center">Welcome to library!</h1>
+            <h1 class="display-5 fw-bold" style="text-align: center"><fmt:message key="index.welcome"/></h1>
             <img src="${contextPath}/images/library.jpeg" class="mx-auto" style="width: 100%">
             <p class="col-md-8 fs-4">Scientia nihil aliud est quam veritas.</p>
             <a class="btn btn-primary btn-lg" href="books">Books</a>

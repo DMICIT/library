@@ -28,7 +28,7 @@
         <input type="hidden" id="action" name="action">
         <input type="hidden" id="orderId" name="orderId">
 
-    <h2>Book Orders</h2>
+    <h2><fmt:message key="book.orders"/></h2>
     </br>
     </br>
 
