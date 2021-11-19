@@ -17,15 +17,19 @@ public class LoginCommand extends AbstractCommand {
     private static final Logger LOG = Logger.getLogger(LoginCommand.class);
     private UserService userService;
     private PenaltyService penaltyService;
+    private ValidatorService validatorService;
 
-    public LoginCommand(){
-        this(new UserService(), new PenaltyService());
-    }
-
-    public LoginCommand(UserService userService, PenaltyService penaltyService) {
+    public LoginCommand(UserService userService, PenaltyService penaltyService, ValidatorService validatorService) {
         this.userService = userService;
         this.penaltyService = penaltyService;
+        this.validatorService = validatorService;
     }
+
+    public LoginCommand(){
+        this(new UserService(), new PenaltyService(), new ValidatorService());
+    }
+
+
 
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
@@ -38,7 +42,7 @@ public class LoginCommand extends AbstractCommand {
         LoginForm form = getLoginForm(request);
         User user = userService.getUserByEmail(form.getEmail());
 
-        if (!ValidatorService.validate(form)) {
+        if (!validatorService.validate(form)) {
             request.setAttribute("errorMessage", "Not valid Data");
             return "login.jsp";
         }
