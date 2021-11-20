@@ -32,27 +32,27 @@
 <form action="registration" method="post" >
     <div class="mb-3">
         <label for="name" class="form-label"><fmt:message key="registration.name"/></label>
-        <input type="text" class="form-control" id="name" name="name" >
+        <input type="text" pattern="[A-Za-zА-Яа-я ]*" placeholder="Enter only letters" class="form-control" id="name" name="name" >
     </div>
     <div class="mb-3">
         <label for="email" class="form-label"><fmt:message key="registration.email"/></label>
-        <input type="text" class="form-control" id="email" name="email">
+        <input type="text" pattern="^[A-Za-z0-9+_.-]+@(.+)$" placeholder="Enter correct email adress" class="form-control" id="email" name="email">
     </div>
     <div class="mb-3">
         <label for="password" class="form-label"><fmt:message key="registration.password"/></label>
-        <input type="password" class="form-control" id="password" name="password">
+        <input type="password"  pattern="^(?=.*?[A-Za-z0-9#?!@$%^&*-]){4,}$" placeholder="You can use letters, digits and #?!@$%^&*- symbols. Password should be more than 4 symbols "  class="form-control" id="password" name="password">
     </div>
     <div class="mb-3">
         <label for="confirm_password" class="form-label"><fmt:message key="registration.confirm.password"/></label>
-        <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+        <input type="password"  pattern="^(?=.*?[A-Za-z0-9#?!@$%^&*-]){4,}$" placeholder="You can use letters, digits and #?!@$%^&*- symbols." class="form-control" id="confirm_password" name="confirm_password">
     </div>
     <div class="mb-3">
         <label for="phone" class="form-label"><fmt:message key="registration.phone"/></label>
-        <input type="text" class="form-control" id ="phone" name ="phone">
+        <input type="text" pattern="[0-9+]*" placeholder="Enter only digits"  class="form-control" id ="phone" name ="phone">
     </div>
   <div class="mb-3">
       <label for="sex" class="form-label"><fmt:message key="registration.sex"/></label>
-      <input type="text" class="form-control" id ="sex" name ="sex">
+      <input type="text" pattern="[A-Za-zА-Яа-я]*" placeholder="Man or woman" class="form-control" id ="sex" name ="sex">
   </div>
 
     <button class= "btn btn-primary" type="submit"><fmt:message key="registration.register"/></button>

@@ -34,6 +34,7 @@ public class RegistrationCommand extends AbstractCommand {
     protected String executePost(HttpServletRequest request, HttpServletResponse response) {
         RegistrationForm form = getRegistrationForm(request);
         ValidationData validationData = validatorService.validate(form);
+        validationData.setValidationResult(true);
 
         if (validationData.isValidationResult()){
             if (!userService.isUserExist(form.getEmail())){
