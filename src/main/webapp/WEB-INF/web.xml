@@ -33,6 +33,15 @@
   </filter-mapping>
 
   <filter>
+    <filter-name>RuLanguageFilter</filter-name>
+    <filter-class>com.project.filter.RuLanguageFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>RuLanguageFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
     <filter-name>StaticResourceFilter</filter-name>
     <filter-class>com.project.filter.StaticResourceFilter</filter-class>
   </filter>

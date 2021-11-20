@@ -40,6 +40,7 @@ public class ValidatorService {
         if(!form.getSex().equalsIgnoreCase("man") && !form.getSex().equalsIgnoreCase("woman")){
             validationData.addErrorCode("error.wrong.gender");
         }
+        matcher = patternPhoneValidation.matcher(form.getPhone());
         if(!matcher.matches()) {
             validationData.addErrorCode("error.wrong.phone");
         }
