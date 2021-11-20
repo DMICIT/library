@@ -52,7 +52,10 @@
     </div>
   <div class="mb-3">
       <label for="sex" class="form-label"><fmt:message key="registration.sex"/></label>
-      <input type="text" pattern="[A-Za-zА-Яа-я]*" placeholder="Man or woman" class="form-control" id ="sex" name ="sex">
+      <select class="form-control" id ="sex" name ="sex">
+          <option value="man"><fmt:message key="sex.man"/></option>
+          <option value="woman"><fmt:message key="sex.woman"/></option>
+      </select>
   </div>
 
     <button class= "btn btn-primary" type="submit"><fmt:message key="registration.register"/></button>
