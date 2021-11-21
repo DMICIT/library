@@ -19,6 +19,7 @@ public class BookDao implements EntityDao<Book>, PaginationDao<Book> {
     public static final String SELECT_BY_ID_QUERY = "SELECT * FROM books WHERE id = ?";
     public static final String INSERT_NEW_BOOK_QUERY = "INSERT into books(author, book_name, book_edition, reliase_date) VALUES (?,?,?,?)";
     public static final String UPDATE_BOOKS_QUERY = "UPDATE books SET author = ?, book_name = ?, book_edition = ?, reliase_date = ? WHERE id = ?";
+    public static final String DELETE_FROM_BOOKS_WHERE_ID = "DELETE FROM books where id=?";
     public static final String ID = "id";
     public static final String AUTHOR = "author";
     public static final String BOOK_NAME = "book_name";
@@ -29,8 +30,6 @@ public class BookDao implements EntityDao<Book>, PaginationDao<Book> {
 
     private BookDao() {
     }
-
-    ;
 
     public static synchronized BookDao getInstance() {
         if (instance == null) {
@@ -132,6 +131,18 @@ public class BookDao implements EntityDao<Book>, PaginationDao<Book> {
         return result;
     }
 
+    public int delete (Book book) {
+        int result = 0;
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FROM_BOOKS_WHERE_ID);) {
+            preparedStatement.setInt(1, book.getId());
+            result = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
     @Override
     public PaginationData<Book> getPagination(int startField, int numbersPerPage) {
         PaginationData<Book> paginationData = new PaginationData();
@@ -156,12 +167,12 @@ public class BookDao implements EntityDao<Book>, PaginationDao<Book> {
             resultSet.close();
             resultSet = preparedStatement.executeQuery("SELECT FOUND_ROWS()");
             if (resultSet.next()){
-                paginationData.setTotalPagesAmount(resultSet.getInt(1));
+                paginationData.setTotalAmount(resultSet.getInt(1));
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
-        paginationData.setList(result);
+        paginationData.setEntityList(result);
         return paginationData;
     }
 }

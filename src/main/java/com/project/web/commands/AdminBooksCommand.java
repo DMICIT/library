@@ -35,7 +35,8 @@ public class AdminBooksCommand extends AbstractCommand{
     protected String executePost(HttpServletRequest request, HttpServletResponse response) {
         String action = request.getParameter("action");
         if(action.equals("delete")){
-            LOG.info("Delete: " + request.getParameter("bookId"));
+
+            bookService.delete(Integer.parseInt(request.getParameter("bookId")));
 
         }
         return "redirect:admin-books";

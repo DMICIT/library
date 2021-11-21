@@ -58,7 +58,7 @@ public class AdminEditBookCommand extends AbstractCommand {
 
         } else if (action.equals("edit")) {
             Book book = new Book(Integer.parseInt(form.getBookId()), form.getAuthor(), form.getBookName(), form.getBookEdition(),Date.valueOf(form.getReliaseDate()));
-            bookService.uodate(book);
+            bookService.update(book);
         }
         return "redirect:admin-books";
     }

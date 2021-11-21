@@ -2,6 +2,7 @@ package com.project.web.commands;
 
 import com.project.services.BookService;
 import com.project.web.data.BookData;
+import com.project.web.data.PaginationData;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,12 +23,20 @@ public class BookCommand extends AbstractCommand {
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
         String searchParameter = request.getParameter("search");
         String sortParameter = request.getParameter("sort");
-        List<BookData> books;
-        if (searchParameter != null) {
-            books = bookService.searchBook(searchParameter);
-        } else {
-            books = bookService.getAllAvailableBooks();
+
+        int page = 1;
+        int numberPerPage = 5;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
         }
+
+        PaginationData<BookData> books;
+        if (searchParameter != null) {
+            books = bookService.searchBook(searchParameter,(page-1)*numberPerPage,numberPerPage);
+        } else {
+            books = bookService.getAllAvailableBooks((page-1)*numberPerPage,numberPerPage);
+        }
+
         if (sortParameter != null) {
             // ascending asc
             // descending desc
@@ -36,9 +45,14 @@ public class BookCommand extends AbstractCommand {
             if (orderParam != null && orderParam.equals("desc")){
                 order = false;
             }
-            bookService.sortBooks(books, sortParameter, order);
+            bookService.sortBooks(books.getEntityList(), sortParameter, order);
         }
-        request.setAttribute("books", books);
+        int totalAmount = books.getTotalAmount();
+        int numberOfPages = (int)Math.ceil(totalAmount * 1.0 / numberPerPage);
+
+        request.setAttribute("books", books.getEntityList());
+        request.setAttribute("currentPage",page);
+        request.setAttribute("numberOfPages",numberOfPages);
         return "books.jsp";
     }
 

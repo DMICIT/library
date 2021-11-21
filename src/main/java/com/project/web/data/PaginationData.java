@@ -4,32 +4,31 @@ import java.util.List;
 
 public class PaginationData<T> {
 
-    private List<T> list;
-
-    private int totalPagesAmount;
+    private List<T> entityList;
+    private int totalAmount;
 
     public PaginationData() {
     }
 
     public PaginationData(List<T> list, int totalPagesAmount) {
-        this.list = list;
-        this.totalPagesAmount = totalPagesAmount;
+        this.entityList = list;
+        this.totalAmount = totalPagesAmount;
     }
 
-    public List<T> getList() {
-        return list;
+    public List<T> getEntityList() {
+        return entityList;
     }
 
-    public void setList(List<T> list) {
-        this.list = list;
+    public void setEntityList(List<T> entityList) {
+        this.entityList = entityList;
     }
 
-    public int getTotalPagesAmount() {
-        return totalPagesAmount;
+    public int getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setTotalPagesAmount(int totalPagesAmount) {
-        this.totalPagesAmount = totalPagesAmount;
+    public void setTotalAmount(int totalAmount) {
+        this.totalAmount = totalAmount;
     }
 }
 
