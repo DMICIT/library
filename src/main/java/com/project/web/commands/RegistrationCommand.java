@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
 
 public class RegistrationCommand extends AbstractCommand {
     private static final Logger LOG = Logger.getLogger(RegistrationCommand.class);
@@ -15,8 +16,8 @@ public class RegistrationCommand extends AbstractCommand {
     private ValidatorService validatorService;
 
 
-    public RegistrationCommand(){
-        this(new UserService(),new ValidatorService());
+    public RegistrationCommand() {
+        this(new UserService(), new ValidatorService());
     }
 
     public RegistrationCommand(UserService userServiceNotStatic, ValidatorService validatorServiceNotStatic) {
@@ -34,25 +35,25 @@ public class RegistrationCommand extends AbstractCommand {
     protected String executePost(HttpServletRequest request, HttpServletResponse response) {
         RegistrationForm form = getRegistrationForm(request);
         ValidationData validationData = validatorService.validate(form);
-        validationData.setValidationResult(true);
 
-        if (validationData.isValidationResult()){
-            if (!userService.isUserExist(form.getEmail())){
+        if (validationData.isValidationResult()) {
+            if (!userService.isUserExist(form.getEmail())) {
                 userService.createUser(form);
                 LOG.info("User created");
                 return "redirect:login";
-            }else {
+            } else {
                 LOG.info("Already exist user with this email: " + form.getEmail());
-                request.setAttribute("errorMessage", "User already exist");
+                request.setAttribute("errorMessages", Collections.singletonList("error.user.exist"));
             }
-        } LOG.info("Invalid Data");
-        request.setAttribute("errorMessage", "Invalid Data");
+        }
+        LOG.info("Invalid Data");
+        request.setAttribute("errorMessages", validationData.getErrorCodes());
         return "registration.jsp";
 
-        }
+    }
 
-    private RegistrationForm getRegistrationForm (HttpServletRequest request){
-        return new RegistrationForm(request.getParameter("name"), request.getParameter("email"),request.getParameter("sex"),
-                request.getParameter("phone"), request.getParameter("password"),request.getParameter("confirm_password"));
+    private RegistrationForm getRegistrationForm(HttpServletRequest request) {
+        return new RegistrationForm(request.getParameter("name"), request.getParameter("email"), request.getParameter("sex"),
+                request.getParameter("phone"), request.getParameter("password"), request.getParameter("confirm_password"));
     }
 }

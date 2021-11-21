@@ -1,14 +1,7 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: dmytro
-  Date: 10/21/21
-  Time: 10:14 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="custom" tagdir="/WEB-INF/tags" %>
 <fmt:setLocale value="${locale}"></fmt:setLocale>
 <fmt:setBundle basename="${bundle}"></fmt:setBundle>
 <c:set var="contextPath" value = "${pageContext.request.contextPath}"/>
@@ -55,13 +48,8 @@
             <button type="submit" class="btn btn-primary btn-md">Accept</button>
         </div>
     </form>
-    <c:if test="${not empty errorMessages}">
-        <c:forEach items="${errorMessages}" var="message">
-            <fmt:message key="${message}"/>
-            </br>
+    <custom:tags errorMessages="${errorMessages}" bundle="${bundle}" locale="${locale}"></custom:tags>
 
-        </c:forEach>
-    </c:if>
 </div>
 <c:import url="components/footer.jsp"/>
 </body>
