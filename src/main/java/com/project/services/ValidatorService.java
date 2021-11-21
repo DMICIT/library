@@ -22,6 +22,7 @@ public class ValidatorService {
     private static Pattern patternReliaseDateValidation = Pattern.compile("([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))");
     private static Pattern patternPasswordValidation = Pattern.compile("^(?=.*?[A-Za-z0-9#?!@$%^&*-]){4,}$");
     private static Pattern patternBookEditionValidation = Pattern.compile("[A-Za-z0-9#?!@$%^&* -]*");
+    private static Pattern patternQuantityValidation = Pattern.compile("[0-9]*");
 
 
     public  ValidationData validate (RegistrationForm form){
@@ -112,7 +113,12 @@ public class ValidatorService {
         if(!matcher.matches()) {
             validationData.addErrorCode("error.wrong.date");
         }
-        if (validationData.getErrorCodes().isEmpty()) {
+        matcher = patternQuantityValidation.matcher(form.getCount());
+        if(!matcher.matches()) {
+            validationData.addErrorCode("error.wrong.quantity");
+        }
+
+            if (validationData.getErrorCodes().isEmpty()) {
             validationData.setValidationResult(true);
         }
         return validationData;

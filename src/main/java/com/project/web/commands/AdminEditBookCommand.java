@@ -47,19 +47,14 @@ public class AdminEditBookCommand extends AbstractCommand {
         AdminEditBookForm form = getAdminEditBookForm(request);
          ValidationData validationData = validatorService.validate(form);
          String action = request.getParameter("action");
-//        String bookId = request.getParameter("bookId");
-//        String author = request.getParameter("author");
-//        String bookName = request.getParameter("bookName");
-//        String bookEdition = request.getParameter("bookEdition");
-//        Date reliaseDate = Date.valueOf(request.getParameter("reliaseDate"));
-//        int count = Integer.parseInt(request.getParameter("count"));
+
         if (!validationData.isValidationResult()){
             request.setAttribute("errorMessages", validationData.getErrorCodes());
             return "admin-edit-book.jsp";
         }
         if (action.equals("add")) {
             Book book = new Book(form.getAuthor(), form.getBookName(), form.getBookEdition(),Date.valueOf(form.getReliaseDate()));
-            bookService.create(book, form.getCount());
+            bookService.create(book, Integer.parseInt(form.getCount()));
 
         } else if (action.equals("edit")) {
             Book book = new Book(Integer.parseInt(form.getBookId()), form.getAuthor(), form.getBookName(), form.getBookEdition(),Date.valueOf(form.getReliaseDate()));
@@ -70,6 +65,6 @@ public class AdminEditBookCommand extends AbstractCommand {
     private AdminEditBookForm getAdminEditBookForm(HttpServletRequest request){
         return new AdminEditBookForm(request.getParameter("bookId"),request.getParameter("author"),
                 request.getParameter("bookName"),request.getParameter("bookEdition"),
-                request.getParameter("reliaseDate"),Integer.parseInt(request.getParameter("count")));
+                request.getParameter("reliaseDate"),request.getParameter("count"));
     }
 }

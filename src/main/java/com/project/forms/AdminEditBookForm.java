@@ -1,6 +1,5 @@
 package com.project.forms;
 
-import java.sql.Date;
 import java.util.Objects;
 
 public class AdminEditBookForm {
@@ -9,9 +8,9 @@ public class AdminEditBookForm {
     private String bookName;
     private String bookEdition;
     private String reliaseDate;
-    private int count;
+    private String count;
 
-    public AdminEditBookForm(String bookId, String author, String bookName, String bookEdition, String reliaseDate, int count) {
+    public AdminEditBookForm(String bookId, String author, String bookName, String bookEdition, String reliaseDate, String count) {
         this.bookId = bookId;
         this.author = author;
         this.bookName = bookName;
@@ -60,11 +59,11 @@ public class AdminEditBookForm {
         this.reliaseDate = reliaseDate;
     }
 
-    public int getCount() {
+    public String getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(String count) {
         this.count = count;
     }
 

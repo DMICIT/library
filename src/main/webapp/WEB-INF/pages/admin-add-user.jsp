@@ -1,6 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="custom" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${locale}"></fmt:setLocale>
@@ -52,13 +51,7 @@
         </div>
     </form>
 
-    <c:if test="${not empty errorMessages}">
-        <c:forEach items="${errorMessages}" var="message">
-            <fmt:message key="${message}"/>
-            </br>
-
-        </c:forEach>
-    </c:if>
+    <custom:tags errorMessages="${errorMessages}" bundle="${bundle}" locale="${locale}"></custom:tags>
 </div>
 <c:import url="components/footer.jsp"/>
 </body>
