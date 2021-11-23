@@ -8,10 +8,7 @@ import com.project.entities.Book;
 import com.project.entities.Order;
 import com.project.entities.Penalty;
 import com.project.entities.User;
-import com.project.web.data.BookData;
-import com.project.web.data.OrderData;
-import com.project.web.data.PenaltyData;
-import com.project.web.data.UserPrincipal;
+import com.project.web.data.*;
 import com.sun.tools.corba.se.idl.constExpr.Or;
 
 import javax.servlet.http.HttpSession;
@@ -23,14 +20,18 @@ public class OrderService {
     private OrderDao orderDao;
     private BookService bookService;
 
-    public OrderService(){
-        this(OrderDaoImpl.getInstance(),new BookService());
-    }
-
-    public OrderService(OrderDao orderDao, BookService bookService) {
+    public OrderService(OrderDao orderDao, BookService bookService, UserService userService) {
         this.orderDao = orderDao;
         this.bookService = bookService;
+        this.userService = userService;
     }
+
+    private UserService userService;
+
+    public OrderService(){
+        this(OrderDaoImpl.getInstance(),new BookService(),new UserService());
+    }
+
 
 
     public static void changeStatus(int orderId, String status) {
@@ -41,9 +42,11 @@ public class OrderService {
         orderDao.update(order);
     }
 
-    public static List<Order> getAllOrdersByUser(int userId) {
+    public List<OrderData> getAllOrdersByUser(int userId) {
         OrderDaoImpl orderDao = OrderDaoImpl.getInstance();
-        return orderDao.getAllOrdersByUser(userId);
+
+        List<Order> orders = orderDao.getAllOrdersByUser(userId);
+        return getOrderDataList(orders);
     }
 
     public void create(Order order) {
@@ -51,9 +54,10 @@ public class OrderService {
         orderDao.create(order);
     }
 
-    public static List<Order> getOrdersByStatus(String status) {
+    public List<OrderData> getOrdersByStatus(String status) {
         OrderDao orderDao = OrderDaoImpl.getInstance();
-        return orderDao.getOrdersByStatus(status);
+        List<Order> ordersByStatus = orderDao.getOrdersByStatus(status);
+        return getOrderDataList(ordersByStatus);
 
     }
 
@@ -63,14 +67,15 @@ public class OrderService {
         for (Order order : orders) {
             int bookId = order.getBookId();
             BookData book = bookService.getById(bookId);
-            BookData bookData = new BookData(book.getId(), book.getAuthor(), book.getBookName(), book.getBookEdition(), book.getReliaseDate());
-            OrderData orderData = new OrderData(order.getId(), order.getUserId(), bookData, order.getBookSpot(), order.getStatus(), order.getReturnDate());
+            UserData user = userService.getUser(order.getUserId());
+            OrderData orderData = new OrderData(order.getId(), user, book, order.getBookSpot(), order.getStatus(), order.getReturnDate());
             PenaltyDao penaltyDao = PenaltyDaoImpl.getInstance();
             Penalty penaltyByOrder = penaltyDao.getPenaltyByOrder(order.getId());
             if (penaltyByOrder != null) {
                 PenaltyData penaltyData = new PenaltyData(penaltyByOrder.getPenaltyCost());
                 orderData.setPenaltyData(penaltyData);
             }
+
             orderDataList.add(orderData);
         } return orderDataList;
     }

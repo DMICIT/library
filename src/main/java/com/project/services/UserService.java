@@ -3,6 +3,7 @@ package com.project.services;
 import com.project.dao.impl.UserDaoImpl;
 import com.project.entities.User;
 import com.project.forms.RegistrationForm;
+import com.project.web.data.UserData;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -74,5 +75,8 @@ public class UserService {
         UserDaoImpl userDao = UserDaoImpl.getInstance();
         userDao.deleteUser(userId);
     }
-
+    public UserData getUser(int userId){
+        User userById = userDao.getById(userId);
+        return new UserData(userById.getName());
+    }
 }

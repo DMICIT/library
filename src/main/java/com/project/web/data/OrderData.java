@@ -4,16 +4,16 @@ import java.sql.Date;
 
 public class OrderData {
     private int id;
-    private int userId;
+    private UserData userData;
     private BookData bookData;
     private String bookSpot;
     private String status;
     private Date returnDate;
     private PenaltyData penaltyData;
 
-    public OrderData(int id, int userId, BookData bookData, String bookSpot, String status, Date returnDate) {
+    public OrderData(int id, UserData userData, BookData bookData, String bookSpot, String status, Date returnDate) {
         this.id = id;
-        this.userId = userId;
+        this.userData = userData;
         this.bookData = bookData;
         this.bookSpot = bookSpot;
         this.status = status;
@@ -28,12 +28,12 @@ public class OrderData {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public UserData getUserData() {
+        return userData;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserData(UserData userData) {
+        this.userData = userData;
     }
 
     public BookData getBookData() {

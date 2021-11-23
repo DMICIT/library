@@ -53,7 +53,14 @@
                     <td>${user.id}</td>
                     <td>${user.name}</td>
                     <td>${user.email}</td>
-                    <td>${user.sex}</td>
+                    <td>
+                        <c:if test="${user.sex eq 'man'}">
+                            <fmt:message key="sex.man"/>
+                        </c:if>
+                        <c:if test="${user.sex eq 'woman'}">
+                            <fmt:message key="sex.woman"/>
+                        </c:if>
+                            </td>
                     <td>${user.phone}</td>
                     <td>${user.role}</td>
                     <td>${user.banList}</td>
@@ -65,7 +72,7 @@
                                onclick="document.getElementById('action').value = 'delete';
                                        document.getElementById('userId').value = '${user.id}';
                                        document.getElementById('userForm').submit();">
-                                delete
+                                <fmt:message key="delete"/>
                             </a>
                         </c:if>
                         <c:if test="${param.type eq 'users' && user.banList eq 0}">
@@ -73,7 +80,7 @@
                                onclick="document.getElementById('action').value = 'ban';
                                        document.getElementById('userId').value = '${user.id}';
                                        document.getElementById('userForm').submit();">
-                                ban
+                                <fmt:message key="ban"/>
                             </a>
                         </c:if>
                         <c:if test="${param.type eq 'users' && user.banList eq 1}">
@@ -81,7 +88,7 @@
                                onclick="document.getElementById('action').value = 'unban';
                                        document.getElementById('userId').value = '${user.id}';
                                        document.getElementById('userForm').submit();">
-                                unban
+                                <fmt:message key="unban"/>
                             </a>
                         </c:if>
 
@@ -92,7 +99,7 @@
 
     </form>
     <c:if test="${param.type eq 'librarians'}">
-        <a href="admin-add-user" class="btn btn-primary btn-md"> Add </a></c:if>
+        <a href="admin-add-user" class="btn btn-primary btn-md">   <fmt:message key="add"/> </a></c:if>
 </div>
 <c:import url="components/footer.jsp"/>
 </body>

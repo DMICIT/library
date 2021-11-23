@@ -29,7 +29,7 @@
                    value="${not empty param.search ? param.search: ''}"
                    placeholder="Type the Author or Book Name">
         </div>
-        <button type="submit" class="btn btn-info">Search</button>
+        <button type="submit" class="btn btn-info"><fmt:message key="search"/></button>
         </br>
         </br>
     </form>
@@ -88,13 +88,13 @@
                                onclick="document.getElementById('action').value = 'abonement';
                                        document.getElementById('bookId').value = '${book.id}';
                                        document.getElementById('bookForm').submit();">
-                            abonement
+                            <fmt:message key="abonement"/>
                         </a></td>
                         <td><a href="#" id="library hall"
                                onclick="document.getElementById('action').value = 'library hall';
                                        document.getElementById('bookId').value = '${book.id}';
                                        document.getElementById('bookForm').submit();">
-                            library hall
+                            <fmt:message key="library.hall"/>
                         </a></td>
                     </c:if>
                 </tr>
@@ -103,7 +103,7 @@
 
         <c:if test="${currentPage !=1}">
         <a href="books?page=${currentPage-1}${not empty param.search ? '&search=' += param.search : ''}${not empty param.sort ? '&sort=' += param.sort : ''}${not empty param.order ? '&order=' += param.order : ''}">
-            Previous
+            <fmt:message key="previous"/>
         </a>
         </c:if>
 
@@ -122,7 +122,7 @@
 
         <c:if test="${currentPage lt numberOfPages}">
         <a href="books?page=${currentPage+1}${not empty param.search ? '&search=' += param.search : ''}${not empty param.sort ? '&sort=' += param.sort : ''}${not empty param.order ? '&order=' += param.order : ''}">
-            Next
+            <fmt:message key="next"/>
         </a>
 
         </c:if>

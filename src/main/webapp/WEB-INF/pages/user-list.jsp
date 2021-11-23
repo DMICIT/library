@@ -16,7 +16,7 @@
 </head>
 
 
-<title>User List</title>
+<title><fmt:message key="header.users"/></title>
 </head>
 <body>
 
@@ -44,7 +44,7 @@
                 <td>${user.name}</td>
                 <td>${user.email}</td>
                 <td>
-                    <a href="user-abonement?userId=${user.id}">abonement</a>
+                    <a href="user-abonement?userId=${user.id}"><fmt:message key="abonement"/></a>
                 </td>
 
             </tr>

@@ -64,7 +64,7 @@
         </c:forEach>
     </table>
 </form>
-<a href="admin-edit-book" class="btn btn-primary btn-md">new book</a>
+<a href="admin-edit-book" class="btn btn-primary btn-md"><fmt:message key="new.book"/></a>
 </div>
 <c:import url="components/footer.jsp"/>
 </body>

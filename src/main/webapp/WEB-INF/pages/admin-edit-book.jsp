@@ -30,19 +30,19 @@
         <input type="hidden" id ="action" name ="action" value="${action}">
 
         <div class ="form-group col-xs-4">
-            <label for="author" class="control-label col-xs-4">author</label>
+            <label for="author" class="control-label col-xs-4"><fmt:message key="books.author"/></label>
             <input type = "text" name="author" id = "author" class="form-control" value ="${book.author}" required>
 
-            <label for="bookName" class="control-label col-xs-4">bookName</label>
+            <label for="bookName" class="control-label col-xs-4"><fmt:message key="books.book.name"/></label>
             <input type = "text" name="bookName" id = "bookName" class="form-control" value ="${book.bookName}" required>
 
-            <label for="bookEdition" class="control-label col-xs-4">bookEdition</label>
+            <label for="bookEdition" class="control-label col-xs-4"><fmt:message key="books.edition"/></label>
             <input type = "text" name="bookEdition" id = "bookEdition" class="form-control" value ="${book.bookEdition}" required>
 
-            <label for="reliaseDate" class="control-label col-xs-4">reliaseDate</label>
+            <label for="reliaseDate" class="control-label col-xs-4"><fmt:message key="books.date.of.reliase"/></label>
             <input type = "text" name="reliaseDate" id = "reliaseDate" class="form-control" value ="${book.reliaseDate}" required>
 
-            <label for="count" class="control-label col-xs-4">count</label>
+            <label for="count" class="control-label col-xs-4"><fmt:message key="count"/></label>
             <input type = "text" name="count" id = "count" class="form-control" value ="${book.catalogData.totalQuantity}" required>
             </br>
             <button type="submit" class="btn btn-primary btn-md">Accept</button>

@@ -36,7 +36,8 @@
         <thead>
         <tr>
             <td><fmt:message key="orders.#"/></td>
-            <td><fmt:message key="orders.bookId"/></td>
+            <td><fmt:message key="header.users"/></td>
+            <td><fmt:message key="books.book.name"/></td>
             <td><fmt:message key="orders.book.spot"/></td>
             <td><fmt:message key="orders.status"/></td>
             <td><fmt:message key="orders.return.date"/></td>
@@ -46,9 +47,26 @@
         <c:forEach items="${orders}" var="order">
         <tr>
             <td>${order.id}</td>
-            <td>${order.bookId}</td>
-            <td>${order.bookSpot}</td>
-            <td>${order.status}</td>
+            <td>${order.userData.userName}</td>
+            <td>${order.bookData.bookName}</td>
+            <td>
+                <c:if test="${order.bookSpot eq 'abonement'}">
+                <fmt:message key="abonement"/>
+            </c:if>
+                <c:if test="${order.bookSpot eq 'library hall'}">
+                    <fmt:message key="library.hall"/>
+                </c:if>
+            </td>
+            <td><c:if test="${order.status eq 'expected'}">
+                <fmt:message key="expected"/>
+            </c:if>
+                <c:if test="${order.status eq 'checked out'}">
+                    <fmt:message key="checked.out"/>
+                </c:if>
+                <c:if test="${order.status eq 'returned'}">
+                    <fmt:message key="returned"/>
+                </c:if>
+            </td>
             <td>${order.returnDate}</td>
             <td>
                 <c:if test="${order.status eq 'expected'}">
@@ -56,7 +74,7 @@
                    onclick="document.getElementById('action').value = 'checked out';
                    document.getElementById('orderId').value = ${order.id};
                            document.getElementById('bookForm').submit();">
-                    check out
+                    <fmt:message key="check.out"/>
                 </a>
                 </c:if>
                 <c:if test="${order.status  eq 'checked out'}">
@@ -64,7 +82,7 @@
                        onclick="document.getElementById('action').value = 'returned';
                                document.getElementById('orderId').value = ${order.id};
                                document.getElementById('bookForm').submit();">
-                        returned
+                        <fmt:message key="returned"/>
                     </a>
                 </c:if>
             </td>

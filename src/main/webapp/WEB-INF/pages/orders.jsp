@@ -46,8 +46,25 @@
         <tr>
         <td>${order.id}</td>
         <td>${order.bookData.bookName}</td>
-        <td>${order.bookSpot}</td>
-        <td>${order.status}</td>
+        <td>
+            <c:if test="${order.bookSpot eq 'abonement'}">
+            <fmt:message key="abonement"/>
+        </c:if>
+            <c:if test="${order.bookSpot eq 'library hall'}">
+                <fmt:message key="library.hall"/>
+            </c:if>
+</td>
+        <td>
+            <c:if test="${order.status eq 'expected'}">
+                <fmt:message key="expected"/>
+            </c:if>
+            <c:if test="${order.status eq 'checked out'}">
+                <fmt:message key="checked.out"/>
+            </c:if>
+            <c:if test="${order.status eq 'returned'}">
+                <fmt:message key="returned"/>
+            </c:if>
+        </td>
         <td>${order.returnDate}</td>
            <c:if test="${not empty order.penaltyData}">
                <td>${order.penaltyData.penaltyCost}</td>

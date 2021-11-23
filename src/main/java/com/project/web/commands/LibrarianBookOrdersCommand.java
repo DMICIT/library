@@ -5,6 +5,7 @@ import com.project.dao.impl.OrderDaoImpl;
 import com.project.entities.Order;
 import com.project.services.OrderService;
 import com.project.services.PenaltyService;
+import com.project.web.data.OrderData;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,13 +13,15 @@ import java.util.List;
 
 public class LibrarianBookOrdersCommand extends AbstractCommand {
     private PenaltyService penaltyService;
+    private OrderService orderService;
 
-    public LibrarianBookOrdersCommand(){
-        this(new PenaltyService());
+    public LibrarianBookOrdersCommand(PenaltyService penaltyService, OrderService orderService) {
+        this.penaltyService = penaltyService;
+        this.orderService = orderService;
     }
 
-    public LibrarianBookOrdersCommand(PenaltyService penaltyService) {
-        this.penaltyService = penaltyService;
+    public LibrarianBookOrdersCommand(){
+        this(new PenaltyService(),new OrderService());
     }
 
     @Override
@@ -26,8 +29,8 @@ public class LibrarianBookOrdersCommand extends AbstractCommand {
 
         penaltyService.checkPenaltyByLibrarian();
 
-        List<Order> orders = OrderService.getOrdersByStatus("expected");
-        orders.addAll(OrderService.getOrdersByStatus("checked out"));
+        List<OrderData> orders = orderService.getOrdersByStatus("expected");
+        orders.addAll(orderService.getOrdersByStatus("checked out"));
         request.setAttribute("orders", orders);
         return "librarian-orders.jsp";
     }

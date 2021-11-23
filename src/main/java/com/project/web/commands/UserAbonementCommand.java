@@ -4,8 +4,10 @@ package com.project.web.commands;
 import com.project.entities.Order;
 import com.project.services.BookService;
 import com.project.services.OrderService;
+import com.project.services.UserService;
 import com.project.web.data.BookData;
 import com.project.web.data.OrderData;
+import com.project.web.data.UserData;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,32 +16,22 @@ import java.util.List;
 
 
 public class UserAbonementCommand implements Command{
-   private BookService bookService;
+   private OrderService orderService;
 
    public UserAbonementCommand(){
-       this(new BookService());
+       this(new OrderService());
    }
 
-    public UserAbonementCommand(BookService bookService) {
-        this.bookService = bookService;
+    public UserAbonementCommand(OrderService orderService) {
+        this.orderService = orderService;
     }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        List<Order> allOrders = OrderService.getAllOrdersByUser(Integer.parseInt(request.getParameter("userId")));
+        List<OrderData> allOrders = orderService.getAllOrdersByUser(Integer.parseInt(request.getParameter("userId")));
 
-        List<OrderData> orders = new ArrayList<>();
-        for (Order order :
-                allOrders) {
-            int bookId = order.getBookId();
-            BookData book = bookService.getById(bookId);
-            BookData bookData = new BookData(book.getId(),book.getAuthor(),book.getBookName(), book.getBookEdition(),book.getReliaseDate());
-            OrderData orderData = new OrderData(order.getId(),order.getUserId(),bookData,order.getBookSpot(), order.getStatus(),order.getReturnDate());
-            orders.add(orderData);
-        }
-
-        request.setAttribute("allOrders",orders);
+        request.setAttribute("allOrders",allOrders);
         return "user-abonement.jsp";
     }
 }

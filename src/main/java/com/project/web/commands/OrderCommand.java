@@ -35,17 +35,15 @@ public class OrderCommand extends AbstractCommand {
             User userByEmail = userService.getUserByEmail(user.getEmail());
             int usersIdByEmail = userByEmail.getId();
 
-            List<Order> allOrdersByUser = OrderService.getAllOrdersByUser(usersIdByEmail);
-            List<Order> ordersByStatus = new ArrayList<>();
-            for (Order orderByUser :
+            List<OrderData> allOrdersByUser = orderService.getAllOrdersByUser(usersIdByEmail);
+            List<OrderData> ordersByStatus = new ArrayList<>();
+            for (OrderData orderByUser :
                     allOrdersByUser) {
-                if (orderByUser.getStatus().equals("checked out") && orderByUser.getBookSpot().equals("abonement")) {
+                if(!orderByUser.getStatus().equals("returned")){
                     ordersByStatus.add(orderByUser);
                 }
             }
-
-            List<OrderData> orderDataList = orderService.getOrderDataList(ordersByStatus);
-            request.setAttribute("allOrders", orderDataList);
+            request.setAttribute("allOrders", ordersByStatus);
         }
         return "orders.jsp";
     }

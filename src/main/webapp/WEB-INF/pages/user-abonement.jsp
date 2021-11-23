@@ -21,7 +21,7 @@
 <c:import url="components/header.jsp"/>
 <div class="container">
 
-<h2>User abonement</h2>
+<h2><fmt:message key="abonement"/></h2>
 
 
 <table class="table">

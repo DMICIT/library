@@ -29,6 +29,7 @@ public class CommandFactory {
         commandMap.put("user-list", new UserListCommand());
         commandMap.put("user-abonement",new UserAbonementCommand());
         commandMap.put("ban-page",new BanCommand());
+        commandMap.put("error", new PageNotFoundCommand());
     }
 
     private CommandFactory() {

@@ -24,7 +24,7 @@
 <c:import url="components/header.jsp"/>
 <div class="container">
 
-    <h2><fmt:message key="users.header"/></h2>
+    <h2><fmt:message key="users.librarian"/></h2>
     <form action="admin-add-user" method="post" id="userForm" role="form">
         <c:if test="${empty action}">
             <c:set var="action" value="add"/>
@@ -32,22 +32,22 @@
         <input type="hidden" id="action" name="action" value="${action}">
 
         <div class="form-group col-xs-4">
-            <label for="name" class="control-label col-xs-4">name</label>
+            <label for="name" class="control-label col-xs-4"><fmt:message key="users.name"/></label>
             <input type="text" name="name" id="name" class="form-control" required>
 
-            <label for="email" class="control-label col-xs-4">email</label>
+            <label for="email" class="control-label col-xs-4"><fmt:message key="users.email"/></label>
             <input type="text" name="email" id="email" class="form-control" required>
 
-            <label for="sex" class="control-label col-xs-4">sex</label>
+            <label for="sex" class="control-label col-xs-4"><fmt:message key="users.sex"/></label>
             <input type="text" name="sex" id="sex" class="form-control" required>
 
-            <label for="phone" class="control-label col-xs-4">phone</label>
+            <label for="phone" class="control-label col-xs-4"><fmt:message key="users.phone"/></label>
             <input type="text" name="phone" id="phone" class="form-control" required>
 
-            <label for="password" class="control-label col-xs-4">password</label>
+            <label for="password" class="control-label col-xs-4"><fmt:message key="users.password"/></label>
             <input type="text" name="password" id="password" class="form-control" required>
             </br>
-            <button type="submit" class="btn btn-primary btn-md">Accept</button>
+            <button type="submit" class="btn btn-primary btn-md"><fmt:message key="accept"/></button>
         </div>
     </form>
 
