@@ -22,7 +22,7 @@
 
     <h2><fmt:message key="books.header"/></h2>
 
-    <form action="admin-edit-book" method="post" id="bookForm" role ="form">
+    <form action="admin-edit-book${not empty book.id ? '?id=' += book.id : ''}" method="post" id="bookForm" role ="form">
         <c:if test ="${empty action}">
             <c:set var="action" value="add"/>
         </c:if>

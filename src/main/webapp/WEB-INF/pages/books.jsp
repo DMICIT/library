@@ -47,28 +47,28 @@
                 <td><fmt:message key="books.#"/></td>
                 <td><fmt:message key="books.author"/>
                     <a style="text-decoration: none;"
-                       href="books?sort=author${not empty param.search ? '&search=' += param.search  : ''}">&#9650;</a>
+                       href="books?sort=author${not empty param.search ? '&search=' += param.search  : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
                     <a style="text-decoration: none;"
-                       href="books?sort=author&order=desc${not empty param.search ? '$search' += param.search : ''}">&#9660;</a>
+                       href="books?sort=author&order=desc${not empty param.search ? '&search' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
                 </td>
                 <td><fmt:message key="books.book.name"/>
                     <a style="text-decoration: none;"
-                       href="books?sort=bookName${not empty param.search ? '&search=' += param.search : ''}">&#9650;</a>
+                       href="books?sort=bookName${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
                     <a style="text-decoration: none;"
-                       href="books?sort=bookName&order=desc${not empty param.search ? '&search=' += param.search : ''}">&#9660;</a>
+                       href="books?sort=bookName&order=desc${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
                 </td>
                 </td>
                 <td><fmt:message key="books.edition"/>
                     <a style="text-decoration: none;"
-                       href="books?sort=bookEdition${not empty param.search ? '&search=' += param.search : ''}">&#9650;</a>
+                       href="books?sort=bookEdition${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
                     <a style="text-decoration: none;"
-                       href="books?sort=bookEdition&order=desc${not empty param.search ? '&search=' += param.search : ''}">&#9660;</a>
+                       href="books?sort=bookEdition&order=desc${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
                 </td>
                 <td><fmt:message key="books.date.of.reliase"/>
                     <a style="text-decoration: none;"
-                       href="books?sort=reliaseDate${not empty param.search ? '&search=' += param.search : ''}">&#9650;</a>
+                       href="books?sort=reliaseDate${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
                     <a style="text-decoration: none;"
-                       href="books?sort=reliaseDate&order=desc${not empty param.search ? '&search=' += param.search : ''}">&#9660;</a>
+                       href="books?sort=reliaseDate&order=desc${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
                 </td>
                 <td></td>
                 <td></td>
@@ -83,26 +83,26 @@
                     <td>${book.bookEdition}</td>
                     <td>${book.reliaseDate}</td>
 
-                        <c:if test="${user.role eq 'user'}">
-                            <td><a href="#" id="abonement"
-                                   onclick="document.getElementById('action').value = 'abonement';
-                                           document.getElementById('bookId').value = '${book.id}';
-                                           document.getElementById('bookForm').submit();">
-                                abonement
-                            </a></td>
-                            <td><a href="#" id="library hall"
-                                   onclick="document.getElementById('action').value = 'library hall';
-                                           document.getElementById('bookId').value = '${book.id}';
-                                           document.getElementById('bookForm').submit();">
-                                library hall
-                            </a></td>
-                        </c:if>
+                    <c:if test="${user.role eq 'user'}">
+                        <td><a href="#" id="abonement"
+                               onclick="document.getElementById('action').value = 'abonement';
+                                       document.getElementById('bookId').value = '${book.id}';
+                                       document.getElementById('bookForm').submit();">
+                            abonement
+                        </a></td>
+                        <td><a href="#" id="library hall"
+                               onclick="document.getElementById('action').value = 'library hall';
+                                       document.getElementById('bookId').value = '${book.id}';
+                                       document.getElementById('bookForm').submit();">
+                            library hall
+                        </a></td>
+                    </c:if>
                 </tr>
             </c:forEach>
         </table>
 
         <c:if test="${currentPage !=1}">
-        <a href="books?page=${currentPage-1}">
+        <a href="books?page=${currentPage-1}${not empty param.search ? '&search=' += param.search : ''}${not empty param.sort ? '&sort=' += param.sort : ''}${not empty param.order ? '&order=' += param.order : ''}">
             Previous
         </a>
         </c:if>
@@ -113,7 +113,7 @@
             ${i}
         </c:when>
         <c:otherwise>
-        <a href="books?page=${i}">
+        <a href="books?page=${i}${not empty param.search ? '&search=' += param.search : ''}${not empty param.sort ? '&sort=' += param.sort : ''}${not empty param.order ? '&order=' += param.order : ''}">
                 ${i}
         </a>
         </c:otherwise>
@@ -121,12 +121,11 @@
         </c:forEach>
 
         <c:if test="${currentPage lt numberOfPages}">
-        <a href="books?page=${currentPage+1}">
+        <a href="books?page=${currentPage+1}${not empty param.search ? '&search=' += param.search : ''}${not empty param.sort ? '&sort=' += param.sort : ''}${not empty param.order ? '&order=' += param.order : ''}">
             Next
         </a>
 
         </c:if>
-
         </c:when>
         <c:otherwise>
         <h2>Sorry but nothing found &#9785;</h2>

@@ -48,6 +48,11 @@ public class AdminEditBookCommand extends AbstractCommand {
 
         if (!validationData.isValidationResult()){
             request.setAttribute("errorMessages", validationData.getErrorCodes());
+            if (action.equals("edit") && form.getBookId() != null){
+                BookData book = bookService.getById(Integer.parseInt(form.getBookId()));
+                request.setAttribute("book", book);
+                request.setAttribute("action", "edit");
+            }
             return "admin-edit-book.jsp";
         }
         if (action.equals("add")) {

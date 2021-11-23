@@ -11,7 +11,7 @@ import java.util.List;
 public class BookCommand extends AbstractCommand {
     private BookService bookService;
 
-    public BookCommand(){
+    public BookCommand() {
         this(new BookService());
     }
 
@@ -22,7 +22,15 @@ public class BookCommand extends AbstractCommand {
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
         String searchParameter = request.getParameter("search");
-        String sortParameter = request.getParameter("sort");
+        String sortParameter = "id";
+        boolean order = true;
+        if (request.getParameter("sort") != null) {
+            sortParameter = request.getParameter("sort");
+            String orderParam = request.getParameter("order");
+            if (orderParam != null && orderParam.equals("desc")) {
+                order = false;
+            }
+        }
 
         int page = 1;
         int numberPerPage = 10;
@@ -32,27 +40,17 @@ public class BookCommand extends AbstractCommand {
 
         PaginationData<BookData> books;
         if (searchParameter != null) {
-            books = bookService.searchBook(searchParameter,(page-1)*numberPerPage,numberPerPage);
+            books = bookService.searchBook(searchParameter, (page - 1) * numberPerPage, numberPerPage, sortParameter, order);
         } else {
-            books = bookService.getAllAvailableBooks((page-1)*numberPerPage,numberPerPage);
+            books = bookService.getAllAvailableBooks((page - 1) * numberPerPage, numberPerPage, sortParameter, order);
         }
 
-        if (sortParameter != null) {
-            // ascending asc
-            // descending desc
-            String orderParam = request.getParameter("order");
-            boolean order = true;
-            if (orderParam != null && orderParam.equals("desc")){
-                order = false;
-            }
-            bookService.sortBooks(books.getEntityList(), sortParameter, order);
-        }
         int totalAmount = books.getTotalAmount();
-        int numberOfPages = (int)Math.ceil(totalAmount * 1.0 / numberPerPage);
+        int numberOfPages = (int) Math.ceil(totalAmount * 1.0 / numberPerPage);
 
         request.setAttribute("books", books.getEntityList());
-        request.setAttribute("currentPage",page);
-        request.setAttribute("numberOfPages",numberOfPages);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("numberOfPages", numberOfPages);
         return "books.jsp";
     }
 
