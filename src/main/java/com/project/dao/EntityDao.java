@@ -8,5 +8,4 @@ public interface EntityDao<T> {
     T getById(int id);
     int create (T entity);
     int update (T entity);
-
 }

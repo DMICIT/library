@@ -1,7 +1,5 @@
 package com.project.web.commands;
 
-import com.project.dao.CatalogDao;
-import com.project.dao.impl.BookDao;
 import com.project.entities.Book;
 import com.project.forms.AdminEditBookForm;
 import com.project.services.BookService;
@@ -58,7 +56,7 @@ public class AdminEditBookCommand extends AbstractCommand {
 
         } else if (action.equals("edit")) {
             Book book = new Book(Integer.parseInt(form.getBookId()), form.getAuthor(), form.getBookName(), form.getBookEdition(),Date.valueOf(form.getReliaseDate()));
-            bookService.update(book);
+            bookService.update(book,Integer.parseInt(form.getCount()));
         }
         return "redirect:admin-books";
     }

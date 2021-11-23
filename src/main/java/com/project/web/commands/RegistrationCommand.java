@@ -43,7 +43,7 @@ public class RegistrationCommand extends AbstractCommand {
                 return "redirect:login";
             } else {
                 LOG.info("Already exist user with this email: " + form.getEmail());
-                request.setAttribute("errorMessages", Collections.singletonList("error.user.exist"));
+                validationData.addErrorCode("error.user.exist");
             }
         }
         LOG.info("Invalid Data");

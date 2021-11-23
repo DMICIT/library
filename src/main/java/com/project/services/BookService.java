@@ -1,7 +1,7 @@
 package com.project.services;
 
 import com.project.dao.CatalogDao;
-import com.project.dao.impl.BookDao;
+import com.project.dao.impl.BookDaoImp;
 import com.project.dao.impl.CatalogDaoImpl;
 import com.project.entities.Book;
 import com.project.entities.Catalog;
@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BookService {
-    private BookDao bookDao;
+    private BookDaoImp bookDao;
     private CatalogService catalogService;
 
     public BookService(){
-        this(BookDao.getInstance(),new CatalogService());
+        this(BookDaoImp.getInstance(),new CatalogService());
     }
 
-    public BookService(BookDao bookDao, CatalogService catalogService) {
+    public BookService(BookDaoImp bookDao, CatalogService catalogService) {
         this.bookDao = bookDao;
         this.catalogService = catalogService;
     }
@@ -44,8 +44,6 @@ public class BookService {
         List<Book> paginatedList = getPaginatedBooks(allAvailableBooks,start,numberPerPage);
         List<BookData> listBookData = getBookDataList(paginatedList);
         return new PaginationData<>(listBookData,allAvailableBooks.size());
-
-
     }
 
     private List<BookData> getBookDataList(List<Book> books) {
@@ -63,7 +61,6 @@ public class BookService {
                 catalogData.setAvailableQuantity(catalogByBookId.getCount() - (int) checkedOutBooks);
                 bookData.setCatalogData(catalogData);
             }
-
             result.add(bookData);
         }
         return result;
@@ -109,33 +106,32 @@ public class BookService {
 
 
     public List<BookData> getAllBooks() {
-        BookDao bookDao = BookDao.getInstance();
         List<Book> bookList = bookDao.getAll();
         return getBookDataList(bookList);
     }
 
     public BookData getById(int id) {
-        BookDao bookDao = BookDao.getInstance();
         Book book = bookDao.getById(id);
         return new BookData(book.getId(), book.getAuthor(), book.getBookName(), book.getBookEdition(), book.getReliaseDate());
 
     }
 
     public void create(Book book, int count) {
-        BookDao bookDao = BookDao.getInstance();
         bookDao.create(book);
         CatalogDao catalogDao = CatalogDaoImpl.getInstance();
         Catalog catalog = new Catalog(book.getId(), count);
         catalogDao.create(catalog);
     }
 
-    public void update(Book book) {
-        BookDao bookDao = BookDao.getInstance();
+    public void update(Book book, int count) {
         bookDao.update(book);
+        CatalogDao catalogDao = CatalogDaoImpl.getInstance();
+        Catalog catalog = catalogDao.getCatalogByBookId(book.getId());
+        catalog.setCount(count);
+        catalogDao.update(catalog);
     }
 
     public void delete(int bookId){
-        BookDao bookDao = BookDao.getInstance();
         Book bookById = bookDao.getById(bookId);
         if (bookById != null){
             bookDao.delete(bookById);

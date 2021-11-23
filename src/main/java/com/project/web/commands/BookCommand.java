@@ -25,7 +25,7 @@ public class BookCommand extends AbstractCommand {
         String sortParameter = request.getParameter("sort");
 
         int page = 1;
-        int numberPerPage = 5;
+        int numberPerPage = 10;
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }

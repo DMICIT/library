@@ -1,5 +1,6 @@
 package com.project.dao.impl;
 
+import com.project.dao.BookDao;
 import com.project.dao.EntityDao;
 import com.project.dao.PaginationDao;
 import com.project.entities.Book;
@@ -11,9 +12,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDao implements EntityDao<Book>, PaginationDao<Book> {
+public class BookDaoImp implements BookDao, PaginationDao<Book> {
 
-    private static final Logger LOG = Logger.getLogger(BookDao.class);
+    private static final Logger LOG = Logger.getLogger(BookDaoImp.class);
     public static final String SELECT_ALL_QUERY = "SELECT * FROM books";
     public static final String SELECT_PAGINATION_QUERY = "SELECT SQL_CALC_FOUND_ROWS * FROM books LIMIT ?, ?";
     public static final String SELECT_BY_ID_QUERY = "SELECT * FROM books WHERE id = ?";
@@ -26,14 +27,14 @@ public class BookDao implements EntityDao<Book>, PaginationDao<Book> {
     public static final String BOOK_EDITION = "book_edition";
     public static final String RELIASE_DATE = "reliase_date";
 
-    private static BookDao instance;
+    private static BookDaoImp instance;
 
-    private BookDao() {
+    private BookDaoImp() {
     }
 
-    public static synchronized BookDao getInstance() {
+    public static synchronized BookDaoImp getInstance() {
         if (instance == null) {
-            instance = new BookDao();
+            instance = new BookDaoImp();
         }
         return instance;
     }

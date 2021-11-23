@@ -41,12 +41,10 @@
             <td><fmt:message key="orders.status"/></td>
             <td><fmt:message key="orders.return.date"/></td>
             <td></td>
-
         </tr>
         </thead>
         <c:forEach items="${orders}" var="order">
         <tr>
-
             <td>${order.id}</td>
             <td>${order.bookId}</td>
             <td>${order.bookSpot}</td>
@@ -69,7 +67,7 @@
                         returned
                     </a>
                 </c:if>
-            </td>>
+            </td>
         </tr>
         </c:forEach>
     </table>

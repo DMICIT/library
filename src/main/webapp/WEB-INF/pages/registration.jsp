@@ -27,7 +27,7 @@
 <form action="registration" method="post" >
     <div class="mb-3">
         <label for="name" class="form-label"><fmt:message key="registration.name"/></label>
-        <input type="text" pattern="[A-Za-zА-Яа-я ]*" placeholder="Enter only letters" class="form-control" id="name" name="name" >
+        <input type="text" pattern="[A-Za-zА-Яа-я0-9 ]*" placeholder="Enter only letters" class="form-control" id="name" name="name" >
     </div>
     <div class="mb-3">
         <label for="email" class="form-label"><fmt:message key="registration.email"/></label>
@@ -39,7 +39,7 @@
     </div>
     <div class="mb-3">
         <label for="confirm_password" class="form-label"><fmt:message key="registration.confirm.password"/></label>
-        <input type="password"  pattern="^(?=.*?[A-Za-z0-9#?!@$%^&*-]){4,}$" placeholder="You can use letters, digits and #?!@$%^&*- symbols." class="form-control" id="confirm_password" name="confirm_password">
+        <input type="password"  pattern="^[A-Za-z0-9#?!@$%^&*-]{4,}$" placeholder="You can use letters, digits and #?!@$%^&*- symbols." class="form-control" id="confirm_password" name="confirm_password">
     </div>
     <div class="mb-3">
         <label for="phone" class="form-label"><fmt:message key="registration.phone"/></label>

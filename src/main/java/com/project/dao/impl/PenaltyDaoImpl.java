@@ -163,4 +163,5 @@ public class PenaltyDaoImpl implements PenaltyDao {
         }
         return result;
     }
+
 }

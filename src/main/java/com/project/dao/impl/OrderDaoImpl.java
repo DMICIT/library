@@ -169,7 +169,6 @@ public class OrderDaoImpl implements OrderDao {
 
                 Order order = new Order(id, userId, bookId, bookSpot, status, returnDate);
                 result.add(order);
-
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -201,5 +200,6 @@ public class OrderDaoImpl implements OrderDao {
         }
         return result;
     }
+
 }
 

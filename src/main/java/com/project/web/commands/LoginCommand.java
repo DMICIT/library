@@ -6,11 +6,13 @@ import com.project.services.PenaltyService;
 import com.project.services.UserService;
 import com.project.services.ValidatorService;
 import com.project.web.data.UserPrincipal;
+import com.project.web.data.ValidationData;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Collections;
 
 public class LoginCommand extends AbstractCommand {
 
@@ -41,17 +43,18 @@ public class LoginCommand extends AbstractCommand {
 
         LoginForm form = getLoginForm(request);
         User user = userService.getUserByEmail(form.getEmail());
+        ValidationData validationData = validatorService.validate(form);
 
-        if (!validatorService.validate(form)) {
-            request.setAttribute("errorMessage", "Not valid Data");
+        if (!validationData.isValidationResult()) {
+            request.setAttribute("errorMessages", validationData.getErrorCodes());
             return "login.jsp";
         }
         if (user == null) {
-            request.setAttribute("errorMessage", "User not found, please register");
+            request.setAttribute("errorMessages", "User not found, please register");
             return "redirect:registration";
         }
         if (!user.getPassword().equals(form.getPassword())) {
-            request.setAttribute("errorMessage", "Wrong password!");
+            request.setAttribute("errorMessages", Collections.singletonList("error.wrong.password"));
             return "login.jsp";
         }
         if (user.getBanList() == 1){

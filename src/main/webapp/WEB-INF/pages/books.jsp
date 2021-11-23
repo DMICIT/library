@@ -82,18 +82,21 @@
                     <td>${book.bookName}</td>
                     <td>${book.bookEdition}</td>
                     <td>${book.reliaseDate}</td>
-                    <td><a href="#" id="abonement"
-                           onclick="document.getElementById('action').value = 'abonement';
-                                   document.getElementById('bookId').value = '${book.id}';
-                                   document.getElementById('bookForm').submit();">
-                        abonement
-                    </a></td>
-                    <td><a href="#" id="library hall"
-                           onclick="document.getElementById('action').value = 'library hall';
-                                   document.getElementById('bookId').value = '${book.id}';
-                                   document.getElementById('bookForm').submit();">
-                        library hall
-                    </a></td>
+
+                        <c:if test="${user.role eq 'user'}">
+                            <td><a href="#" id="abonement"
+                                   onclick="document.getElementById('action').value = 'abonement';
+                                           document.getElementById('bookId').value = '${book.id}';
+                                           document.getElementById('bookForm').submit();">
+                                abonement
+                            </a></td>
+                            <td><a href="#" id="library hall"
+                                   onclick="document.getElementById('action').value = 'library hall';
+                                           document.getElementById('bookId').value = '${book.id}';
+                                           document.getElementById('bookForm').submit();">
+                                library hall
+                            </a></td>
+                        </c:if>
                 </tr>
             </c:forEach>
         </table>

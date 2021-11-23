@@ -43,7 +43,7 @@
             <input type = "text" name="reliaseDate" id = "reliaseDate" class="form-control" value ="${book.reliaseDate}" required>
 
             <label for="count" class="control-label col-xs-4">count</label>
-            <input type = "text" name="count" id = "count" class="form-control" value ="${book.count}" required>
+            <input type = "text" name="count" id = "count" class="form-control" value ="${book.catalogData.totalQuantity}" required>
             </br>
             <button type="submit" class="btn btn-primary btn-md">Accept</button>
         </div>
