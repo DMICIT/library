@@ -26,7 +26,17 @@ public class AdminBooksCommand extends AbstractCommand{
 
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
-        List<BookData> books = bookService.getAllBooks();
+
+        String sortParameter = "id";
+        boolean order = true;
+        if (request.getParameter("sort") != null) {
+            sortParameter = request.getParameter("sort");
+            String orderParam = request.getParameter("order");
+            if (orderParam != null && orderParam.equals("desc")) {
+                order = false;
+            }
+        }
+        List<BookData> books = bookService.getSortedBooks(sortParameter,order);
         request.setAttribute("books",books);
         return "admin-books.jsp";
     }

@@ -17,21 +17,26 @@ import java.util.List;
 
 public class UserAbonementCommand implements Command{
    private OrderService orderService;
+   private UserService userService;
 
-   public UserAbonementCommand(){
-       this(new OrderService());
-   }
-
-    public UserAbonementCommand(OrderService orderService) {
-        this.orderService = orderService;
+    public UserAbonementCommand(){
+        this(new OrderService(), new UserService());
     }
+
+    public UserAbonementCommand(OrderService orderService, UserService userService) {
+        this.orderService = orderService;
+        this.userService = userService;
+    }
+
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        List<OrderData> allOrders = orderService.getAllOrdersByUser(Integer.parseInt(request.getParameter("userId")));
-
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        List<OrderData> allOrders = orderService.getAllOrdersByUser(userId);
+        UserData userData = userService.getUser(userId);
         request.setAttribute("allOrders",allOrders);
+        request.setAttribute("userData", userData);
         return "user-abonement.jsp";
     }
 }

@@ -12,19 +12,19 @@ import java.util.List;
 public class OrderDaoImpl implements OrderDao {
 
     private static final Logger LOG = Logger.getLogger(PenaltyDaoImpl.class);
-    public static final String SELECT_ALL_ORDERS_QUERY = "SELECT * FROM orders";
-    public static final String SELECT_ORDERS_BY_ID_QUERY = "SELECT * FROM orders WHERE id = ?";
-    public static final String SELECT_ORDERS_BY_STATUS_QUERY = "SELECT * FROM orders WHERE status = ?";
-    public static final String SELECT_ORDERS_BY_BOOK_ID_QUERY = "SELECT * FROM orders WHERE id_book = ?";
-    public static final String INSERT_INTO_ORDERS_QUERY = "INSERT INTO orders ( id_book, id_user, book_spot, status, return_date ) values(?,?,?,?,?)";
-    public static final String UPDATE_ORDERS_QUERY = "UPDATE orders SET id_book = ?, id_user = ?, book_spot = ?, status= ?, return_date = ? WHERE id =?";
-    public static final String SELECT_FROM_ORDERS_BY_USER_ID_QUERY = "SELECT * FROM orders WHERE ID_USER = ?";
-    public static final String ID = "id";
-    public static final String ID_USER = "id_user";
-    public static final String ID_BOOK = "id_book";
-    public static final String BOOK_SPOT = "book_spot";
-    public static final String STATUS = "status";
-    public static final String RETURN_DATE = "return_date";
+    private static final String SELECT_ALL_ORDERS_QUERY = "SELECT * FROM orders";
+    private static final String SELECT_ORDERS_BY_ID_QUERY = "SELECT * FROM orders WHERE id = ?";
+    private static final String SELECT_ORDERS_BY_STATUS_QUERY = "SELECT * FROM orders WHERE status = ?";
+    private static final String SELECT_ORDERS_BY_BOOK_ID_QUERY = "SELECT * FROM orders WHERE id_book = ?";
+    private static final String INSERT_INTO_ORDERS_QUERY = "INSERT INTO orders ( id_book, id_user, book_spot, status, return_date ) values(?,?,?,?,?)";
+    private static final String UPDATE_ORDERS_QUERY = "UPDATE orders SET id_book = ?, id_user = ?, book_spot = ?, status= ?, return_date = ? WHERE id =?";
+    private static final String SELECT_FROM_ORDERS_BY_USER_ID_QUERY = "SELECT * FROM orders WHERE ID_USER = ?";
+    private static final String ID = "id";
+    private static final String ID_USER = "id_user";
+    private static final String ID_BOOK = "id_book";
+    private static final String BOOK_SPOT = "book_spot";
+    private static final String STATUS = "status";
+    private static final String RETURN_DATE = "return_date";
 
     private static OrderDaoImpl instance;
 

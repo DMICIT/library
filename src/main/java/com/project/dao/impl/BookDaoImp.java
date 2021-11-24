@@ -1,7 +1,6 @@
 package com.project.dao.impl;
 
 import com.project.dao.BookDao;
-import com.project.dao.EntityDao;
 import com.project.dao.PaginationDao;
 import com.project.entities.Book;
 import com.project.persistance.DataSourceConnectionPoolFactory;
@@ -15,17 +14,17 @@ import java.util.List;
 public class BookDaoImp implements BookDao, PaginationDao<Book> {
 
     private static final Logger LOG = Logger.getLogger(BookDaoImp.class);
-    public static final String SELECT_ALL_QUERY = "SELECT * FROM books";
-    public static final String SELECT_PAGINATION_QUERY = "SELECT SQL_CALC_FOUND_ROWS * FROM books LIMIT ?, ?";
-    public static final String SELECT_BY_ID_QUERY = "SELECT * FROM books WHERE id = ?";
-    public static final String INSERT_NEW_BOOK_QUERY = "INSERT into books(author, book_name, book_edition, reliase_date) VALUES (?,?,?,?)";
-    public static final String UPDATE_BOOKS_QUERY = "UPDATE books SET author = ?, book_name = ?, book_edition = ?, reliase_date = ? WHERE id = ?";
-    public static final String DELETE_FROM_BOOKS_WHERE_ID = "DELETE FROM books where id=?";
-    public static final String ID = "id";
-    public static final String AUTHOR = "author";
-    public static final String BOOK_NAME = "book_name";
-    public static final String BOOK_EDITION = "book_edition";
-    public static final String RELIASE_DATE = "reliase_date";
+    private static final String SELECT_ALL_QUERY = "SELECT * FROM books";
+    private static final String SELECT_PAGINATION_QUERY = "SELECT SQL_CALC_FOUND_ROWS * FROM books LIMIT ?, ?";
+    private static final String SELECT_BY_ID_QUERY = "SELECT * FROM books WHERE id = ?";
+    private static final String INSERT_NEW_BOOK_QUERY = "INSERT into books(author, book_name, book_edition, reliase_date) VALUES (?,?,?,?)";
+    private static final String UPDATE_BOOKS_QUERY = "UPDATE books SET author = ?, book_name = ?, book_edition = ?, reliase_date = ? WHERE id = ?";
+    private static final String DELETE_FROM_BOOKS_WHERE_ID = "DELETE FROM books where id=?";
+    private static final String ID = "id";
+    private static final String AUTHOR = "author";
+    private static final String BOOK_NAME = "book_name";
+    private static final String BOOK_EDITION = "book_edition";
+    private static final String RELIASE_DATE = "reliase_date";
 
     private static BookDaoImp instance;
 

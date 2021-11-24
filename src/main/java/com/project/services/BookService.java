@@ -19,8 +19,8 @@ public class BookService {
     private BookDaoImp bookDao;
     private CatalogService catalogService;
 
-    public BookService(){
-        this(BookDaoImp.getInstance(),new CatalogService());
+    public BookService() {
+        this(BookDaoImp.getInstance(), new CatalogService());
     }
 
     public BookService(BookDaoImp bookDao, CatalogService catalogService) {
@@ -39,12 +39,12 @@ public class BookService {
         return allAvailableBooks;
     }
 
-    public PaginationData <BookData> getAllAvailableBooks(int start, int numberPerPage,String sortParameter, boolean order){
+    public PaginationData<BookData> getAllAvailableBooks(int start, int numberPerPage, String sortParameter, boolean order) {
         List<Book> allAvailableBooks = getAllAvailableBooks();
-        sortBooks(allAvailableBooks,sortParameter,order);
-        List<Book> paginatedList = getPaginatedBooks(allAvailableBooks,start,numberPerPage);
+        sortBooks(allAvailableBooks, sortParameter, order);
+        List<Book> paginatedList = getPaginatedBooks(allAvailableBooks, start, numberPerPage);
         List<BookData> listBookData = getBookDataList(paginatedList);
-        return new PaginationData<>(listBookData,allAvailableBooks.size());
+        return new PaginationData<>(listBookData, allAvailableBooks.size());
     }
 
     private List<BookData> getBookDataList(List<Book> books) {
@@ -57,7 +57,7 @@ public class BookService {
     }
 
 
-    public PaginationData<BookData> searchBook(String searchParameter, int start, int numberPerPage,String sortParameter, boolean order) {
+    public PaginationData<BookData> searchBook(String searchParameter, int start, int numberPerPage, String sortParameter, boolean order) {
 
         List<Book> result = new ArrayList<>();
         List<Book> allBooks = getAllAvailableBooks();
@@ -67,10 +67,10 @@ public class BookService {
                 result.add(book);
             }
         }
-        sortBooks(result,sortParameter,order);
-        List<Book> paginatedList = getPaginatedBooks(result,start,numberPerPage);
+        sortBooks(result, sortParameter, order);
+        List<Book> paginatedList = getPaginatedBooks(result, start, numberPerPage);
         List<BookData> listBookData = getBookDataList(paginatedList);
-        return new PaginationData<>(listBookData,result.size());
+        return new PaginationData<>(listBookData, result.size());
     }
 
     private void sortBooks(List<Book> books, String sortParameter, boolean order) {
@@ -101,6 +101,13 @@ public class BookService {
         return getBookDataList(bookList);
     }
 
+    public List<BookData> getSortedBooks(String sortParameter, boolean order) {
+        List<Book> bookList = bookDao.getAll();
+        sortBooks(bookList, sortParameter, order);
+        return getBookDataList(bookList);
+
+    }
+
     public BookData getById(int id) {
         Book book = bookDao.getById(id);
         return getBookData(book);
@@ -121,14 +128,14 @@ public class BookService {
         catalogDao.update(catalog);
     }
 
-    public void delete(int bookId){
+    public void delete(int bookId) {
         Book bookById = bookDao.getById(bookId);
-        if (bookById != null){
+        if (bookById != null) {
             bookDao.delete(bookById);
         }
     }
 
-    private List<Book> getPaginatedBooks(List<Book> bookList, int start, int numbersPerPage){
+    private List<Book> getPaginatedBooks(List<Book> bookList, int start, int numbersPerPage) {
         List<Book> paginatedList = bookList.stream()
                 .skip(start)
                 .limit(numbersPerPage)
@@ -136,7 +143,7 @@ public class BookService {
         return paginatedList;
     }
 
-    private BookData getBookData(Book book){
+    private BookData getBookData(Book book) {
         BookData bookData = new BookData(book.getId(), book.getAuthor(), book.getBookName(), book.getBookEdition(), book.getReliaseDate());
 
         CatalogDao catalogDao = CatalogDaoImpl.getInstance();

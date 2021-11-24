@@ -15,20 +15,20 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
 
     private static final Logger LOG = Logger.getLogger(PenaltyDaoImpl.class);
-    public static final String SELECT_ALL_QUERY = "SELECT * FROM users";
-    public static final String SELECT_ALL_BY_ROLE_QUERY = "SELECT * FROM users Where role = ?";
-    public static final String SELECT_BY_ID_QUERY = "SELECT * FROM users WHERE id = ?";
-    public static final String SELECT_BY_EMAIL_QUERY = "SELECT * FROM users WHERE email = ?";
-    public static final String UPDATE_USERS_QUERY = "UPDATE  users SET name = ? , email = ?, sex = ?, telephone = ?, role = ?, ban_list = ?, password = ? WHERE id = ?";
-    public static final String CREATE_USERS_QUERY = "INSERT INTO users ( name , email, sex, telephone, role, ban_list, password) values(?,?,?,?,?,?,?)";
-    public static final String ID = "id";
-    public static final String NAME = "name";
-    public static final String EMAIL = "email";
-    public static final String SEX = "sex";
-    public static final String TELEPHONE = "telephone";
-    public static final String ROLE = "role";
-    public static final String BAN_LIST = "ban_list";
-    public static final String PASSWORD = "password";
+    private static final String SELECT_ALL_QUERY = "SELECT * FROM users";
+    private static final String SELECT_ALL_BY_ROLE_QUERY = "SELECT * FROM users Where role = ?";
+    private static final String SELECT_BY_ID_QUERY = "SELECT * FROM users WHERE id = ?";
+    private static final String SELECT_BY_EMAIL_QUERY = "SELECT * FROM users WHERE email = ?";
+    private static final String UPDATE_USERS_QUERY = "UPDATE  users SET name = ? , email = ?, sex = ?, telephone = ?, role = ?, ban_list = ?, password = ? WHERE id = ?";
+    private static final String CREATE_USERS_QUERY = "INSERT INTO users ( name , email, sex, telephone, role, ban_list, password) values(?,?,?,?,?,?,?)";
+    private static final String ID = "id";
+    private static final String NAME = "name";
+    private static final String EMAIL = "email";
+    private static final String SEX = "sex";
+    private static final String TELEPHONE = "telephone";
+    private static final String ROLE = "role";
+    private static final String BAN_LIST = "ban_list";
+    private static final String PASSWORD = "password";
 
     private static UserDaoImpl instance;
     private UserDaoImpl() {

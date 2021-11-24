@@ -17,14 +17,14 @@ public class CatalogDaoImpl implements CatalogDao {
 
 
     private static final Logger LOG = Logger.getLogger(CatalogDaoImpl.class);
-    public static final String SELECT_ALL_CATALOG_QUERY = "SELECT * FROM catalog";
-    public static final String SELECT_CATALOG_BY_ID_QUERY = "SELECT * FROM catalog WHERE id = ?";
-    public static final String SELECT_CATALOG_BY_BOOK_ID_QUERY = "SELECT * FROM catalog WHERE book_id = ?";
-    public static final String INSERT_QUERY = "INSERT INTO catalog (book_id, count ) VALUES (?,?)";
-    public static final String UPDATE_CATALOG_QUERY = "UPDATE catalog SET book_id = ?, count = ? WHERE id = ?";
-    public static final String ID = "id";
-    public static final String BOOK_ID = "book_id";
-    public static final String COUNT = "count";
+    private static final String SELECT_ALL_CATALOG_QUERY = "SELECT * FROM catalog";
+    private static final String SELECT_CATALOG_BY_ID_QUERY = "SELECT * FROM catalog WHERE id = ?";
+    private static final String SELECT_CATALOG_BY_BOOK_ID_QUERY = "SELECT * FROM catalog WHERE book_id = ?";
+    private static final String INSERT_QUERY = "INSERT INTO catalog (book_id, count ) VALUES (?,?)";
+    private static final String UPDATE_CATALOG_QUERY = "UPDATE catalog SET book_id = ?, count = ? WHERE id = ?";
+    private static final String ID = "id";
+    private static final String BOOK_ID = "book_id";
+    private static final String COUNT = "count";
 
     private static CatalogDaoImpl instance;
 

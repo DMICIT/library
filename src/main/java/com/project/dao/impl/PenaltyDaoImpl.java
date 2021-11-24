@@ -15,16 +15,16 @@ import java.util.List;
 
 public class PenaltyDaoImpl implements PenaltyDao {
     private static final Logger LOG = Logger.getLogger(PenaltyDaoImpl.class);
-    public static final String SELECT_ALL_PENALTIES_QUERY = "SELECT * FROM penalties";
-    public static final String SELECT_PENALTIES_BY_ID_QUERY = "SELECT * FROM penalties WHERE id = ?";
-    public static final String SELECT_PENALTIES_BY_ORDER_ID_QUERY = "SELECT * FROM penalties WHERE order_id = ?";
-    public static final String SELECT_PENALTIES_BY_USER_ID_QUERY = "SELECT * FROM penalties WHERE user_id = ?";
-    public static final String INSERT_QUERY = "INSERT INTO penalties ( user_id, order_id, penalty_cost ) values(?,?,?)";
-    public static final String UPDATE_QUERY = "UPDATE penalties SET user_id = ?, order_id = ?, penalty_cost = ? WHERE id = ?";
-    public static final String ID = "id";
-    public static final String ORDER_ID = "order_id";
-    public static final String USER_ID = "user_id";
-    public static final String PENALTY_COST = "penalty_cost";
+    private static final String SELECT_ALL_PENALTIES_QUERY = "SELECT * FROM penalties";
+    private static final String SELECT_PENALTIES_BY_ID_QUERY = "SELECT * FROM penalties WHERE id = ?";
+    private static final String SELECT_PENALTIES_BY_ORDER_ID_QUERY = "SELECT * FROM penalties WHERE order_id = ?";
+    private static final String SELECT_PENALTIES_BY_USER_ID_QUERY = "SELECT * FROM penalties WHERE user_id = ?";
+    private static final String INSERT_QUERY = "INSERT INTO penalties ( user_id, order_id, penalty_cost ) values(?,?,?)";
+    private static final String UPDATE_QUERY = "UPDATE penalties SET user_id = ?, order_id = ?, penalty_cost = ? WHERE id = ?";
+    private static final String ID = "id";
+    private static final String ORDER_ID = "order_id";
+    private static final String USER_ID = "user_id";
+    private static final String PENALTY_COST = "penalty_cost";
 
     private static PenaltyDaoImpl instance;
 

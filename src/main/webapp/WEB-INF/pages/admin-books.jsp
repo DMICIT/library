@@ -36,10 +36,31 @@
         <thead>
         <tr>
             <td><fmt:message key="books.#"/></td>
-            <td><fmt:message key="books.author"/></td>
-            <td><fmt:message key="books.book.name"/></td>
-            <td><fmt:message key="books.edition"/></td>
-            <td><fmt:message key="books.date.of.reliase"/></td>
+            <td><fmt:message key="books.author"/>
+                <a style="text-decoration: none;"
+                   href="admin-books?sort=author${not empty param.search ? '&search=' += param.search  : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
+                <a style="text-decoration: none;"
+                   href="admin-books?sort=author&order=desc${not empty param.search ? '&search' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
+            </td>
+
+            <td><fmt:message key="books.book.name"/>
+                <a style="text-decoration: none;"
+                   href="admin-books?sort=bookName${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
+                <a style="text-decoration: none;"
+                   href="admin-books?sort=bookName&order=desc${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
+            </td>
+            <td><fmt:message key="books.edition"/>
+                <a style="text-decoration: none;"
+                   href="admin-books?sort=bookEdition${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
+                <a style="text-decoration: none;"
+                   href="admin-books?sort=bookEdition&order=desc${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
+            </td>
+            <td><fmt:message key="books.date.of.reliase"/>
+                <a style="text-decoration: none;"
+                   href="admin-books?sort=reliaseDate${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
+                <a style="text-decoration: none;"
+                   href="admin-books?sort=reliaseDate&order=desc${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
+            </td>
             <td><fmt:message key="books.quantity"/></td>
             <td></td>
         </tr>

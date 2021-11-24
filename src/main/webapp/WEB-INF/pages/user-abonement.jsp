@@ -21,7 +21,7 @@
 <c:import url="components/header.jsp"/>
 <div class="container">
 
-<h2><fmt:message key="abonement"/></h2>
+<h2>${userData.userName}</h2>
 
 
 <table class="table">
@@ -31,8 +31,8 @@
     <td><fmt:message key="orders.#"/></td>
     <td><fmt:message key="books.book.name"/></td>
     <td><fmt:message key="books.author"/></td>
+    <td><fmt:message key="orders.book.spot"/></td>
     <td><fmt:message key="orders.return.date"/></td>
-
 
 </tr>
 </thead>
@@ -43,6 +43,12 @@
         <td>${order.id}</td>
         <td>${order.bookData.bookName}</td>
         <td>${order.bookData.author}</td>
+        <td> <c:if test="${order.bookSpot eq 'abonement'}">
+            <fmt:message key="abonement"/>
+        </c:if>
+            <c:if test="${order.bookSpot eq 'library hall'}">
+                <fmt:message key="library.hall"/>
+            </c:if></td>
         <td>${order.returnDate}</td>
 
     </tr>
