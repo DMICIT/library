@@ -75,9 +75,9 @@
             </tr>
             </thead>
 
-            <c:forEach items="${books}" var="book">
+            <c:forEach items="${books}" var="book" varStatus="loop">
                 <tr>
-                    <td>${book.id}</td>
+                    <td>${loop.count}</td>
                     <td>${book.author}</td>
                     <td>${book.bookName}</td>
                     <td>${book.bookEdition}</td>

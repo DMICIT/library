@@ -44,7 +44,6 @@ public class BookCommand extends AbstractCommand {
         } else {
             books = bookService.getAllAvailableBooks((page - 1) * numberPerPage, numberPerPage, sortParameter, order);
         }
-
         int totalAmount = books.getTotalAmount();
         int numberOfPages = (int) Math.ceil(totalAmount * 1.0 / numberPerPage);
 

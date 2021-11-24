@@ -47,10 +47,10 @@
             </tr>
             </thead>
 
-            <c:forEach items="${users}" var="user">
+            <c:forEach items="${users}" var="user" varStatus="loop">
 
                 <tr>
-                    <td>${user.id}</td>
+                    <td>${loop.count}</td>
                     <td>${user.name}</td>
                     <td>${user.email}</td>
                     <td>

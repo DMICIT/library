@@ -44,9 +44,9 @@
             <td></td>
         </tr>
         </thead>
-        <c:forEach items="${orders}" var="order">
+        <c:forEach items="${orders}" var="order" varStatus="loop">
         <tr>
-            <td>${order.id}</td>
+            <td>${loop.count}</td>
             <td>${order.userData.userName}</td>
             <td>${order.bookData.bookName}</td>
             <td>

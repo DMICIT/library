@@ -1,7 +1,5 @@
 package com.project.factory;
 
-import com.project.dao.impl.*;
-import com.project.services.*;
 import com.project.web.commands.*;
 
 import java.util.HashMap;

@@ -42,9 +42,9 @@
         </tr>
         </thead>
 
-    <c:forEach items="${allOrders}" var="order">
+    <c:forEach items="${allOrders}" var="order" varStatus="loop">
         <tr>
-        <td>${order.id}</td>
+        <td>${loop.count}</td>
         <td>${order.bookData.bookName}</td>
         <td>
             <c:if test="${order.bookSpot eq 'abonement'}">

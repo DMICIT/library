@@ -33,6 +33,8 @@
     <td><fmt:message key="books.author"/></td>
     <td><fmt:message key="orders.book.spot"/></td>
     <td><fmt:message key="orders.return.date"/></td>
+    <td><fmt:message key="orders.status"/></td>
+
 
 </tr>
 </thead>
@@ -50,7 +52,17 @@
                 <fmt:message key="library.hall"/>
             </c:if></td>
         <td>${order.returnDate}</td>
-
+        <td>
+            <c:if test="${order.status eq 'expected'}">
+                <fmt:message key="expected"/>
+            </c:if>
+            <c:if test="${order.status eq 'checked out'}">
+                <fmt:message key="checked.out"/>
+            </c:if>
+            <c:if test="${order.status eq 'returned'}">
+                <fmt:message key="returned"/>
+            </c:if>
+        </td>
     </tr>
 
     </c:forEach>
