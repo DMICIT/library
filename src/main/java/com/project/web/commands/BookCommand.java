@@ -59,8 +59,4 @@ public class BookCommand extends AbstractCommand {
         return null;
     }
 
-    public void setBookService(BookService bookService) {
-        this.bookService = bookService;
-    }
-
 }
