@@ -10,7 +10,6 @@ public class Order {
     private String bookSpot;
     private String status;
     private Date returnDate;
-    private String penalty;
 
     public Order(int userId, int bookId, String bookSpot, String status, Date returnDate) {
         this.userId = userId;

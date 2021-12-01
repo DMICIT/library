@@ -31,8 +31,6 @@ public class LoginCommand extends AbstractCommand {
         this(new UserService(), new PenaltyService(), new ValidatorService());
     }
 
-
-
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
         return "login.jsp";

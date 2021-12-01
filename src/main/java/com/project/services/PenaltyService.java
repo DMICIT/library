@@ -13,6 +13,8 @@ import java.util.List;
 public class PenaltyService {
 
     private PenaltyDao penaltyDao;
+    private OrderDao orderDao;
+
     public PenaltyService(){
         this(PenaltyDaoImpl.getInstance());
     }
@@ -22,21 +24,21 @@ public class PenaltyService {
     }
 
     public void checkUserPenalty(int userId) {
-        OrderDao orderDao = OrderDaoImpl.getInstance();
+        orderDao = OrderDaoImpl.getInstance();
         List<Order> allOrdersByUser = orderDao.getAllOrdersByUser(userId);
 
         checkPenalty(allOrdersByUser);
     }
 
     public void checkPenaltyByLibrarian() {
-        OrderDao orderDao = OrderDaoImpl.getInstance();
+        orderDao = OrderDaoImpl.getInstance();
         List<Order> allOrdersByUser = orderDao.getOrdersByStatus("checked out");
 
         checkPenalty(allOrdersByUser);
     }
 
     private void checkPenalty(List<Order> allOrdersByUser) {
-        PenaltyDao penaltyDao = PenaltyDaoImpl.getInstance();
+        penaltyDao = PenaltyDaoImpl.getInstance();
         LocalDate now = LocalDate.now();
         for (Order order : allOrdersByUser) {
             Penalty penaltyByOrder = penaltyDao.getPenaltyByOrder(order.getId());
@@ -49,6 +51,4 @@ public class PenaltyService {
             }
         }
     }
-
-
 }

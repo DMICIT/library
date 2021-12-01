@@ -18,7 +18,7 @@ public class AdminEditBookCommand extends AbstractCommand {
     private BookService bookService;
     private ValidatorService validatorService;
 
-    public AdminEditBookCommand(){
+    public AdminEditBookCommand() {
         this(new BookService(), new ValidatorService());
     }
 
@@ -37,18 +37,19 @@ public class AdminEditBookCommand extends AbstractCommand {
             request.setAttribute("action", "edit");
         }
         return "admin-edit-book.jsp";
+
     }
 
     @Override
     protected String executePost(HttpServletRequest request, HttpServletResponse response) {
 
         AdminEditBookForm form = getAdminEditBookForm(request);
-         ValidationData validationData = validatorService.validate(form);
-         String action = request.getParameter("action");
+        ValidationData validationData = validatorService.validate(form);
+        String action = request.getParameter("action");
 
-        if (!validationData.isValidationResult()){
+        if (!validationData.isValidationResult()) {
             request.setAttribute("errorMessages", validationData.getErrorCodes());
-            if (action.equals("edit") && form.getBookId() != null){
+            if (action.equals("edit") && form.getBookId() != null) {
                 BookData book = bookService.getById(Integer.parseInt(form.getBookId()));
                 request.setAttribute("book", book);
                 request.setAttribute("action", "edit");
@@ -56,18 +57,19 @@ public class AdminEditBookCommand extends AbstractCommand {
             return "admin-edit-book.jsp";
         }
         if (action.equals("add")) {
-            Book book = new Book(form.getAuthor(), form.getBookName(), form.getBookEdition(),Date.valueOf(form.getReliaseDate()));
+            Book book = new Book(form.getAuthor(), form.getBookName(), form.getBookEdition(), Date.valueOf(form.getReliaseDate()));
             bookService.create(book, Integer.parseInt(form.getCount()));
 
         } else if (action.equals("edit")) {
-            Book book = new Book(Integer.parseInt(form.getBookId()), form.getAuthor(), form.getBookName(), form.getBookEdition(),Date.valueOf(form.getReliaseDate()));
-            bookService.update(book,Integer.parseInt(form.getCount()));
+            Book book = new Book(Integer.parseInt(form.getBookId()), form.getAuthor(), form.getBookName(), form.getBookEdition(), Date.valueOf(form.getReliaseDate()));
+            bookService.update(book, Integer.parseInt(form.getCount()));
         }
         return "redirect:admin-books";
     }
-    private AdminEditBookForm getAdminEditBookForm(HttpServletRequest request){
-        return new AdminEditBookForm(request.getParameter("bookId"),request.getParameter("author"),
-                request.getParameter("bookName"),request.getParameter("bookEdition"),
-                request.getParameter("reliaseDate"),request.getParameter("count"));
+
+    private AdminEditBookForm getAdminEditBookForm(HttpServletRequest request) {
+        return new AdminEditBookForm(request.getParameter("bookId"), request.getParameter("author"),
+                request.getParameter("bookName"), request.getParameter("bookEdition"),
+                request.getParameter("reliaseDate"), request.getParameter("count"));
     }
 }

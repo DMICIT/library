@@ -47,14 +47,7 @@ public class BookService {
         return new PaginationData<>(listBookData, allAvailableBooks.size());
     }
 
-    private List<BookData> getBookDataList(List<Book> books) {
-        List<BookData> result = new ArrayList<>();
-        for (Book book : books) {
-            BookData bookData = getBookData(book);
-            result.add(bookData);
-        }
-        return result;
-    }
+
 
 
     public PaginationData<BookData> searchBook(String searchParameter, int start, int numberPerPage, String sortParameter, boolean order) {
@@ -141,6 +134,15 @@ public class BookService {
                 .limit(numbersPerPage)
                 .collect(Collectors.toList());
         return paginatedList;
+    }
+
+    private List<BookData> getBookDataList(List<Book> books) {
+        List<BookData> result = new ArrayList<>();
+        for (Book book : books) {
+            BookData bookData = getBookData(book);
+            result.add(bookData);
+        }
+        return result;
     }
 
     private BookData getBookData(Book book) {

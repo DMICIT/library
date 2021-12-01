@@ -32,7 +32,6 @@
                     <li><a href="${contextPath}/books" class="nav-link px-2 link-dark"><fmt:message key="header.books"/></a></li>
                 </c:otherwise>
             </c:choose>
-
             <c:if test="${user.role eq 'user'}">
                 <li><a href="${contextPath}/orders" class="nav-link px-2 link-dark"><fmt:message
                         key="header.orders"/></a></li>

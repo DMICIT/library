@@ -19,14 +19,14 @@ import java.util.List;
 public class OrderService {
     private OrderDao orderDao;
     private BookService bookService;
+    private UserService userService;
+
 
     public OrderService(OrderDao orderDao, BookService bookService, UserService userService) {
         this.orderDao = orderDao;
         this.bookService = bookService;
         this.userService = userService;
     }
-
-    private UserService userService;
 
     public OrderService(){
         this(OrderDaoImpl.getInstance(),new BookService(),new UserService());
