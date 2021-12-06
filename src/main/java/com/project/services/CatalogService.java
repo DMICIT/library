@@ -1,39 +1,40 @@
 package com.project.services;
 
 import com.project.dao.CatalogDao;
-import com.project.dao.OrderDao;
 import com.project.dao.impl.CatalogDaoImpl;
-import com.project.dao.impl.OrderDaoImpl;
 import com.project.entities.Catalog;
-import com.project.entities.Order;
-
-import java.util.List;
+import com.project.web.data.CatalogData;
 
 public class CatalogService {
 
     private CatalogDao catalogDao;
-    public CatalogService(){
-        this(CatalogDaoImpl.getInstance());
-    }
+
     public CatalogService(CatalogDao catalogDao) {
         this.catalogDao = catalogDao;
     }
 
-    public boolean isBookAvailable(int bookId) {
+    public CatalogService() {
+        this(CatalogDaoImpl.getInstance());
 
-        Catalog catalog = catalogDao.getCatalogByBookId(bookId);
-
-        long checkedOutBooks = quantityCheckedOutBooks(bookId);
-        return catalog != null && catalog.getCount() > checkedOutBooks;
     }
 
-    public long quantityCheckedOutBooks(int bookId){
+    public CatalogData getCatalogData(int id) {
+        Catalog catalogByBookId = catalogDao.getCatalogByBookId(id);
+        CatalogData catalogData = new CatalogData();
+        if (catalogByBookId != null) {
+            catalogData.setTotalQuantity(catalogByBookId.getCount());
+        }
+        return catalogData;
+    }
 
-        OrderDao orderDao = OrderDaoImpl.getInstance();
-        List<Order> allOrdersByBook = orderDao.getAllOrdersByBook(bookId);
+    public void create(int bookId, int count) {
+        Catalog catalog = new Catalog(bookId, count);
+        catalogDao.create(catalog);
+    }
 
-       return  allOrdersByBook.stream()
-                .filter(order -> order.getStatus().equals("checked out"))
-                .count();
+    public void update(int bookId, int count) {
+        Catalog catalog = catalogDao.getCatalogByBookId(bookId);
+        catalog.setCount(count);
+        catalogDao.update(catalog);
     }
 }

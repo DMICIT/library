@@ -7,7 +7,6 @@ import com.project.services.UserService;
 import com.project.services.ValidatorService;
 import com.project.web.data.UserPrincipal;
 import com.project.web.data.ValidationData;
-import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +15,6 @@ import java.util.Collections;
 
 public class LoginCommand extends AbstractCommand {
 
-    private static final Logger LOG = Logger.getLogger(LoginCommand.class);
     private UserService userService;
     private PenaltyService penaltyService;
     private ValidatorService validatorService;
@@ -27,7 +25,7 @@ public class LoginCommand extends AbstractCommand {
         this.validatorService = validatorService;
     }
 
-    public LoginCommand(){
+    public LoginCommand() {
         this(new UserService(), new PenaltyService(), new ValidatorService());
     }
 
@@ -55,7 +53,7 @@ public class LoginCommand extends AbstractCommand {
             request.setAttribute("errorMessages", Collections.singletonList("error.wrong.password"));
             return "login.jsp";
         }
-        if (user.getBanList() == 1){
+        if (user.getBanList() == 1) {
             return "ban-page.jsp";
         }
 

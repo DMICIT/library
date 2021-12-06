@@ -72,7 +72,7 @@ public class AdminEditBookForm {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AdminEditBookForm that = (AdminEditBookForm) o;
-        return count == that.count && Objects.equals(bookId, that.bookId) && Objects.equals(author, that.author) && Objects.equals(bookName, that.bookName) && Objects.equals(bookEdition, that.bookEdition) && Objects.equals(reliaseDate, that.reliaseDate);
+        return Objects.equals(bookId, that.bookId) && Objects.equals(author, that.author) && Objects.equals(bookName, that.bookName) && Objects.equals(bookEdition, that.bookEdition) && Objects.equals(reliaseDate, that.reliaseDate) && Objects.equals(count, that.count);
     }
 
     @Override

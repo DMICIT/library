@@ -1,25 +1,21 @@
 package com.project.web.commands;
 
 
-import com.project.entities.Order;
-import com.project.services.BookService;
 import com.project.services.OrderService;
 import com.project.services.UserService;
-import com.project.web.data.BookData;
 import com.project.web.data.OrderData;
 import com.project.web.data.UserData;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 
-public class UserAbonementCommand implements Command{
-   private OrderService orderService;
-   private UserService userService;
+public class UserAbonementCommand implements Command {
+    private OrderService orderService;
+    private UserService userService;
 
-    public UserAbonementCommand(){
+    public UserAbonementCommand() {
         this(new OrderService(), new UserService());
     }
 
@@ -35,7 +31,7 @@ public class UserAbonementCommand implements Command{
         int userId = Integer.parseInt(request.getParameter("userId"));
         List<OrderData> allOrders = orderService.getAllOrdersByUser(userId);
         UserData userData = userService.getUser(userId);
-        request.setAttribute("allOrders",allOrders);
+        request.setAttribute("allOrders", allOrders);
         request.setAttribute("userData", userData);
         return "user-abonement.jsp";
     }

@@ -23,12 +23,12 @@ public class BookCommand extends AbstractCommand {
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
         String searchParameter = request.getParameter("search");
         String sortParameter = "id";
-        boolean order = true;
+        String order = "ASC";
         if (request.getParameter("sort") != null) {
             sortParameter = request.getParameter("sort");
             String orderParam = request.getParameter("order");
             if (orderParam != null && orderParam.equals("desc")) {
-                order = false;
+                order = "DESC";
             }
         }
 

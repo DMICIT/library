@@ -6,7 +6,6 @@ import com.project.services.BookService;
 import com.project.services.ValidatorService;
 import com.project.web.data.BookData;
 import com.project.web.data.ValidationData;
-import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +13,6 @@ import java.sql.Date;
 
 public class AdminEditBookCommand extends AbstractCommand {
 
-    private static final Logger LOG = Logger.getLogger(AdminBooksCommand.class);
     private BookService bookService;
     private ValidatorService validatorService;
 

@@ -1,6 +1,5 @@
 package com.project.web.commands;
 
-import com.project.dao.impl.UserDaoImpl;
 import com.project.entities.User;
 import com.project.forms.AdminAddUserForm;
 import com.project.services.UserService;
@@ -24,7 +23,6 @@ public class AdminAddUserCommand extends AbstractCommand {
 
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
-
         return "admin-add-user.jsp";
     }
 
@@ -40,7 +38,7 @@ public class AdminAddUserCommand extends AbstractCommand {
         if (validationData.isValidationResult()) {
             User user = new User(form.getName(), form.getEmail(), form.getSex(), form.getPhone(), role, banList, form.getPassword());
             userService.createUser(user);
-        }else {
+        } else {
             request.setAttribute("errorMessages", validationData.getErrorCodes());
             return "admin-add-user.jsp";
         }

@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
 
 public class RegistrationCommand extends AbstractCommand {
     private static final Logger LOG = Logger.getLogger(RegistrationCommand.class);

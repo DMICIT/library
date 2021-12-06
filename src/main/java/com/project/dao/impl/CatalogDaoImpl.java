@@ -15,8 +15,8 @@ import java.util.List;
 
 public class CatalogDaoImpl implements CatalogDao {
 
-
     private static final Logger LOG = Logger.getLogger(CatalogDaoImpl.class);
+
     private static final String SELECT_ALL_CATALOG_QUERY = "SELECT * FROM catalog";
     private static final String SELECT_CATALOG_BY_ID_QUERY = "SELECT * FROM catalog WHERE id = ?";
     private static final String SELECT_CATALOG_BY_BOOK_ID_QUERY = "SELECT * FROM catalog WHERE book_id = ?";
@@ -44,7 +44,8 @@ public class CatalogDaoImpl implements CatalogDao {
         List<Catalog> result = new ArrayList<>();
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_CATALOG_QUERY);
-             ResultSet resultSet = preparedStatement.executeQuery();) {
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
             while (resultSet.next()) {
                 int id = resultSet.getInt(ID);
                 int bookId = resultSet.getInt(BOOK_ID);
@@ -52,8 +53,8 @@ public class CatalogDaoImpl implements CatalogDao {
 
                 Catalog catalog = new Catalog(id, bookId, count);
                 result.add(catalog);
-
             }
+
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -62,7 +63,6 @@ public class CatalogDaoImpl implements CatalogDao {
 
     @Override
     public Catalog getById(int inputId) {
-
         Catalog result = null;
 
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
@@ -119,13 +119,13 @@ public class CatalogDaoImpl implements CatalogDao {
 
     @Override
     public Catalog getCatalogByBookId(int inputBookId) {
-
         Catalog result = null;
 
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CATALOG_BY_BOOK_ID_QUERY);) {
             preparedStatement.setInt(1, inputBookId);
             ResultSet resultSet = preparedStatement.executeQuery();
+
             while (resultSet.next()) {
                 int id = resultSet.getInt(ID);
                 int bookId = resultSet.getInt(BOOK_ID);

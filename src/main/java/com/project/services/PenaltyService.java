@@ -15,34 +15,31 @@ public class PenaltyService {
     private PenaltyDao penaltyDao;
     private OrderDao orderDao;
 
-    public PenaltyService(){
-        this(PenaltyDaoImpl.getInstance());
+    public PenaltyService() {
+        this(PenaltyDaoImpl.getInstance(), OrderDaoImpl.getInstance());
     }
 
-    public PenaltyService(PenaltyDao penaltyDao) {
+    public PenaltyService(PenaltyDao penaltyDao, OrderDao orderDao) {
         this.penaltyDao = penaltyDao;
+        this.orderDao = orderDao;
     }
 
     public void checkUserPenalty(int userId) {
-        orderDao = OrderDaoImpl.getInstance();
         List<Order> allOrdersByUser = orderDao.getAllOrdersByUser(userId);
-
         checkPenalty(allOrdersByUser);
     }
 
     public void checkPenaltyByLibrarian() {
-        orderDao = OrderDaoImpl.getInstance();
         List<Order> allOrdersByUser = orderDao.getOrdersByStatus("checked out");
 
         checkPenalty(allOrdersByUser);
     }
 
     private void checkPenalty(List<Order> allOrdersByUser) {
-        penaltyDao = PenaltyDaoImpl.getInstance();
         LocalDate now = LocalDate.now();
         for (Order order : allOrdersByUser) {
             Penalty penaltyByOrder = penaltyDao.getPenaltyByOrder(order.getId());
-            if (penaltyByOrder != null) {
+            if (penaltyByOrder == null) {
                 LocalDate returnDate = order.getReturnDate().toLocalDate();
                 if (order.getStatus().equals("checked out") && returnDate.isBefore(now)) {
                     Penalty penalty = new Penalty(order.getId(), order.getUserId(), 500);

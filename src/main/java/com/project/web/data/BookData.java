@@ -1,6 +1,7 @@
 package com.project.web.data;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class BookData {
     private int id;
@@ -73,5 +74,30 @@ public class BookData {
 
     public void setCatalogData(CatalogData catalogData) {
         this.catalogData = catalogData;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookData bookData = (BookData) o;
+        return id == bookData.id && Objects.equals(author, bookData.author) && Objects.equals(bookName, bookData.bookName) && Objects.equals(bookEdition, bookData.bookEdition) && Objects.equals(reliaseDate, bookData.reliaseDate) && Objects.equals(catalogData, bookData.catalogData);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, author, bookName, bookEdition, reliaseDate, catalogData);
+    }
+
+    @Override
+    public String toString() {
+        return "BookData{" +
+                "id=" + id +
+                ", author='" + author + '\'' +
+                ", bookName='" + bookName + '\'' +
+                ", bookEdition='" + bookEdition + '\'' +
+                ", reliaseDate=" + reliaseDate +
+                ", catalogData=" + catalogData +
+                '}';
     }
 }

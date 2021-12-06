@@ -14,8 +14,10 @@ import java.util.List;
 public class BookDaoImp implements BookDao, PaginationDao<Book> {
 
     private static final Logger LOG = Logger.getLogger(BookDaoImp.class);
+
+    private static final String SELECT_PAGINATION_QUERY = "SELECT SQL_CALC_FOUND_ROWS * FROM books ORDER BY %s %s LIMIT ?, ?";
+    private static final String SELECT_SEARCH_PAGINATION_QUERY = "SELECT SQL_CALC_FOUND_ROWS * FROM books WHERE book_name LIKE ? or author LIKE ? ORDER BY %s %s LIMIT ?, ?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM books";
-    private static final String SELECT_PAGINATION_QUERY = "SELECT SQL_CALC_FOUND_ROWS * FROM books LIMIT ?, ?";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM books WHERE id = ?";
     private static final String INSERT_NEW_BOOK_QUERY = "INSERT into books(author, book_name, book_edition, reliase_date) VALUES (?,?,?,?)";
     private static final String UPDATE_BOOKS_QUERY = "UPDATE books SET author = ?, book_name = ?, book_edition = ?, reliase_date = ? WHERE id = ?";
@@ -90,8 +92,7 @@ public class BookDaoImp implements BookDao, PaginationDao<Book> {
     public int create(Book entity) {
         int result = 0;
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NEW_BOOK_QUERY, Statement.RETURN_GENERATED_KEYS);
-        ) {
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NEW_BOOK_QUERY, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, entity.getAuthor());
             preparedStatement.setString(2, entity.getBookName());
             preparedStatement.setString(3, entity.getBookEdition());
@@ -105,7 +106,6 @@ public class BookDaoImp implements BookDao, PaginationDao<Book> {
                     }
                 }
             }
-
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -131,7 +131,7 @@ public class BookDaoImp implements BookDao, PaginationDao<Book> {
         return result;
     }
 
-    public int delete (Book book) {
+    public int delete(Book book) {
         int result = 0;
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FROM_BOOKS_WHERE_ID);) {
@@ -144,14 +144,13 @@ public class BookDaoImp implements BookDao, PaginationDao<Book> {
     }
 
     @Override
-    public PaginationData<Book> getPagination(int startField, int numbersPerPage) {
+    public PaginationData<Book> getPagination(int startField, int numbersPerPage, String sort, String direction) {
         PaginationData<Book> paginationData = new PaginationData();
         List<Book> result = new ArrayList<>();
-        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
-        ) {
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PAGINATION_QUERY);
-            preparedStatement.setInt(1,startField);
-            preparedStatement.setInt(2,numbersPerPage);
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(String.format(SELECT_PAGINATION_QUERY, sort, direction));
+            preparedStatement.setInt(1, startField);
+            preparedStatement.setInt(2, numbersPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -166,7 +165,43 @@ public class BookDaoImp implements BookDao, PaginationDao<Book> {
             }
             resultSet.close();
             resultSet = preparedStatement.executeQuery("SELECT FOUND_ROWS()");
-            if (resultSet.next()){
+            if (resultSet.next()) {
+                paginationData.setTotalAmount(resultSet.getInt(1));
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        paginationData.setEntityList(result);
+        return paginationData;
+    }
+
+    @Override
+    public PaginationData<Book> getSearchPagination(String search, int startField, int numbersPerPage, String sort, String direction) {
+        PaginationData<Book> paginationData = new PaginationData();
+        List<Book> result = new ArrayList<>();
+        try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
+        ) {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(String.format(SELECT_SEARCH_PAGINATION_QUERY, sort, direction));
+            preparedStatement.setString(1, "%" + search + "%");
+            preparedStatement.setString(2, "%" + search + "%");
+            preparedStatement.setInt(3, startField);
+            preparedStatement.setInt(4, numbersPerPage);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while ((resultSet.next())) {
+                int id = resultSet.getInt(ID);
+                String author = resultSet.getString(AUTHOR);
+                String bookName = resultSet.getString(BOOK_NAME);
+                String bookEdition = resultSet.getString(BOOK_EDITION);
+                Date reliaseDate = resultSet.getDate(RELIASE_DATE);
+                Book bookInfo = new Book(id, author, bookName, bookEdition, reliaseDate);
+                result.add(bookInfo);
+
+            }
+            resultSet.close();
+            resultSet = preparedStatement.executeQuery("SELECT FOUND_ROWS()");
+            if (resultSet.next()) {
                 paginationData.setTotalAmount(resultSet.getInt(1));
             }
         } catch (SQLException e) {

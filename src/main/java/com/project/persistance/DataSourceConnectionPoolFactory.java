@@ -1,7 +1,5 @@
 package com.project.persistance;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
-import com.project.entities.Book;
 import org.apache.log4j.Logger;
 
 import javax.naming.Context;
@@ -12,11 +10,10 @@ import java.sql.*;
 
 public class DataSourceConnectionPoolFactory {
     private static final Logger LOG = Logger.getLogger(DataSourceConnectionPoolFactory.class);
-    private static final DataSourceConnectionPoolFactory INSTANCE = new DataSourceConnectionPoolFactory();
 
     private static DataSource dataSource;
 
-    public DataSourceConnectionPoolFactory() {
+    private DataSourceConnectionPoolFactory() {
     }
 
     static {

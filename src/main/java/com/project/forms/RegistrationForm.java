@@ -1,15 +1,15 @@
 package com.project.forms;
 
 
-public class RegistrationForm{
+import java.util.Objects;
+
+public class RegistrationForm {
     private String name;
     private String email;
     private String sex;
     private String phone;
     private String password;
     private String confirmPassword;
-
-
 
     public RegistrationForm(String name, String email, String sex, String phone, String password, String confirmPassword) {
         this.name = name;
@@ -59,6 +59,7 @@ public class RegistrationForm{
     public void setPassword(String password) {
         this.password = password;
     }
+
     public String getConfirmPassword() {
         return confirmPassword;
     }
@@ -67,5 +68,28 @@ public class RegistrationForm{
         this.confirmPassword = confirmedPassword;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RegistrationForm that = (RegistrationForm) o;
+        return Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(sex, that.sex) && Objects.equals(phone, that.phone) && Objects.equals(password, that.password) && Objects.equals(confirmPassword, that.confirmPassword);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, email, sex, phone, password, confirmPassword);
+    }
+
+    @Override
+    public String toString() {
+        return "RegistrationForm{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", sex='" + sex + '\'' +
+                ", phone='" + phone + '\'' +
+                ", password='" + password + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                '}';
+    }
 }

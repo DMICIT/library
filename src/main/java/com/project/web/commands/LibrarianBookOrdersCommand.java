@@ -1,8 +1,5 @@
 package com.project.web.commands;
 
-import com.project.dao.OrderDao;
-import com.project.dao.impl.OrderDaoImpl;
-import com.project.entities.Order;
 import com.project.services.OrderService;
 import com.project.services.PenaltyService;
 import com.project.web.data.OrderData;
@@ -20,8 +17,8 @@ public class LibrarianBookOrdersCommand extends AbstractCommand {
         this.orderService = orderService;
     }
 
-    public LibrarianBookOrdersCommand(){
-        this(new PenaltyService(),new OrderService());
+    public LibrarianBookOrdersCommand() {
+        this(new PenaltyService(), new OrderService());
     }
 
     @Override
@@ -41,11 +38,8 @@ public class LibrarianBookOrdersCommand extends AbstractCommand {
         String action = request.getParameter("action");
         int orderId = Integer.parseInt(request.getParameter("orderId"));
 
-        if (action.equals("checked out")) {
-            OrderService.changeStatus(orderId, "checked out");
-        } else if (action.equals("returned")) {
-            OrderService.changeStatus(orderId, "returned");
-        }
+        orderService.changeStatus(orderId, action);
+
         return "redirect:librarian-orders";
     }
 }

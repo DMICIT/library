@@ -1,10 +1,12 @@
 package com.project.web.commands;
+
 import com.project.entities.Order;
 import com.project.entities.User;
 import com.project.services.OrderService;
 import com.project.services.UserService;
 import com.project.web.data.OrderData;
 import com.project.web.data.UserPrincipal;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,7 +20,7 @@ public class OrderCommand extends AbstractCommand {
     private UserService userService;
     private OrderService orderService;
 
-    public OrderCommand(){
+    public OrderCommand() {
         this(new UserService(), new OrderService());
     }
 
@@ -39,7 +41,7 @@ public class OrderCommand extends AbstractCommand {
             List<OrderData> ordersByStatus = new ArrayList<>();
             for (OrderData orderByUser :
                     allOrdersByUser) {
-                if(!orderByUser.getStatus().equals("returned")){
+                if (!orderByUser.getStatus().equals("returned")) {
                     ordersByStatus.add(orderByUser);
                 }
             }
@@ -68,6 +70,7 @@ public class OrderCommand extends AbstractCommand {
         }
 
         Order order = new Order(userByEmail.getId(), bookId, bookSpot, "expected", returnDate);
+
         orderService.create(order);
         return "redirect:orders";
     }

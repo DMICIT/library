@@ -1,22 +1,11 @@
 package com.project.web.data;
 
+import java.util.Objects;
+
 public class CatalogData {
     private int totalQuantity;
-    private int availableQuantity;
-    private int checkedOutQuantity;
-
-    public CatalogData(int availableQuantity) {
-        this.availableQuantity = availableQuantity;
-    }
-
-    public CatalogData(int totalQuantity, int availableQuantity, int checkedOutQuantity) {
-        this.totalQuantity = totalQuantity;
-        this.availableQuantity = availableQuantity;
-        this.checkedOutQuantity = checkedOutQuantity;
-    }
 
     public CatalogData() {
-
     }
 
     public int getTotalQuantity() {
@@ -27,19 +16,23 @@ public class CatalogData {
         this.totalQuantity = totalQuantity;
     }
 
-    public int getAvailableQuantity() {
-        return availableQuantity;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CatalogData that = (CatalogData) o;
+        return totalQuantity == that.totalQuantity;
     }
 
-    public void setAvailableQuantity(int availableQuantity) {
-        this.availableQuantity = availableQuantity;
+    @Override
+    public int hashCode() {
+        return Objects.hash(totalQuantity);
     }
 
-    public int getCheckedOutQuantity() {
-        return checkedOutQuantity;
-    }
-
-    public void setCheckedOutQuantity(int checkedOutQuantity) {
-        this.checkedOutQuantity = checkedOutQuantity;
+    @Override
+    public String toString() {
+        return "CatalogData{" +
+                "totalQuantity=" + totalQuantity +
+                '}';
     }
 }

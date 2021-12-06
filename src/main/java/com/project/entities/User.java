@@ -12,8 +12,6 @@ public class User {
     private int banList;
     private String password;
 
-
-
     public User(int id, String name, String email, String sex, String phone, String role, int banList, String password) {
         this.id = id;
         this.name = name;

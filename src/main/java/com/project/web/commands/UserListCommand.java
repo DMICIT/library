@@ -2,6 +2,7 @@ package com.project.web.commands;
 
 import com.project.entities.User;
 import com.project.services.UserService;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -10,7 +11,7 @@ public class UserListCommand implements Command {
 
     private UserService userService;
 
-    public UserListCommand(){
+    public UserListCommand() {
         this(new UserService());
     }
 
@@ -23,5 +24,6 @@ public class UserListCommand implements Command {
         List<User> users = userService.getAllUsers();
         request.setAttribute("allUsers", users);
 
-        return "user-list.jsp";    }
+        return "user-list.jsp";
+    }
 }

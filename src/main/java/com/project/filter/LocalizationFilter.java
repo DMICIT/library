@@ -14,15 +14,15 @@ public class LocalizationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpSession session = ((HttpServletRequest) servletRequest).getSession();
-        String locale = (String)session.getAttribute("locale");
-        if (locale == null){
-            session.setAttribute("locale","en");
+        String locale = (String) session.getAttribute("locale");
+        if (locale == null) {
+            session.setAttribute("locale", "en");
         }
-        String bundle = (String)session.getAttribute("bundle");
+        String bundle = (String) session.getAttribute("bundle");
         if (bundle == null) {
-            session.setAttribute("bundle","messages");
+            session.setAttribute("bundle", "messages");
         }
-        filterChain.doFilter(servletRequest,servletResponse);
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

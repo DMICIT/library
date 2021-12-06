@@ -49,26 +49,26 @@
                     <a style="text-decoration: none;"
                        href="books?sort=author${not empty param.search ? '&search=' += param.search  : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
                     <a style="text-decoration: none;"
-                       href="books?sort=author&order=desc${not empty param.search ? '&search' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
+                       href="books?sort=author&order=desc${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
                 </td>
                 <td><fmt:message key="books.book.name"/>
                     <a style="text-decoration: none;"
-                       href="books?sort=bookName${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
+                       href="books?sort=book_Name${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
                     <a style="text-decoration: none;"
-                       href="books?sort=bookName&order=desc${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
+                       href="books?sort=book_Name&order=desc${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
                 </td>
                 </td>
                 <td><fmt:message key="books.edition"/>
                     <a style="text-decoration: none;"
-                       href="books?sort=bookEdition${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
+                       href="books?sort=book_Edition${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
                     <a style="text-decoration: none;"
-                       href="books?sort=bookEdition&order=desc${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
+                       href="books?sort=book_Edition&order=desc${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
                 </td>
                 <td><fmt:message key="books.date.of.reliase"/>
                     <a style="text-decoration: none;"
-                       href="books?sort=reliaseDate${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
+                       href="books?sort=reliase_Date${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
                     <a style="text-decoration: none;"
-                       href="books?sort=reliaseDate&order=desc${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
+                       href="books?sort=reliase_Date&order=desc${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
                 </td>
                 <td></td>
                 <td></td>

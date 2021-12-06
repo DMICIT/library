@@ -17,6 +17,7 @@ public class PersonalAccountCommand implements Command {
         this(new UserService());
 
     }
+
     public PersonalAccountCommand(UserService userService) {
         this.userService = userService;
     }

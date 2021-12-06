@@ -18,19 +18,6 @@ public class AdminAddUserForm {
         this.password = password;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AdminAddUserForm that = (AdminAddUserForm) o;
-        return Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(sex, that.sex) && Objects.equals(phone, that.phone) && Objects.equals(password, that.password);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, email, sex, phone, password);
-    }
-
     public String getName() {
         return name;
     }
@@ -71,4 +58,27 @@ public class AdminAddUserForm {
         this.password = password;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AdminAddUserForm that = (AdminAddUserForm) o;
+        return Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(sex, that.sex) && Objects.equals(phone, that.phone) && Objects.equals(password, that.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, email, sex, phone, password);
+    }
+
+    @Override
+    public String toString() {
+        return "AdminAddUserForm{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", sex='" + sex + '\'' +
+                ", phone='" + phone + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

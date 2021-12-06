@@ -15,12 +15,14 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
 
     private static final Logger LOG = Logger.getLogger(PenaltyDaoImpl.class);
+
     private static final String SELECT_ALL_QUERY = "SELECT * FROM users";
     private static final String SELECT_ALL_BY_ROLE_QUERY = "SELECT * FROM users Where role = ?";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM users WHERE id = ?";
     private static final String SELECT_BY_EMAIL_QUERY = "SELECT * FROM users WHERE email = ?";
     private static final String UPDATE_USERS_QUERY = "UPDATE  users SET name = ? , email = ?, sex = ?, telephone = ?, role = ?, ban_list = ?, password = ? WHERE id = ?";
     private static final String CREATE_USERS_QUERY = "INSERT INTO users ( name , email, sex, telephone, role, ban_list, password) values(?,?,?,?,?,?,?)";
+    private static final String DELETE_USERS_QUERY = "DELETE FROM users WHERE id = ?";
     private static final String ID = "id";
     private static final String NAME = "name";
     private static final String EMAIL = "email";
@@ -48,7 +50,7 @@ public class UserDaoImpl implements UserDao {
 
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_QUERY);
-             ResultSet resultSet = preparedStatement.executeQuery();) {
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 int id = resultSet.getInt(ID);
@@ -72,10 +74,10 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getById(int inputId) {
-
         User result = null;
+
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID_QUERY);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID_QUERY)) {
             preparedStatement.setInt(1, inputId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -101,6 +103,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public int create(User entity) {
         int result = 0;
+
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(CREATE_USERS_QUERY)) {
             preparedStatement.setString(1, entity.getName());
@@ -122,6 +125,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public int update(User entity) {
         int result = 0;
+
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USERS_QUERY)) {
             preparedStatement.setString(1, entity.getName());
@@ -135,7 +139,6 @@ public class UserDaoImpl implements UserDao {
 
             result = preparedStatement.executeUpdate();
 
-
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -147,7 +150,7 @@ public class UserDaoImpl implements UserDao {
 
         User result = null;
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_EMAIL_QUERY);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_EMAIL_QUERY)) {
             preparedStatement.setString(1, inputEmail);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -174,8 +177,8 @@ public class UserDaoImpl implements UserDao {
         List<User> result = new ArrayList<>();
 
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_BY_ROLE_QUERY);
-        ) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_BY_ROLE_QUERY)) {
+
             preparedStatement.setString(1, inputRole);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -203,7 +206,7 @@ public class UserDaoImpl implements UserDao {
     public int deleteUser(int userId) {
         int result = 0;
         try (Connection connection = DataSourceConnectionPoolFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USERS_QUERY)) {
             preparedStatement.setInt(1, userId);
             result = preparedStatement.executeUpdate();
 

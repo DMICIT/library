@@ -30,7 +30,7 @@ public class BannedUserFilter implements Filter {
             User userByEmail = userService.getUserByEmail(email);
             if (userByEmail.getBanList() == 1) {
                 session.invalidate();
-                response.sendRedirect(request.getContextPath()+"/"+"ban-page");
+                response.sendRedirect(request.getContextPath() + "/" + "ban-page");
                 return;
             }
         }

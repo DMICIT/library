@@ -1,22 +1,18 @@
 package com.project.web.commands;
 
 import com.project.services.BookService;
-import com.project.services.UserService;
 import com.project.web.data.BookData;
-import org.apache.log4j.Logger;
+import com.project.web.data.PaginationData;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 
+public class AdminBooksCommand extends AbstractCommand {
 
-public class AdminBooksCommand extends AbstractCommand{
-
-    private static final Logger LOG = Logger.getLogger(AdminBooksCommand.class);
     private BookService bookService;
 
-    public AdminBooksCommand(){
+    public AdminBooksCommand() {
         this(new BookService());
     }
 
@@ -26,28 +22,37 @@ public class AdminBooksCommand extends AbstractCommand{
 
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
-
         String sortParameter = "id";
-        boolean order = true;
+        String order = "ASC";
         if (request.getParameter("sort") != null) {
             sortParameter = request.getParameter("sort");
             String orderParam = request.getParameter("order");
             if (orderParam != null && orderParam.equals("desc")) {
-                order = false;
+                order = "DESC";
             }
         }
-        List<BookData> books = bookService.getSortedBooks(sortParameter,order);
-        request.setAttribute("books",books);
+
+        int page = 1;
+        int numberPerPage = 10;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+
+        PaginationData<BookData> books = bookService.getAllAvailableBooks((page - 1) * numberPerPage, numberPerPage, sortParameter, order);
+        int totalAmount = books.getTotalAmount();
+        int numberOfPages = (int) Math.ceil(totalAmount * 1.0 / numberPerPage);
+
+        request.setAttribute("books", books.getEntityList());
+        request.setAttribute("currentPage", page);
+        request.setAttribute("numberOfPages", numberOfPages);
         return "admin-books.jsp";
     }
 
     @Override
     protected String executePost(HttpServletRequest request, HttpServletResponse response) {
         String action = request.getParameter("action");
-        if(action.equals("delete")){
-
+        if (action.equals("delete")) {
             bookService.delete(Integer.parseInt(request.getParameter("bookId")));
-
         }
         return "redirect:admin-books";
     }

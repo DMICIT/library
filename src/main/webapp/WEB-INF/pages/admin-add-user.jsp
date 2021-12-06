@@ -39,7 +39,10 @@
             <input type="text" name="email" id="email" class="form-control" required>
 
             <label for="sex" class="control-label col-xs-4"><fmt:message key="users.sex"/></label>
-            <input type="text" name="sex" id="sex" class="form-control" required>
+            <select  class="form-control" id ="sex" name ="sex">
+            <option value="man"><fmt:message key="sex.man"/></option>
+            <option value="woman"><fmt:message key="sex.woman"/></option>
+           </select>
 
             <label for="phone" class="control-label col-xs-4"><fmt:message key="users.phone"/></label>
             <input type="text" name="phone" id="phone" class="form-control" required>

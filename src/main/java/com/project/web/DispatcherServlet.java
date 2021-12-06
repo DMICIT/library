@@ -30,11 +30,11 @@ public class DispatcherServlet extends HttpServlet {
         String path = getPath(request);
         Command command = CommandFactory.getCommand(path);
         String page = command.execute(request, response);
-        if (page.contains("redirect:")){
+        if (page.contains("redirect:")) {
             String pageToRedirect = page.replace("redirect:", "");
             response.sendRedirect(request.getContextPath() + "/" + pageToRedirect);
 
-        }else request.getRequestDispatcher("/WEB-INF/pages/" + page).forward(request, response);
+        } else request.getRequestDispatcher("/WEB-INF/pages/" + page).forward(request, response);
     }
 
     private String getPath(HttpServletRequest request) {

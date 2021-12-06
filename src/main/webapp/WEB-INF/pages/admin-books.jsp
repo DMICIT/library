@@ -1,11 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: dmytro
-  Date: 10/21/21
-  Time: 10:14 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -66,9 +59,9 @@
         </tr>
         </thead>
 
-        <c:forEach items="${books}" var="book">
+        <c:forEach items="${books}" var="book" varStatus="loop">
             <tr>
-                <td><a href="admin-edit-book?id=${book.id}">${book.id}</a></td>
+                <td><a href="admin-edit-book?id=${book.id}">${loop.count}</a></td>
                 <td>${book.author}</td>
                 <td>${book.bookName}</td>
                 <td>${book.bookEdition}</td>
@@ -84,6 +77,31 @@
             </tr>
         </c:forEach>
     </table>
+    <c:if test="${currentPage !=1}">
+        <a href="admin-books?page=${currentPage-1}${not empty param.search ? '&search=' += param.search : ''}${not empty param.sort ? '&sort=' += param.sort : ''}${not empty param.order ? '&order=' += param.order : ''}">
+            <fmt:message key="previous"/>
+        </a>
+    </c:if>
+
+    <c:forEach begin="1" end="${numberOfPages}" var="i">
+        <c:choose>
+            <c:when test="${currentPage eq i}">
+                ${i}
+            </c:when>
+            <c:otherwise>
+                <a href="admin-books?page=${i}${not empty param.search ? '&search=' += param.search : ''}${not empty param.sort ? '&sort=' += param.sort : ''}${not empty param.order ? '&order=' += param.order : ''}">
+                        ${i}
+                </a>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+
+    <c:if test="${currentPage lt numberOfPages}">
+        <a href="admin-books?page=${currentPage+1}${not empty param.search ? '&search=' += param.search : ''}${not empty param.sort ? '&sort=' += param.sort : ''}${not empty param.order ? '&order=' += param.order : ''}">
+            <fmt:message key="next"/>
+        </a>
+
+    </c:if>
 </form>
 <a href="admin-edit-book" class="btn btn-primary btn-md"><fmt:message key="new.book"/></a>
 </div>

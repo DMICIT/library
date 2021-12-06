@@ -1,10 +1,7 @@
 package com.project.web.commands;
 
-import com.project.dao.UserDao;
-import com.project.dao.impl.UserDaoImpl;
 import com.project.entities.User;
 import com.project.services.UserService;
-import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +11,7 @@ public class AdminUsersCommand extends AbstractCommand {
 
     private UserService userService;
 
-    public AdminUsersCommand(){
+    public AdminUsersCommand() {
         this(new UserService());
     }
 
@@ -22,11 +19,8 @@ public class AdminUsersCommand extends AbstractCommand {
         this.userService = userService;
     }
 
-    private static final Logger LOG = Logger.getLogger(AdminUsersCommand.class);
-
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
-
         String type = request.getParameter("type");
         if (type.equals("users")) {
             List<User> users = userService.getAllUsers();

@@ -8,9 +8,12 @@
 <fmt:setBundle basename="${bundle}"></fmt:setBundle>
 
 <c:if test="${not empty errorMessages}">
+    <div style="color: darkred">
+
     <c:forEach items="${errorMessages}" var="message">
         <fmt:message key="${message}"/>
         </br>
 
     </c:forEach>
+    </div>
 </c:if>
